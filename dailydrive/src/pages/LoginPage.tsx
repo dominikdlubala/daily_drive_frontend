@@ -1,11 +1,10 @@
+import './styles/loginPage.css'; 
+
 import { useState } from 'react'; 
 import { useForm, SubmitHandler } from 'react-hook-form'; 
 import { Link } from 'react-router-dom'; 
 
 import { useAuth } from '../hooks/useAuth'; 
-import type { User } from '../types'; 
-
-import './styles/loginPage.css'; 
 
 type FormValues = {
     username: string 
@@ -33,14 +32,14 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="page login-page d-flex justify-content-center align-items-center">
-            <div className="login-form-wrapper">
-                <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="login-form-title">Zaloguj się</h1>
-                    <div className="login-form-group">
+        <div className="page page-login">
+            <div className="form-wrapper form-wrapper--login">
+                <form className="form form-login" onSubmit={handleSubmit(onSubmit)}>
+                    <h1 className="form-title form-title--login">Zaloguj się</h1>
+                    <div className="form-group--login">
                         <input 
                             type="text" 
-                            className="login-form-input"
+                            className="form-input--login"
                             placeholder="Nazwa użytkownika"
                             {...register("username", {
                                 required: {
@@ -50,10 +49,10 @@ export default function LoginPage() {
                             })}
                         />
                     </div>
-                    <div className="login-form-group">
+                    <div className="form-group--login">
                         <input 
                             type="password" 
-                            className="login-form-input" 
+                            className="form-input--login" 
                             placeholder="Hasło"  
                             {...register("password", {
                                 required:{
@@ -63,21 +62,21 @@ export default function LoginPage() {
                             })}
                         />
                     </div>
+                    {Object.entries(errors).length > 0 && (
+                        <span className="input-validate">{Object.entries(errors)[0][1].message}</span>
+                    )}
                     {
-                        (errors.username || errors.password) && <span className="login-input-validate">{errors.username?.message || errors.password?.message}</span>
-                    }
-                    {
-                        isError && <span className="login-input-validate">Użytkownik nie istnieje lub błąd połączenia z bazą</span>
+                        isError && <span className="input-validate input-validate--login">Użytkownik nie istnieje lub błąd połączenia z bazą</span>
                     }
                     <button 
-                        className="login-btn-submit"
+                        className="btn-submit--login"
                         type="submit"
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Loguję...' : 'Zaloguj'}
                     </button>
                 </form>
-                <div className="login-register-link mt-2">
+                <div className="register-link--login">
                     <span>Nie masz konta?</span> <br/>
                     <Link to={'/register'}>Zarejestruj się</Link>
                 </div>

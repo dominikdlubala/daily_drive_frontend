@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'; 
 
+import ProtectedRoute from './components/login/ProtectedRoute';
 import Root from './pages/Root'; 
 import LoginPage from './pages/LoginPage'; 
-// import HomePage from './pages/HomePage'; 
-// import RegisterPage from './pages/RegisterPage'; 
+import HomePage from './pages/HomePage'; 
+import RegisterPage from './pages/RegisterPage'; 
 // import CarsPage from './pages/CarsPage'; 
 // import CarPage from './pages/CarPage'; 
 // import ReservationsPage from './pages/ReservationsPage';
-// import ProtectedRoute from './components/login/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -18,14 +18,16 @@ const router = createBrowserRouter([
         path: '/login', 
         element: <LoginPage />
       }, 
-      // {
-      //   index: true, 
-      //   element: <HomePage />
-      // }, 
-      // {
-      //   path: '/register', 
-      //   element: <RegisterPage />
-      // }, 
+      {
+        index: true, 
+        element: <ProtectedRoute>
+                  <HomePage />
+                 </ProtectedRoute>
+      }, 
+      {
+        path: '/register', 
+        element: <RegisterPage />
+      }, 
       // {
       //   path: '/cars', 
       //   element: <CarsPage/>
