@@ -1,0 +1,62 @@
+/* Home page styles */
+.page-home {
+    display: flex; 
+    align-items: center;
+    flex-direction: column; 
+    margin-top: 1rem; 
+}
+
+.buttons--home {
+    display: flex; 
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.section--home {
+    display: flex; 
+    flex-direction: column;
+    width: 70vw; 
+    height: 70vh; 
+}
+
+.sub-section {
+    border: 2px solid black; 
+    padding: 1rem; 
+    margin-top: 1rem; 
+}
+
+.sub-section:hover {
+    border: 2px solid var(--primary-color); 
+    cursor: pointer; 
+}
+
+.sub-section--title {
+    margin: 0.25rem 0; 
+}
+
+.buttons--home-group {
+    position: relative; 
+    width: 7rem; 
+}
+
+.btn--add-workout, .btn--add-diet {
+    width: 100%; 
+}
+
+.drawer {
+    position: absolute;  
+    width: inherit; 
+    background-color: #3392ff8b; 
+    padding: 0.5rem 0;
+    text-align: center;
+    color: #fff; 
+    text-shadow:  1px 1px 2px black;
+}
+
+.drawer--list-item:hover {
+    cursor: pointer; 
+    background-color: #1981f78b;
+}
+
+
