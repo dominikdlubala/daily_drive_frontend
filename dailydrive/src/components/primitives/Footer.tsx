@@ -42,7 +42,7 @@ export default function Footer() {
     const handleWorkoutDrawerClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.preventDefault(); 
         const target = e.target as HTMLElement; 
-        console.log(target.dataset); 
+        console.log(target.dataset.value); 
     }
 
     const handleDietDrawerClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {

@@ -28,6 +28,11 @@ export default function HomePage() {
                             Twój postęp w tym tygodniu: 
                             <img src="" alt="some graph" />
                         </div>
+                        <div className="workout-week-summary">
+                            W tym tygodniu: 
+                            podniosłeś: 700kg ciężaru
+                            ćwiczyłeś: 17h 23min 
+                        </div>
                     </div>
                 </div>
                 <div 

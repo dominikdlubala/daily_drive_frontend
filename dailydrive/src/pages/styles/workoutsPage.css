@@ -1,0 +1,15 @@
+.section--workouts-buttons {
+    display: flex; 
+    justify-content: space-evenly;
+    margin-top: 1rem; 
+}
+
+.btn-workouts {
+    border: none; 
+    background-color: #fff;
+    cursor: pointer;    
+}
+
+.btn-workouts--active {
+    border-bottom: 2px solid var(--primary-color)
+}

@@ -15,6 +15,7 @@
 
 .sub-section {
     border: 2px solid black; 
+    border-radius: 30px; 
     padding: 1rem; 
     margin-top: 1rem; 
 }
