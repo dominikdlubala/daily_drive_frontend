@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'; 
 import Header from '../components/primitives/Header'; 
-// import Footer from '../components/primitives/Footer'; 
+import Footer from '../components/primitives/Footer'; 
 import { AuthProvider } from '../hooks/useAuth'; 
 
 export default function Root() {
@@ -9,7 +9,7 @@ export default function Root() {
             <AuthProvider>
                 <Header/>
                 <Outlet />
-                {/* <Footer/> */}
+                <Footer/>
             </AuthProvider>
         </div>
     )

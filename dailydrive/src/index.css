@@ -1,6 +1,7 @@
 * {
   --primary-color: #2093ff; 
   --primary-color-hover: #5eaef9;
+  box-sizing: border-box; 
 }
 
 
@@ -11,11 +12,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  text-decoration: none;
 }
 
 ul {
@@ -166,6 +172,10 @@ li {
   color: #fff; 
 }
 
+.link-header {
+  color: #fff; 
+}
+
 /* Buttons */
 .btn-primary {
   border: none; 
@@ -173,8 +183,58 @@ li {
   color: #fff; 
   padding: 0.5rem 1rem;  
   cursor: pointer; 
+  border-radius: 30px; 
 }
 
 .btn-primary:hover {
   background-color: var(--primary-color-hover); 
 }
+
+/* Footer */
+.footer {
+  position: fixed; 
+  bottom: 50px; 
+  display: flex; 
+  width: 100vw; 
+}
+
+.buttons--footer {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;  
+}
+
+.buttons--footer-group {
+  position: relative; 
+  width: 7rem; 
+}
+
+.btn--add-workout, .btn--add-diet {
+  width: 100px;
+  height: 50px; 
+}
+
+.drawer {
+  position: absolute;  
+  top: -180px;
+}
+
+.drawer--list-item {
+  background-color: #3392ff8b; 
+  margin-bottom: 10px;
+  border-radius: 30px; 
+  height: 50px; 
+  width: 100px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  text-align: center; 
+}
+
+.drawer--list-item:hover {
+  cursor: pointer; 
+  background-color: #1981f78b;
+}
+

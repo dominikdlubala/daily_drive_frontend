@@ -5,9 +5,8 @@ import Root from './pages/Root';
 import LoginPage from './pages/LoginPage'; 
 import HomePage from './pages/HomePage'; 
 import RegisterPage from './pages/RegisterPage'; 
-// import CarsPage from './pages/CarsPage'; 
-// import CarPage from './pages/CarPage'; 
-// import ReservationsPage from './pages/ReservationsPage';
+import WorkoutsPage from './pages/WorkoutsPage';
+import DietPage from './pages/DietPage';
 
 const router = createBrowserRouter([
   {
@@ -28,22 +27,14 @@ const router = createBrowserRouter([
         path: '/register', 
         element: <RegisterPage />
       }, 
-      // {
-      //   path: '/cars', 
-      //   element: <CarsPage/>
-      // }, 
-      // {
-      //   path: '/car',
-      //   element: <CarPage/>
-      // }, 
-      // {
-      //   path: '/reservations', 
-      //   element: (
-      //     <ProtectedRoute>
-      //       <ReservationsPage />
-      //     </ProtectedRoute>
-      //   )
-      // }
+      {
+        path: '/workouts', 
+        element: <WorkoutsPage />
+      }, 
+      {
+        path: '/diet', 
+        element: <DietPage />
+      }
     ]
   }
 ])

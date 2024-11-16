@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 
 import { useAuth } from '../../hooks/useAuth'; 
 
@@ -9,12 +9,12 @@ export default function Header() {
 
     return (
         <div className="header">
-            <div className="link link-header link-header--left">
+            <Link to={'/workouts'}className="link link-header link-header--left">
                 Treningi
-            </div>
-            <div className="link link-header link-header--logo">
+            </Link>
+            <Link to={'/'} className="link link-header link-header--logo">
                 DailyDrive
-            </div>
+            </Link>
             <div className="link link-header link-header--left">
                 { 
                     token 
