@@ -1,5 +1,4 @@
 import './styles/homePage.css'; 
-
 import { useNavigate } from 'react-router-dom'; 
 
 // icons

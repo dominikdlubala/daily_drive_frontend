@@ -1,10 +1,14 @@
 import { useState, useRef, useEffect } from 'react'; 
 
+import Modal from './Modal';
+import WorkoutTemplateForm from '../workouts/WorkoutTemplateForm';
 
 export default function Footer() {
 
     const [isWorkoutDrawerOpen, setIsWorkoutDrawerOpen] = useState<boolean>(false); 
     const [isDietDrawerOpen, setIsDietDrawerOpen] = useState<boolean>(false); 
+
+    const [modalOpen, setModalOpen] = useState<boolean>(true); 
 
     const workoutDrawerRef = useRef<HTMLDivElement | null>(null);
     const dietDrawerRef = useRef<HTMLDivElement | null>(null);
@@ -53,6 +57,10 @@ export default function Footer() {
 
     return(
         <div className="footer">
+            <Modal>
+                <WorkoutTemplateForm />
+            </Modal>
+
             <div className="buttons--footer">
                 <div ref={workoutDrawerRef} className="buttons--footer-group">
                     <button onClick={() => {

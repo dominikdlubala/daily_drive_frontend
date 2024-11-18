@@ -9,9 +9,7 @@ export default function Modal({ children }: ModalProps) {
 
     return createPortal(
         <div className="modal-background">
-            <div className="modal">
-                Some child
-            </div>
+            {children}
         </div>, 
         document.querySelector('.modal-container') as Element
     )

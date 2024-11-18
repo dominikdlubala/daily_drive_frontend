@@ -6,7 +6,7 @@ export default function WorkoutsGallery() {
     return (
         <div className="gallery gallery-workouts">
             {mockData.map(el => (
-                <WorkoutsGalleryItem workoutData={el} />
+                <WorkoutsGalleryItem key={el.name} workoutData={el} />
             ))}
         </div>
     )

@@ -4,7 +4,7 @@ export default function WorkoutsList() {
     
     return (
         <div className="list list-workouts">
-            {mockData.map(el => <WorkoutsListItem workoutsData={el} />)}
+            {mockData.map(el => <WorkoutsListItem key={el.title} workoutsData={el} />)}
         </div>
     )
 }

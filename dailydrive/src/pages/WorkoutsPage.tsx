@@ -4,8 +4,6 @@ import { useState } from 'react';
 import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
 import WorkoutsList from '../components/workouts/WorkoutsList';
 
-import Modal from '../components/primitives/Modal';
-
 export default function WorkoutsPage() {
 
     const [pageContent, setPageContent] = useState<string>('customWorkouts');  
@@ -42,9 +40,6 @@ export default function WorkoutsPage() {
             </div>
             {content}
 
-            {/* <Modal>
-                some child
-            </Modal> */}
         </div>
     )
 }
