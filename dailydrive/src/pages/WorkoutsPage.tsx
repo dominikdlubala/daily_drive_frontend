@@ -1,5 +1,10 @@
 import './styles/workoutsPage.css';
-import { useState } from 'react'; 
+import { useState } from 'react';
+
+import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
+import WorkoutsList from '../components/workouts/WorkoutsList';
+
+import Modal from '../components/primitives/Modal';
 
 export default function WorkoutsPage() {
 
@@ -14,9 +19,9 @@ export default function WorkoutsPage() {
     
     let content; 
     if(pageContent === 'customWorkouts') {
-        content = <div>Wzorce</div>
+        content = <WorkoutsGallery />
     } else if(pageContent === 'pastWorkouts') {
-        content = <div>Historia</div>
+        content = <WorkoutsList />
     }
 
     return (
@@ -36,6 +41,10 @@ export default function WorkoutsPage() {
                 </button>
             </div>
             {content}
+
+            {/* <Modal>
+                some child
+            </Modal> */}
         </div>
     )
 }

@@ -12,7 +12,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
 }
 
 code {
@@ -238,3 +237,79 @@ li {
   background-color: #1981f78b;
 }
 
+
+
+
+/* Workouts */
+/* Workouts gallery */
+
+.gallery-workouts {
+  display: flex; 
+  flex-wrap: wrap; 
+  width: 100%; 
+  justify-content: center;
+}
+
+.gallery-item--workouts {
+  border: 2px solid var(--primary-color); 
+  display: flex; 
+  flex-direction: column;
+  max-width: 250px; 
+  min-width: 200px; 
+  flex-grow: 1; 
+  border-radius: 15px;
+  overflow: hidden; 
+  margin: 1rem; 
+}
+
+.gallery-item--title {
+  text-align: center; 
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  color: #fff;  
+}
+
+.gallery-item--exercises-list {
+  padding: 0.5rem; 
+}
+
+.gallery-item--button-start {
+  margin: 0 0.5rem 0.5rem 0.5rem; 
+  border: none; 
+  background-color: var(--primary-color); 
+  color: #fff; 
+  padding: 0.25rem; 
+  cursor: pointer; 
+  border-radius: 15px;
+}
+.gallery-item--button-start:hover {
+  background-color: var(--primary-color-hover)
+}
+
+/* Workouts list history */
+.list-item--workouts {
+  border: 2px solid black; 
+  margin: 1rem; 
+  display: flex; 
+  align-items: center;
+  padding: 1rem; 
+}
+
+.list-item--exercise-list {
+  display: flex; 
+}
+
+/* Modal */
+.modal-container {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  display: flex; 
+  width: 100vw; 
+  height: 100vh; 
+}
+
+.modal-background {
+  background-color: red; 
+  width: 100%; 
+}
