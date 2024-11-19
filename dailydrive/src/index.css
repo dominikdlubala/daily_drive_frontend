@@ -85,11 +85,12 @@ li {
   border: none; 
   border-bottom: 1px solid darkgray;
   transition: border-color 0.2s ease;
+  outline: none; 
+  transition: ease-out 0.5s border-color; 
 }
 
-.form-input:focus {
-  border: none; 
-  border-color: var(--primary-color);
+.form-input:focus { 
+  border-color: var(--primary-color); 
 }
 
 .input-validate {
@@ -316,8 +317,13 @@ li {
   
 }
 
-.modal-body {
-  width: 100%; 
+.modal-content {
+  width: 80%;
+  max-width: 700px;
+  padding: 3rem;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
 
@@ -327,7 +333,6 @@ li {
 /* Workouts template form */
 
 .form-wrapper--workout-template {
-  width: 80%;
   background-color: #fff; 
 }
 
@@ -345,6 +350,11 @@ li {
   margin-right: 1rem ;
 }
 
+.form-input--workout-template-title {
+  margin: 0; 
+  width: 50%;   
+}
+
 .btn-remove {
   background-color: #fff; 
   border: none; 
@@ -352,6 +362,7 @@ li {
   font-size: inherit; 
   cursor: pointer; 
   padding: 0; 
+  transition: ease 0.3s color; 
 }
 
 .btn-remove:hover {
@@ -365,6 +376,7 @@ li {
   padding: 0.5rem; 
   border-radius: 30px; 
   cursor: pointer; 
+  transition: ease 0.3s background-color; 
 }
 
 .btn-add--workout-template:hover {
