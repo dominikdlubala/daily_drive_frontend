@@ -50,12 +50,6 @@ export default function WorkoutsDrawer({ isOpen, onClose }: WorkoutsDrawerProps)
         return () => document.removeEventListener('mousedown', handleClickOutside); 
     }, [isOpen, onClose])
 
-    const handleWorkoutDrawerClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        e.preventDefault(); 
-        const target = e.target as HTMLElement; 
-        console.log(target.dataset.value); 
-    }
-
     return (
         <div ref={drawerRef} className="drawer drawer-workout">
 
@@ -70,7 +64,7 @@ export default function WorkoutsDrawer({ isOpen, onClose }: WorkoutsDrawerProps)
                 </Modal>
             }
 
-            <ul onClick={handleWorkoutDrawerClick} className="drawer--list workout-drawer--list">
+            <ul className="drawer--list workout-drawer--list">
                 { (Object.keys(drawerConfig) as DrawerKey[]).map((key) => (
                     <li 
                         data-value={key}
