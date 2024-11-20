@@ -1,6 +1,6 @@
 import { useState } from 'react'; 
-import WorkoutsDrawer from '../workouts/WorkoutsDrawer';
-import DietDrawer from '../diet/DietDrawer';
+
+import Drawer, { workoutDrawerConfig, dietDrawerConfig } from './Drawer';
 
 export default function Footer() {
 
@@ -19,9 +19,10 @@ export default function Footer() {
                     { 
                         isWorkoutDrawerOpen 
                         &&
-                        <WorkoutsDrawer 
+                        <Drawer 
                             isOpen={isWorkoutDrawerOpen} 
                             onClose={() => setIsWorkoutDrawerOpen(false)}
+                            drawerConfig={workoutDrawerConfig}
                         />
                     }
                 </div>
@@ -36,9 +37,10 @@ export default function Footer() {
                     { 
                         isDietDrawerOpen 
                         &&
-                       <DietDrawer
+                       <Drawer
                             isOpen={isDietDrawerOpen}
                             onClose={() => setIsDietDrawerOpen(false)}
+                            drawerConfig={dietDrawerConfig}
                        />
                     }
                 </div>

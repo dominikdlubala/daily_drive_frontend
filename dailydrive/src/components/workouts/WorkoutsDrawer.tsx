@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'; 
+import type { ReactNode } from 'react'; 
 
 import Modal from '../primitives/Modal';
 import WorkoutTemplateForm from './WorkoutTemplateForm';
@@ -6,6 +7,9 @@ import WorkoutTemplateForm from './WorkoutTemplateForm';
 interface WorkoutsDrawerProps {
     isOpen: boolean; 
     onClose: () => void; 
+    config: { 
+        [key: string]: { title: string, content: ReactNode }
+    }
 }
 
 const drawerConfig = {
@@ -25,7 +29,7 @@ const drawerConfig = {
 
 type DrawerKey = keyof typeof drawerConfig; 
 
-export default function WorkoutsDrawer({ isOpen, onClose }: WorkoutsDrawerProps) {
+export default function WorkoutsDrawer({ isOpen, onClose, config }: WorkoutsDrawerProps) {
 
     const [isModalOpen, setIsModalOpen] = useState<string | null>(null); 
 

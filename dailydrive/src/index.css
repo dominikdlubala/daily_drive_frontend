@@ -320,6 +320,8 @@ li {
 .modal-content {
   width: 80%;
   max-width: 700px;
+  max-height: 90vh; 
+  overflow-y: auto; 
   padding: 3rem;
   margin: auto;
   background-color: #fff;
@@ -338,7 +340,25 @@ li {
 
 .form-group--workout-template {
   display: flex; 
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.form-subgroup {
+  display: flex; 
+  margin-top: 1rem; 
+}
+
+.form-subgroup--set {
+  justify-content: space-between;
+}
+
+.form-input--label {
+  margin-left: 0.5rem; 
+  align-content: center; 
+}
+
+.form-input--set {
+  width: 30%; 
 }
 
 .form-group-wrapper {
@@ -381,5 +401,9 @@ li {
 
 .btn-add--workout-template:hover {
   background-color: #4a805e;
+}
+
+.btn-add--set {
+  margin-top: 1rem; 
 }
 

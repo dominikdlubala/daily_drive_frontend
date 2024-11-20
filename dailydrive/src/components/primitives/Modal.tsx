@@ -26,7 +26,7 @@ export default function Modal({ children, isOpen, onClose }: ModalProps) {
 
     return createPortal(
         <div className="modal-background">
-            <div ref={modalRef} className="modal-content">
+            <div ref={modalRef} onClick={(e) => e.stopPropagation()} className="modal-content">
                 {children}
             </div>
         </div>, 
