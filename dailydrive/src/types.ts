@@ -21,3 +21,23 @@ export type MyError = {
     error?: boolean; 
     message?: string; 
 }
+
+export type Exercise = {
+    name: string; 
+    sets?: ExerciseSet[] | null;
+}
+
+export type ExerciseSet = {
+    reps: number; 
+    weight?: number | null; 
+}
+
+export type CurrentWorkout = {
+    isWorkoutActive: boolean; 
+    title: string; 
+    exercises: Exercise[]; 
+}
+
+export type WorkoutState = {
+    currentWorkout: CurrentWorkout; 
+}

@@ -1,13 +1,44 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import { FaTrashAlt } from "react-icons/fa";
 
-export default function WorkoutFreeForm() {
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { updateWorkout } from '../../store';
 
-    const [exercises, setExercises] = useState([{ name: "", sets: [{ reps: 1, weight: 10 }]  }]); 
-    const [title, setTitle] = useState<string>(''); 
+import type { CurrentWorkout, Exercise, ExerciseSet } from '../../types';
+
+interface WorkoutFreeFormProps {
+    handleModalClose?: (updatedWorkout?: CurrentWorkout) => void; 
+}
+
+
+
+// do zrobienia: 
+// przenieść funkcje dodajace cwiczenia, serie do osobnego pliku. 
+// stworzyć nowy formularz ktory bedzie "WorkoutActiveForm" = tam pobierane będą rzeczy ze store'a a jego aktualizacja zamyka formularz. 
+
+export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
+
+    const dispatch = useAppDispatch(); 
+    const currentWorkout = useAppSelector((state) => state.workout.currentWorkout); 
+
+    const [exercises, setExercises] = useState(currentWorkout.exercises || []); 
+    // const [exercises, setExercises] = useState([{ name: "", sets: [{ reps: 1, weight: 10 }]  }]); 
+    const [title, setTitle] = useState<string>(currentWorkout.title || ''); 
+    // const [title, setTitle] = useState<string>(''); 
+
+
+    useEffect(() => {
+        setExercises(currentWorkout.exercises); 
+        setTitle(currentWorkout.title); 
+    }, [currentWorkout]); 
+
+    const syncWorkout = (updatedWorkout: { isWorkoutActive?: boolean, title?: string, exercises?: Exercise[] }) => {
+        dispatch(updateWorkout(updatedWorkout)); 
+    }
 
     const addExercise = () => {
-        setExercises([...exercises, { name: "", sets: [{ reps: 0, weight: 0 }] }]); 
+        setExercises([...exercises, { name: "", sets: [] }]); 
     }
 
     const updateExercise = (index: number, value: string) => {
@@ -23,28 +54,38 @@ export default function WorkoutFreeForm() {
 
     const addSet = (exerciseIndex: number) => {
         const updatedExercises = [...exercises]; 
-        updatedExercises[exerciseIndex].sets.push({reps: 0, weight: 0}); 
+        if(!updatedExercises[exerciseIndex].sets){
+            updatedExercises[exerciseIndex].sets = [] as ExerciseSet[]; 
+        }
+        updatedExercises[exerciseIndex].sets?.push({reps: 0, weight: 0}); 
         setExercises(updatedExercises); 
     }
 
     const updateSet = (exerciseIndex: number, setIndex: number, field: 'reps' | 'weight', value: number) => {
         const updatedExercises = [...exercises]; 
-        updatedExercises[exerciseIndex].sets[setIndex][field] = value; 
+        if(!updatedExercises[exerciseIndex].sets){
+            updatedExercises[exerciseIndex].sets = [] as ExerciseSet[]; 
+        }
+        updatedExercises[exerciseIndex].sets![setIndex][field] = value; 
         setExercises(updatedExercises); 
     }
 
     const removeSet = (exerciseIndex: number, setIndex: number) => {
         const updatedExercises = [...exercises]; 
-        updatedExercises[exerciseIndex].sets = updatedExercises[exerciseIndex].sets.filter((_, index) => index !== setIndex); 
+        updatedExercises[exerciseIndex].sets = updatedExercises[exerciseIndex].sets?.filter((_, index) => index !== setIndex); 
         setExercises(updatedExercises); 
+    }
+
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); 
+        syncWorkout({ isWorkoutActive: true, title, exercises }); 
+        handleModalClose && handleModalClose(); 
     }
 
     return (
         <form 
-            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                e.preventDefault(); 
-                console.log(exercises); 
-            }}
+            onSubmit={handleSubmit}
             className="form form--workout-free"
         >
             <h2 className="form-title">Trening wolny</h2>
@@ -80,7 +121,7 @@ export default function WorkoutFreeForm() {
                                 <FaTrashAlt />
                             </button>
                         </div>
-                        {exercise.sets.map((set, setIndex) => (
+                        {exercise.sets?.map((set, setIndex) => (
                             <div key={setIndex} className="form-subgroup form-subgroup--set">
                                 <label className="form-input--label">Seria {setIndex + 1}</label>
                                 <input 
@@ -94,7 +135,7 @@ export default function WorkoutFreeForm() {
                                     required
                                     type="text" className="form-input form-input--workout-free form-input--set" 
                                     placeholder={`Kg`}
-                                    value={set.weight}
+                                    value={set.weight || ''}
                                     onChange={(e: React.FormEvent<HTMLInputElement>) => updateSet(index, setIndex, 'weight', parseInt(e.currentTarget.value))}
                                 />
                                 <button 
@@ -125,12 +166,25 @@ export default function WorkoutFreeForm() {
                 </button>
             </div>
 
-            <button 
-                type="submit"
-                className="btn-submit btn-submit--workout-template"
-            >
-                Zapisz
-            </button>
+
+            
+
+            {
+                currentWorkout.isWorkoutActive
+                ?
+                <button 
+                    className="btn-submit btn-submit--workout-template"
+                >
+                    Zaktualizuj trening
+                </button>
+                :
+                <button 
+                    type="submit"
+                    className="btn-submit btn-submit--workout-template"
+                >
+                    Rozpocznij trening
+                </button>
+            }
         </form>
     )
 }

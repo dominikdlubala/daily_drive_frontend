@@ -1,15 +1,21 @@
-import { useRef, useEffect, useState } from 'react'; 
-import type { ReactNode } from 'react'; 
+import { useRef, useEffect, useState, useCallback } from 'react'; 
+import type { ReactElement } from 'react'; 
+import React from 'react';
 
 import Modal from '../primitives/Modal';
 import WorkoutTemplateForm from '../workouts/WorkoutTemplateForm';
 import WorkoutFreeForm from '../workouts/WorkoutFreeForm';
 
+import type { CurrentWorkout } from '../../types'; 
+import { updateWorkout } from '../../store';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+
 interface DrawerProps {
     isOpen: boolean; 
     onClose: () => void; 
     drawerConfig: { 
-        [key: string]: { title: string, content: ReactNode }
+        [key: string]: { title: string, content: ReactElement }
     };
     mainClasses?: string; 
     listItemClasses?: string; 
@@ -17,14 +23,18 @@ interface DrawerProps {
 
 export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, listItemClasses }: DrawerProps) {
 
+    const dispatch = useAppDispatch(); 
+    const currentWorkout = useAppSelector(state => state.workout); 
+
     const [isModalOpen, setIsModalOpen] = useState<string | null>(null); 
 
-    const openModalHandler = (modalId: string) => {
+    const handleModalOpen = (modalId: string) => {
         setIsModalOpen(modalId); 
     }
-    const closeModalHandler = () => {
+    const handleModalClose = (updatedWorkout?: CurrentWorkout) => {
+        // updatedWorkout && dispatch(updateWorkout(updatedWorkout))
         setIsModalOpen(null); 
-    }
+    }; 
 
     const drawerRef = useRef<HTMLDivElement | null>(null); 
 
@@ -48,9 +58,9 @@ export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, lis
                 &&
                 <Modal
                     isOpen={true}
-                    onClose={closeModalHandler}
+                    onClose={handleModalClose}
                 >
-                    {drawerConfig[isModalOpen].content}
+                    {React.cloneElement(drawerConfig[isModalOpen].content, { handleModalClose: handleModalClose })}
                 </Modal>
             }
 
@@ -59,7 +69,7 @@ export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, lis
                     <li 
                         data-value={key}
                         className={`drawer--list-item workout-drawer--list-item ${listItemClasses}`}
-                        onClick={() => openModalHandler(key)}
+                        onClick={() => handleModalOpen(key)}
                     >
                         {drawerConfig[key].title}
                     </li>

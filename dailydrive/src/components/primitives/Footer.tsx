@@ -1,14 +1,19 @@
 import { useState } from 'react'; 
+import { useAuth } from '../../hooks/useAuth';
 
 import Drawer, { workoutDrawerConfig, dietDrawerConfig } from './Drawer';
 
 export default function Footer() {
 
+    const { token } = useAuth(); 
+
     const [isWorkoutDrawerOpen, setIsWorkoutDrawerOpen] = useState<boolean>(false); 
     const [isDietDrawerOpen, setIsDietDrawerOpen] = useState<boolean>(false); 
 
+    const footerClassNames = 'footer ' + ((token === null ) ? 'footer-hide' : ''); 
+
     return(
-        <div className="footer">
+        <div className={footerClassNames}>
             <div className="buttons--footer">
                 <div className="buttons--footer-group">
                     <button onClick={() => {
