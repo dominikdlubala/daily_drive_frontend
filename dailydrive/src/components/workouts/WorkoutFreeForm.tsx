@@ -3,7 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { updateWorkout } from '../../store';
+import { updateWorkout, endWorkout, resetWorkout } from '../../store';
 
 import type { CurrentWorkout, Exercise, ExerciseSet } from '../../types';
 
@@ -11,11 +11,8 @@ interface WorkoutFreeFormProps {
     handleModalClose?: (updatedWorkout?: CurrentWorkout) => void; 
 }
 
-
-
 // do zrobienia: 
 // przenieść funkcje dodajace cwiczenia, serie do osobnego pliku. 
-// stworzyć nowy formularz ktory bedzie "WorkoutActiveForm" = tam pobierane będą rzeczy ze store'a a jego aktualizacja zamyka formularz. 
 
 export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
 
@@ -23,10 +20,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     const currentWorkout = useAppSelector((state) => state.workout.currentWorkout); 
 
     const [exercises, setExercises] = useState(currentWorkout.exercises || []); 
-    // const [exercises, setExercises] = useState([{ name: "", sets: [{ reps: 1, weight: 10 }]  }]); 
     const [title, setTitle] = useState<string>(currentWorkout.title || ''); 
-    // const [title, setTitle] = useState<string>(''); 
-
 
     useEffect(() => {
         setExercises(currentWorkout.exercises); 
@@ -53,13 +47,16 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     }
 
     const addSet = (exerciseIndex: number) => {
-        const updatedExercises = [...exercises]; 
-        if(!updatedExercises[exerciseIndex].sets){
-            updatedExercises[exerciseIndex].sets = [] as ExerciseSet[]; 
-        }
-        updatedExercises[exerciseIndex].sets?.push({reps: 0, weight: 0}); 
-        setExercises(updatedExercises); 
-    }
+        const updatedExercises = exercises.map((exercise, index) => {
+            if (index === exerciseIndex) {
+                const newSets = [...(exercise.sets || []), { reps: 0, weight: 0 }];
+                return { ...exercise, sets: newSets };
+            }
+            return exercise;
+        });
+    
+        setExercises(updatedExercises);
+    };
 
     const updateSet = (exerciseIndex: number, setIndex: number, field: 'reps' | 'weight', value: number) => {
         const updatedExercises = [...exercises]; 
@@ -76,6 +73,11 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
         setExercises(updatedExercises); 
     }
 
+    const handleWorkoutEnd = () => {
+        dispatch(endWorkout({ isWorkoutActive: false, title, exercises })); 
+        dispatch(resetWorkout()); 
+        handleModalClose && handleModalClose(); 
+    }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
@@ -172,11 +174,19 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
             {
                 currentWorkout.isWorkoutActive
                 ?
-                <button 
-                    className="btn-submit btn-submit--workout-template"
-                >
-                    Zaktualizuj trening
-                </button>
+                <div className="buttons--workout-active">
+                    <button 
+                        className="btn-submit btn-submit--workout-template"
+                    >
+                        Zaktualizuj trening
+                    </button>
+                    <button
+                        onClick={handleWorkoutEnd}
+                        className="btn-submit btn-end--workout"
+                    >
+                        Zakończ trening
+                    </button>
+                </div>
                 :
                 <button 
                     type="submit"

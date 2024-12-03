@@ -1,10 +1,19 @@
 import { useState } from 'react'; 
 import { FaTrashAlt } from "react-icons/fa";
 
-export default function WorkoutTemplateForm() {
+import type { Exercise } from '../../types';
 
-    const [exercises, setExercises] = useState([{ name: "" }]); 
-    const [title, setTitle] = useState<string>(''); 
+interface WorkoutTemplateFormProps {
+    initialData?: {
+        title: string; 
+        exercises: Exercise[]; 
+    }; 
+}
+
+export default function WorkoutTemplateForm({ initialData }: WorkoutTemplateFormProps) {
+
+    const [exercises, setExercises] = useState(initialData?.exercises || [{ name: "" }]); 
+    const [title, setTitle] = useState<string>(initialData?.title || ''); 
 
     const addExercise = () => {
         setExercises([...exercises, { name: "" }]); 
@@ -71,7 +80,6 @@ export default function WorkoutTemplateForm() {
             <button 
                 type="submit"
                 className="btn-submit btn-submit--workout-template"
-                
             >
                 Zapisz
             </button>

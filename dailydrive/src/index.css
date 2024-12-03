@@ -344,7 +344,7 @@ li {
 
 .form-group--workout-template {
   display: flex; 
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .form-subgroup {
@@ -411,3 +411,25 @@ li {
   margin-top: 1rem; 
 }
 
+
+.buttons--workout-active {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  width: 70%; 
+}
+
+.btn-end--workout {
+  margin-top: 1rem; 
+  border: none; 
+  border-radius: 30px; 
+  background-color: red;
+  color: #fff; 
+  padding: 0.5rem;
+  width: 50%;   
+  cursor: pointer; 
+}
+
+.btn-end--workout:hover {
+  background-color: #ad3434; 
+}

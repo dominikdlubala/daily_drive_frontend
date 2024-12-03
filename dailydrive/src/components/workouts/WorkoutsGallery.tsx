@@ -6,7 +6,7 @@ export default function WorkoutsGallery() {
     return (
         <div className="gallery gallery-workouts">
             {mockData.map(el => (
-                <WorkoutsGalleryItem key={el.name} workoutData={el} />
+                <WorkoutsGalleryItem key={el.title + '1'} workoutData={el} />
             ))}
         </div>
     )
@@ -14,35 +14,35 @@ export default function WorkoutsGallery() {
 
 const mockData = [
     {
-        name: 'Chest 1', 
+        title: 'Chest 1', 
         exercises: [
-            'Bench press', 
-            'Dumbell fly', 
-            'Peck deck'
+            { name: 'Bench press' }, 
+            { name: 'Dumbell fly' }, 
+            { name: 'Peck deck' }
         ]
     },
     {
-        name: 'Chest 1', 
+        title: 'Chest 1', 
         exercises: [
-            'Bench press', 
-            'Dumbell fly', 
-            'Peck deck'
+            { name: 'Bench press' }, 
+            { name: 'Dumbell fly' }, 
+            { name: 'Peck deck' }
         ]
     },
     {
-        name: 'Chest 1', 
+        title: 'Chest 1', 
         exercises: [
-            'Bench press', 
-            'Dumbell fly', 
-            'Peck deck'
+            { name: 'Bench press' }, 
+            { name: 'Dumbell fly' }, 
+            { name: 'Peck deck' }
         ]
     },
     {
-        name: 'Chest 1', 
+        title: 'Chest 1', 
         exercises: [
-            'Bench press', 
-            'Dumbell fly', 
-            'Peck deck'
+            { name: 'Bench press' }, 
+            { name: 'Dumbell fly' }, 
+            { name: 'Peck deck' }
         ]
     },
 ]

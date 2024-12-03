@@ -76,7 +76,6 @@ export const registerUser = async ({ firstName, lastName, email, username, passw
 
         if (!response.ok) {
             const errorText = await response.text(); 
-            console.error('Server error:', errorText); 
             return { token: null, error: { error: true, message: errorText } }
         }
 

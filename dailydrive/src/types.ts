@@ -36,6 +36,8 @@ export type CurrentWorkout = {
     isWorkoutActive: boolean; 
     title: string; 
     exercises: Exercise[]; 
+    startDate?: Date; 
+    endDate?: Date; 
 }
 
 export type WorkoutState = {
