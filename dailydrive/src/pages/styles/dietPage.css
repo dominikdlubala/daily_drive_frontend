@@ -1,0 +1,85 @@
+.page-diet {
+    display: flex; 
+    flex-direction: column;
+    width: 60vw; 
+    align-items: center;
+    margin: auto; 
+}
+
+.diet-summary {
+    display: flex; 
+    flex-direction: column;
+    width: 60vw; 
+    height: 30vh; 
+    justify-content: center;
+    align-items: center;
+    margin: auto; 
+    margin-top: 2rem; 
+    border: 3px solid black; 
+    border-radius: 15px; 
+}
+
+.macros {
+    display: flex; 
+    width: 100%; 
+}
+
+.macros-item {
+    display: flex; 
+    align-items: center;
+    flex-direction: column;
+    margin: 1rem; 
+    width: 100%; 
+}
+
+.calories {
+    display: flex; 
+    margin: 1rem; 
+    width: 100%; 
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.diet-meal {
+    display: flex; 
+    flex-direction: column;
+    width: 100%; 
+    border: 2px solid black; 
+    border-radius: 15px; 
+    margin-top: 1rem; 
+    padding: 1rem; 
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.meal-macros {
+    display: flex;
+    font-size: 1rem; 
+}
+
+.meal-macros-item {
+    margin-left: 1rem; 
+}
+
+.meal-product-item {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid black; 
+    padding: 0.5rem; 
+    border-radius: 10px;
+    margin-top: 1rem; 
+}
+
+.product-macros {
+    display: flex;
+}
+
+.product-macros-item {
+    margin-left: 1rem; 
+}
