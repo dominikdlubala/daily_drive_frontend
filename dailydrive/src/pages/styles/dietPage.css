@@ -83,3 +83,23 @@
 .product-macros-item {
     margin-left: 1rem; 
 }
+
+
+/* date change buttons */
+.page-diet--buttons {
+    display: flex; 
+    width: 100%; 
+    justify-content: space-between;
+    align-items: center; 
+    font-size: 1.5rem; 
+    margin-top: 1rem; 
+}
+
+.btn-change-date {
+    font-size: 2rem; 
+    color: #000;
+    cursor: pointer; 
+}
+.btn-change-date:hover {
+    color: var(--primary-color)
+}

@@ -10,6 +10,7 @@ import type { CurrentWorkout } from '../../types';
 import { updateWorkout } from '../../store';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { Navigate } from 'react-router-dom';
 
 interface DrawerProps {
     isOpen: boolean; 
@@ -97,16 +98,16 @@ export const workoutDrawerConfig = {
 }
 
 export const dietDrawerConfig = {
-    breakfast: {
-        title: 'Śniadanie', 
-        content: <div className="cos">Sniadnaie</div>
+    addMeal: {
+        title: 'Dodaj posiłek', 
+        content: <div className="cos">Dodaj</div>
     }, 
-    dinner: {
-        title: 'Obiad', 
-        content: <div className="cos">Obiad</div>
+    showDiet: {
+        title: 'Zobacz swoją dietę', 
+        content: <Navigate to='/diet' />
     }, 
-    supper: {
-        title: 'Kolacja', 
+    addProduct: {
+        title: 'Dodaj produkt', 
         content: <div className="cos">Kolacja</div>
     }
 }

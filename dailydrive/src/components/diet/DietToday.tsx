@@ -1,7 +1,11 @@
 import DietMeal from "./DietMeal";
 import DietSummary from "./DIetSumary";
 
-export default function DietToday() {
+interface DietTodayProps {
+    date: Date; 
+}
+
+export default function DietToday({ date }: DietTodayProps) {
 
     return (
         <div className="diet-today diet-today--container">

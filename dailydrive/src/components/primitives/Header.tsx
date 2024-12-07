@@ -2,17 +2,11 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/useAuth'; 
 
-// test code
-import { useAppSelector } from '../../hooks/useAppSelector';
-
 export default function Header() {
 
     const navigate = useNavigate(); 
     const { token, logout } = useAuth(); 
 
-    const currentWorkout  = useAppSelector(state => state.workout.currentWorkout); 
-
-    console.log(currentWorkout); 
 
     return (
         <div className="header">
