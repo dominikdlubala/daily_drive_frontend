@@ -2,9 +2,9 @@ import { useState } from "react"
 
 import Modal from "../primitives/Modal"
 import WorkoutTemplateForm from "./WorkoutTemplateForm"
-import type { Exercise } from "../../types";
+import type { WorkoutTemplate } from "../../types";
 interface WorkoutsGalleryItemProps {
-    workoutData: {title: string, exercises: Exercise[]}
+    workoutData: WorkoutTemplate
 }
 
 export default function WorkoutsGalleryItem({ workoutData }: WorkoutsGalleryItemProps) {
@@ -13,26 +13,26 @@ export default function WorkoutsGalleryItem({ workoutData }: WorkoutsGalleryItem
 
     return (
         <div className="gallery-item gallery-item--workouts" onClick={() => setIsModalOpen(true)}>
-            {
+            {/* {
                 isModalOpen
                 &&
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <WorkoutTemplateForm initialData={workoutData} />
+                    <WorkoutTemplateForm initialData={workoutData} handleModalClose={() => setIsModalOpen(false)} />
                 </Modal>
-            }
+            } */}
 
             <div className="gallery-item--title">
-                {workoutData.title}
+                {workoutData.name}
             </div>
             <ul 
                 className="gallery-item--exercises-list"
             >
-                {workoutData.exercises.map(ex => (
+                {workoutData.weightExercises.map((ex, index) => (
                     <li 
                         className="gallery-item--exercise-item"
-                        key={ex.name}
+                        key={ex + index}
                     >
-                        {ex.name}
+                        {ex}
                     </li>
                 )).slice(0, 3)}
             </ul>

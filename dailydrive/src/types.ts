@@ -43,3 +43,16 @@ export type CurrentWorkout = {
 export type WorkoutState = {
     currentWorkout: CurrentWorkout; 
 }
+
+
+export type WorkoutTemplate = {
+    id: number; 
+    name: string; 
+    weightExercises: string[]; 
+    cardioExercises: string[]; 
+}
+
+export type WorkoutTemplateApiReturn = {
+    data?: WorkoutTemplate[] | null; 
+    error?: { message: string };
+}

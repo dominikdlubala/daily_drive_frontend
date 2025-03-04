@@ -9,7 +9,7 @@ export default function Root() {
             <AuthProvider>
                 <Header/>
                 <Outlet />
-                <Footer/>
+                {/* <Footer/> */}
             </AuthProvider>
         </div>
     )

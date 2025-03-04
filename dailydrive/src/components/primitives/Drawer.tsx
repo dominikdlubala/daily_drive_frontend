@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState, useCallback } from 'react'; 
-import type { ReactElement } from 'react'; 
+import { useRef, useEffect, useState } from 'react'; 
+import type { ReactNode } from 'react'; 
 import React from 'react';
 
 import Modal from '../primitives/Modal';
@@ -7,16 +7,15 @@ import WorkoutTemplateForm from '../workouts/WorkoutTemplateForm';
 import WorkoutFreeForm from '../workouts/WorkoutFreeForm';
 
 import type { CurrentWorkout } from '../../types'; 
-import { updateWorkout } from '../../store';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
+// import { useAppDispatch } from '../../hooks/useAppDispatch';
+// import { useAppSelector } from '../../hooks/useAppSelector';
 import { Navigate } from 'react-router-dom';
 
 interface DrawerProps {
     isOpen: boolean; 
     onClose: () => void; 
     drawerConfig: { 
-        [key: string]: { title: string, content: ReactElement }
+        [key: string]: { title: string, content: (handleModalClose: () => void) => ReactNode }
     };
     mainClasses?: string; 
     listItemClasses?: string; 
@@ -24,8 +23,8 @@ interface DrawerProps {
 
 export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, listItemClasses }: DrawerProps) {
 
-    const dispatch = useAppDispatch(); 
-    const currentWorkout = useAppSelector(state => state.workout); 
+    // const dispatch = useAppDispatch(); 
+    // const currentWorkout = useAppSelector(state => state.workout); 
 
     const [isModalOpen, setIsModalOpen] = useState<string | null>(null); 
 
@@ -35,6 +34,7 @@ export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, lis
     const handleModalClose = (updatedWorkout?: CurrentWorkout) => {
         // updatedWorkout && dispatch(updateWorkout(updatedWorkout))
         setIsModalOpen(null); 
+        onClose()
     }; 
 
     const drawerRef = useRef<HTMLDivElement | null>(null); 
@@ -61,7 +61,7 @@ export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, lis
                     isOpen={true}
                     onClose={handleModalClose}
                 >
-                    {React.cloneElement(drawerConfig[isModalOpen].content, { handleModalClose: handleModalClose })}
+                    {drawerConfig[isModalOpen].content(handleModalClose)}
                 </Modal>
             }
 
@@ -83,31 +83,31 @@ export default function Drawer({ isOpen, onClose, drawerConfig, mainClasses, lis
 
 
 export const workoutDrawerConfig = {
-    workoutTemplate: {
-        title: 'Szablon treningu', 
-        content: <WorkoutTemplateForm />
-    }, 
+    // workoutTemplate: {
+    //     title: 'Szablon treningu', 
+    //     content: (handleModalClose: () => void) => <WorkoutTemplateForm handleModalClose={handleModalClose} />
+    // }, 
     customWorkout: {
         title: 'Trening wolny', 
-        content: <WorkoutFreeForm />
+        content: (handleModalClose: () => void) =>  <WorkoutFreeForm />
     }, 
     cardioSession: {
         title: 'Sesja cardio', 
-        content: <div className="cos">cos</div>
+        content: (handleModalClose: () => void) => <div className="cos">cos</div>
     }
 }
 
 export const dietDrawerConfig = {
     addMeal: {
         title: 'Dodaj posiłek', 
-        content: <div className="cos">Dodaj</div>
+        content: (handleModalClose: () => void) => <div className="cos">Dodaj</div>
     }, 
     showDiet: {
         title: 'Zobacz swoją dietę', 
-        content: <Navigate to='/diet' />
+        content: (handleModalClose: () => void) => <Navigate to='/diet' />
     }, 
     addProduct: {
         title: 'Dodaj produkt', 
-        content: <div className="cos">Kolacja</div>
+        content: (handleModalClose: () => void) => <div className="cos">Kolacja</div>
     }
 }

@@ -13,19 +13,20 @@ interface WorkoutsDrawerProps {
 }
 
 const drawerConfig = {
-    workoutTemplate: {
-        title: 'Szablon treningu', 
-        content: <WorkoutTemplateForm />
-    }, 
+    // workoutTemplate: {
+    //     title: 'Szablon treningu', 
+    //     content: (handleModalClose: () => void) => <WorkoutTemplateForm handleModalClose={handleModalClose} />
+    // }, 
     customWorkout: {
         title: 'Trening wolny', 
-        content: <div className="cos">cos</div>
+        content: (handleModalClose: () => void) => <div className="cos">cos</div>
     }, 
     cardioSession: {
         title: 'Sesja cardio', 
-        content: <div className="cos">cos</div>
+        content: (handleModalClose: () => void) => <div className="cos">cos</div>
     }
 }
+
 
 type DrawerKey = keyof typeof drawerConfig; 
 
@@ -64,7 +65,7 @@ export default function WorkoutsDrawer({ isOpen, onClose, config }: WorkoutsDraw
                     isOpen={true}
                     onClose={closeModalHandler}
                 >
-                    {drawerConfig[isModalOpen as DrawerKey].content}
+                    {drawerConfig[isModalOpen as DrawerKey].content(closeModalHandler)}
                 </Modal>
             }
 
