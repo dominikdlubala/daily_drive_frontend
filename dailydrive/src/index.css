@@ -271,11 +271,21 @@ li {
   margin: 1rem; 
 }
 
-.gallery-item--title {
+.gallery-item--header {
+  display: flex; 
+  justify-content: space-between;
   text-align: center; 
   background-color: var(--primary-color);
   padding: 0.5rem;
   color: #fff;  
+}
+
+.btn-edit {
+  cursor: pointer; 
+}
+
+.btn-delete {
+  cursor: pointer; 
 }
 
 .gallery-item--exercises-list {

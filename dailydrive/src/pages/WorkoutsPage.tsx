@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
 import WorkoutsList from '../components/workouts/WorkoutsList';
+import Modal from '../components/primitives/Modal';
+import WorkoutFreeForm from '../components/workouts/WorkoutFreeForm';
 
 export default function WorkoutsPage() {
 
@@ -22,8 +24,22 @@ export default function WorkoutsPage() {
         content = <WorkoutsList />
     }
 
+
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+
     return (
         <div className="page page-workouts">
+
+            {/* dev only, fix */}
+            <button onClick={() => setIsModalOpen(true)}>workout free form +</button>
+            {
+                isModalOpen
+                &&
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <WorkoutFreeForm />
+                </Modal>
+            }
+
             <div onClick={handleWorkoutsButtonsClick} className="section--workouts-buttons">
                 <button 
                     data-value="customWorkouts"

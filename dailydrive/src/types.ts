@@ -27,23 +27,51 @@ export type Exercise = {
     sets?: ExerciseSet[] | null;
 }
 
+// export type ExerciseSet = {
+//     reps: number; 
+//     weight?: number | null; 
+// }
+
+// export type CurrentWorkout = {
+//     isWorkoutActive: boolean; 
+//     title: string; 
+//     exercises: Exercise[]; 
+//     startDate?: Date; 
+//     endDate?: Date; 
+// }
+
+
 export type ExerciseSet = {
+    setNumber: number; 
     reps: number; 
-    weight?: number | null; 
+    weight: number; 
 }
 
-export type CurrentWorkout = {
-    isWorkoutActive: boolean; 
-    title: string; 
-    exercises: Exercise[]; 
-    startDate?: Date; 
-    endDate?: Date; 
+export type WeightExercise = {
+    id?: number; 
+    name: string; 
+    description?: string; 
+    type: string; 
+    sets: ExerciseSet[];
 }
 
-export type WorkoutState = {
-    currentWorkout: CurrentWorkout; 
+export type CardioExercise = {
+    id?: number; 
+    name: string; 
+    description?: string; 
+    type: string; 
+    intensity: number; 
+    duration: number; 
 }
 
+export type WorkoutSession = {
+    id?: number; 
+    name?: string | null; 
+    startTime?: Date | number; 
+    endTime?: Date | number | null; 
+    weightExercises?: WeightExercise[];
+    cardioExercises?: CardioExercise[];
+}
 
 export type WorkoutTemplate = {
     id: number; 
@@ -55,4 +83,18 @@ export type WorkoutTemplate = {
 export type WorkoutTemplateApiReturn = {
     data?: WorkoutTemplate[] | null; 
     error?: { message: string };
+}
+
+export type CurrentWorkout = {
+    id?: number; 
+    workoutSession: WorkoutSession; 
+}
+
+export type CurrentWorkoutApiReturn = {
+    data?: CurrentWorkout | null; 
+    error?: { message: string } | null; 
+}
+
+export type WorkoutState = {
+    currentWorkout: CurrentWorkout | null; 
 }

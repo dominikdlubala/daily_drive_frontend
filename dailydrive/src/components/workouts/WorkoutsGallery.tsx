@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import WorkoutsGalleryItem from "./WorkoutsGalleryItem"
-import { addWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../services/WorkoutService";
+import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../services/WorkoutTemplateService";
 import { WorkoutTemplate, WorkoutTemplateApiReturn } from "../../types";
 import Modal from "../primitives/Modal";
 import WorkoutTemplateForm, { WorkoutTemplateFormValues } from "./WorkoutTemplateForm";
@@ -10,6 +10,7 @@ export default function WorkoutsGallery() {
 
     const [templates, setTemplates] = useState<WorkoutTemplateApiReturn | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [templateToUpdate, setTemplateToUpdate] = useState<WorkoutTemplate | undefined>(undefined); 
 
     useEffect(() => {
         const fetchTemplates = async () => {
@@ -31,20 +32,35 @@ export default function WorkoutsGallery() {
     } 
 
     const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
-        const data = add ? await addWorkoutTemplate({
-            name: formValues.name, 
-            weightExercises: formValues.weightExercises, 
-            cardioExercises: formValues.cardioExercises
-        } as Omit<WorkoutTemplate, 'id'>)
-        : await updateWorkoutTemplate({
-            id:  formValues.id,
-            name: formValues.name, 
-            weightExercises: formValues.weightExercises, 
-            cardioExercises: formValues.cardioExercises
-        } as WorkoutTemplate); 
+        let data; 
+        if(add) {
+            await addWorkoutTemplate({
+                name: formValues.name, 
+                weightExercises: formValues.weightExercises, 
+                cardioExercises: formValues.cardioExercises
+            } as Omit<WorkoutTemplate, 'id'>)
+        } else {
+            await updateWorkoutTemplate({
+                id:  formValues.id,
+                name: formValues.name, 
+                weightExercises: formValues.weightExercises, 
+                cardioExercises: formValues.cardioExercises
+            } as WorkoutTemplate); 
+            setTemplateToUpdate(undefined); 
+        } 
 
         console.log(data); 
         handleModalClose(true); 
+    }
+
+    const handleEdit = (template: WorkoutTemplate) => {
+        setTemplateToUpdate(template); 
+        setIsModalOpen(true); 
+    }
+
+    const handleDelete = async (id: number) => {
+        await deleteWorkoutTemplate(id); 
+        await refreshTemplates(); 
     }
 
     return (
@@ -56,12 +72,12 @@ export default function WorkoutsGallery() {
                     isOpen={isModalOpen}
                     onClose={handleModalClose}
                 >
-                    <WorkoutTemplateForm handleModalClose={handleModalClose} handleSubmit={handleFormSubmit} />
+                    <WorkoutTemplateForm initialData={templateToUpdate} handleSubmit={handleFormSubmit} />
                 </Modal>
             }
 
             {templates?.data?.map((el, index) => (
-                <WorkoutsGalleryItem key={el.id + index} workoutData={el} />
+                <WorkoutsGalleryItem key={el.id + index} workoutData={el} onEdit={handleEdit} onDelete={handleDelete}/>
             ))}
             <button
                 className="btn-primary workout-template--add-btn"

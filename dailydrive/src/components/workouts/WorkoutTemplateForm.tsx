@@ -2,7 +2,6 @@ import { FormEvent, useState } from 'react';
 import { FaTrashAlt } from "react-icons/fa";
 
 import type { WorkoutTemplate } from '../../types';
-import { addWorkoutTemplate, updateWorkoutTemplate } from '../../services/WorkoutService';
 
 export type WorkoutTemplateFormValues = {
     id?: number;
@@ -13,15 +12,13 @@ export type WorkoutTemplateFormValues = {
 
 interface WorkoutTemplateFormProps {
     initialData?: WorkoutTemplate; 
-    handleModalClose: (formSubmitted?: boolean) => void; 
     handleSubmit: (formValues: WorkoutTemplateFormValues, add?: boolean) => void; 
 }
 
-export default function WorkoutTemplateForm({ initialData, handleModalClose, handleSubmit }: WorkoutTemplateFormProps) {
+export default function WorkoutTemplateForm({ initialData, handleSubmit }: WorkoutTemplateFormProps) {
 
     const [weightExercises, setWeightExercises] = useState(initialData?.weightExercises || ['']); 
     const [cardioExercises, setCardioExercises] = useState(initialData?.cardioExercises || ['']); 
-    // const [cardioExercises, setCardioExercises] = useState(initialData?.cardioExercises || [{ name: "" }]); 
     const [title, setTitle] = useState<string>(initialData?.name || ''); 
 
     const addExercise = (type: string) => {
@@ -66,7 +63,7 @@ export default function WorkoutTemplateForm({ initialData, handleModalClose, han
             cardioExercises: cardioExercises
         }, true); 
 
-        handleModalClose(true); 
+        // handleModalClose(true); 
     }
 
     return (

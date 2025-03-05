@@ -1,28 +1,20 @@
-import { useState } from "react"
+import { MdEdit, MdDelete } from "react-icons/md";
 
-import Modal from "../primitives/Modal"
-import WorkoutTemplateForm from "./WorkoutTemplateForm"
 import type { WorkoutTemplate } from "../../types";
 interface WorkoutsGalleryItemProps {
     workoutData: WorkoutTemplate
+    onEdit: (template: WorkoutTemplate) => void; 
+    onDelete: (id: number) => void; 
 }
 
-export default function WorkoutsGalleryItem({ workoutData }: WorkoutsGalleryItemProps) {
-
-    const [isModalOpen, setIsModalOpen] = useState(false); 
+export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: WorkoutsGalleryItemProps) {
 
     return (
-        <div className="gallery-item gallery-item--workouts" onClick={() => setIsModalOpen(true)}>
-            {/* {
-                isModalOpen
-                &&
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <WorkoutTemplateForm initialData={workoutData} handleModalClose={() => setIsModalOpen(false)} />
-                </Modal>
-            } */}
-
-            <div className="gallery-item--title">
+        <div className="gallery-item gallery-item--workouts">
+            <div className="gallery-item--header">
+                <MdEdit className="btn-edit" onClick={() => onEdit(workoutData)} />
                 {workoutData.name}
+                <MdDelete className="btn-delete" onClick={() => onDelete(workoutData.id)} />
             </div>
             <ul 
                 className="gallery-item--exercises-list"

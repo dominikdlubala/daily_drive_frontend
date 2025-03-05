@@ -10,7 +10,8 @@ export default function Footer() {
 
     const { token } = useAuth(); 
 
-    const { isWorkoutActive, startDate } = useAppSelector(state => state.workout.currentWorkout); 
+    // dev only, fix
+    const { isWorkoutActive, startDate } = { isWorkoutActive: true, startDate: new Date()}; 
 
     const [isModalOpen, setIsModalOpen] = useState(false); 
 
