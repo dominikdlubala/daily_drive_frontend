@@ -79,7 +79,7 @@ export const workoutSlice = createSlice({
                 id: state.currentWorkout.id,
                 workoutSession: {
                     ...state.currentWorkout.workoutSession,
-                    ...action.payload,
+                    ...action.payload.workoutSession,
                 },
             };
             saveWorkoutToStorage(state.currentWorkout);

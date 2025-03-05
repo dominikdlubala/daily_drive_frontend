@@ -27,19 +27,6 @@ export type Exercise = {
     sets?: ExerciseSet[] | null;
 }
 
-// export type ExerciseSet = {
-//     reps: number; 
-//     weight?: number | null; 
-// }
-
-// export type CurrentWorkout = {
-//     isWorkoutActive: boolean; 
-//     title: string; 
-//     exercises: Exercise[]; 
-//     startDate?: Date; 
-//     endDate?: Date; 
-// }
-
 
 export type ExerciseSet = {
     setNumber: number; 

@@ -36,7 +36,7 @@ export default function WorkoutsPage() {
                 isModalOpen
                 &&
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <WorkoutFreeForm />
+                    <WorkoutFreeForm handleModalClose={() => setIsModalOpen(false)} />
                 </Modal>
             }
 

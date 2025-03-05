@@ -80,7 +80,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: new Date() } }));
+        dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: Date.now() } }));
         dispatch(endWorkout()); 
         dispatch(resetWorkout());
         handleModalClose && handleModalClose();
