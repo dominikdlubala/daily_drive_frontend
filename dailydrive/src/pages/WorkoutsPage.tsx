@@ -4,7 +4,6 @@ import { useState } from 'react';
 import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
 import WorkoutsList from '../components/workouts/WorkoutsList';
 import Modal from '../components/primitives/Modal';
-import WorkoutFreeForm from '../components/workouts/WorkoutFreeForm';
 import WorkoutFreeForm2 from '../components/workouts/WorkoutFreeForm2';
 
 export default function WorkoutsPage() {
@@ -31,7 +30,6 @@ export default function WorkoutsPage() {
     return (
         <div className="page page-workouts">
 
-            {/* dev only, fix */}
             <button onClick={() => setIsModalOpen(true)}>workout free form +</button>
             {
                 isModalOpen

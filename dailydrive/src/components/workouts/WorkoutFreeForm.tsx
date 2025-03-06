@@ -29,15 +29,15 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
   const syncWorkout = () => {
     if (currentWorkout) {
-      dispatch(updateWorkout({
-        ...currentWorkout,
-        workoutSession: {
-          ...currentWorkout.workoutSession,
-          name: title,
-          weightExercises,
-          cardioExercises,
-        }
-      }));
+      // dispatch(updateWorkout({
+      //   ...currentWorkout,
+      //   workoutSession: {
+      //     ...currentWorkout.workoutSession,
+      //     name: title,
+      //     weightExercises,
+      //     cardioExercises,
+      //   }
+      // }));
     } else {
         dispatch(setWorkout({
             workoutSession: {
@@ -80,7 +80,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: new Date().toISOString() } }));
+        // dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: new Date().toISOString() } }));
         dispatch(endWorkout()); 
         dispatch(resetWorkout());
         handleModalClose && handleModalClose();

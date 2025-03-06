@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout } from "../../store";
+import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout } from "../../store";
 
 import type { CurrentWorkout, WeightExercise, CardioExercise } from "../../types";
 import ExerciseSearch from "../exercise/ExerciseSearch";
@@ -12,7 +12,7 @@ import "../styles/exercise.css";
 import "../styles/workoutForm.css";
 
 interface WorkoutFreeFormProps {
-  handleModalClose?: (updatedWorkout?: CurrentWorkout) => void;
+    handleModalClose: (updatedWorkout?: CurrentWorkout) => void;
 }
 
 export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormProps) {
@@ -29,7 +29,6 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   useEffect(() => {
     dispatch(fetchCurrentWorkout());
-    console.log("fetch");
   }, [dispatch]);
 
   useEffect(() => {
@@ -38,21 +37,27 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
       setWeightExercises(currentWorkout.workoutSession.weightExercises || []);
       setCardioExercises(currentWorkout.workoutSession.cardioExercises || []);
     }
-  }, []);
+  }, [currentWorkout]);
 
 
-//   WAZNE - SYNC WORKOUT DZIALA NIEPOPRAWNIE -> NIE ZAPISUJE NOWYCH DANYCH
   const syncWorkout = () => {
+
     if (currentWorkout) {
+        dispatch(updateCurrentWorkout({
+            ...currentWorkout, 
+            workoutSession: {
+                ...currentWorkout.workoutSession,
+                name: title, 
+                weightExercises, 
+                cardioExercises
+            }
+        }))
       dispatch(updateWorkout({
-        ...currentWorkout,
-        workoutSession: {
-          ...currentWorkout.workoutSession,
           name: title,
           weightExercises,
           cardioExercises,
         }
-      }));
+      ));
     } else {
         dispatch(setWorkout({
             workoutSession: {
@@ -111,7 +116,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: new Date().toISOString() } }));
+        console.log('end');
         dispatch(endWorkout()); 
         dispatch(resetWorkout());
         handleModalClose && handleModalClose();
@@ -121,18 +126,15 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     syncWorkout();
-    console.log("Submit"); 
 
     if(currentWorkout?.id){
-        const data = await dispatch(updateWorkout(currentWorkout));
-        console.log("update: ");
-        console.log(data);
+        dispatch(updateWorkout(currentWorkout.workoutSession));
     }
     else if (currentWorkout && !currentWorkout.id ){
-        const data  = await dispatch(startCurrentWorkout(currentWorkout)); 
-        console.log("start: " + data);
+        dispatch(startCurrentWorkout(currentWorkout)); 
     }
-    handleModalClose && handleModalClose();
+    dispatch(resetWorkout());
+    handleModalClose();
   };
 
   return (
@@ -159,7 +161,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
           <div key={index} className="form-group form-group--workout-free">
             <ExerciseDetails 
                 index={index+1} 
-                exercise={exercise} 
+                exercise={{...exercise, type: 'weight'}} 
                 onExerciseUpdate={(updatedExercise) => updateExercise("weight", index, updatedExercise)} 
                 onDelete={() => removeExercise("weight", index)}
             />

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { CurrentWorkout, WorkoutState } from '../../types';
-import { startCurrentWorkout as startWorkoutApi, fetchCurrentWorkout as fetchWorkoutApi } from '../../services/WorkoutCurrentService';
+import { CurrentWorkout, WorkoutSession, WorkoutState } from '../../types';
+import { startCurrentWorkout as startWorkoutApi, fetchCurrentWorkout as fetchWorkoutApi, updateCurrentWorkout as updateWorkoutApi } from '../../services/WorkoutCurrentService';
 
 const LOCAL_STORAGE_KEY = 'currentWorkout';
 
@@ -66,6 +66,17 @@ export const startCurrentWorkout = createAsyncThunk<CurrentWorkout | null, Curre
     }
 );
 
+export const updateCurrentWorkout = createAsyncThunk<CurrentWorkout | null, CurrentWorkout>(
+    'workout/updateCurrentWorkout',
+    async (workout, { rejectWithValue }) => {
+        const response = await updateWorkoutApi(workout);
+        if(response.error) {
+            return rejectWithValue(response.error.message);
+        }
+        return response.data || null; 
+    }
+);
+
 export const workoutSlice = createSlice({
     name: 'workout',
     initialState: initialWorkoutState,
@@ -81,14 +92,14 @@ export const workoutSlice = createSlice({
             };
             saveWorkoutToStorage(state.currentWorkout);
         },
-        updateWorkout(state, action: PayloadAction<Partial<CurrentWorkout>>) {
+        updateWorkout(state, action: PayloadAction<Partial<WorkoutSession>>) {
             if (!state.currentWorkout) return;
 
             state.currentWorkout = {
                 id: state.currentWorkout.id,
                 workoutSession: {
                     ...state.currentWorkout.workoutSession,
-                    ...action.payload.workoutSession,
+                    ...action.payload,
                 },
             };
             saveWorkoutToStorage(state.currentWorkout);

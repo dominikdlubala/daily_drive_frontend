@@ -31,3 +31,21 @@ export const fetchCurrentWorkout = async (): Promise<CurrentWorkoutApiReturn> =>
         return { error: { message: 'Unexpected error | startCurrentWorkout' }}
     }
 }
+
+export const updateCurrentWorkout = async (workout: CurrentWorkout): Promise<CurrentWorkoutApiReturn> => {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(workout)
+        })
+        if(!response.ok) return { error: { message: await response.text() } }
+        const data = await response.json(); 
+        return { data }; 
+    } catch(err) {
+        console.error(err); 
+        return { error: { message: 'Unexpected error | startCurrentWorkout' }}
+    }
+}
