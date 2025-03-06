@@ -129,9 +129,16 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
     if(currentWorkout?.id){
         dispatch(updateWorkout(currentWorkout.workoutSession));
-    }
-    else if (currentWorkout && !currentWorkout.id ){
-        dispatch(startCurrentWorkout(currentWorkout)); 
+    } else {
+        dispatch(startCurrentWorkout({
+            workoutSession: {
+                name: title, 
+                weightExercises, 
+                cardioExercises,
+                startTime: new Date().toISOString(), 
+                endTime: new Date().toISOString()
+            }
+        }));
     }
     dispatch(resetWorkout());
     handleModalClose();
