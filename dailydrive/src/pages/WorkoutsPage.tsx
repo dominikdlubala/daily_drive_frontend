@@ -5,6 +5,7 @@ import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
 import WorkoutsList from '../components/workouts/WorkoutsList';
 import Modal from '../components/primitives/Modal';
 import WorkoutFreeForm from '../components/workouts/WorkoutFreeForm';
+import WorkoutFreeForm2 from '../components/workouts/WorkoutFreeForm2';
 
 export default function WorkoutsPage() {
 
@@ -36,7 +37,7 @@ export default function WorkoutsPage() {
                 isModalOpen
                 &&
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <WorkoutFreeForm handleModalClose={() => setIsModalOpen(false)} />
+                    <WorkoutFreeForm2 handleModalClose={() => setIsModalOpen(false)} />
                 </Modal>
             }
 

@@ -1,0 +1,83 @@
+.form--workout-free {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .form-group-wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .form-group--workout-free {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-input--workout-free-title {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .workout-section {
+    margin-bottom: 20px;
+  }
+  
+  .workout-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .btn--workout-template {
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .btn--workout-template:hover {
+    background: var(--primary-color-hover);
+  }
+  
+  .workout-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .btn-submit--workout-template {
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-submit--workout-template:hover {
+    background: var(--primary-color-hover);
+  }
+  
+  .btn-end--workout {
+    padding: 10px 20px;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .btn-end--workout:hover {
+    background: #c82333;
+  }

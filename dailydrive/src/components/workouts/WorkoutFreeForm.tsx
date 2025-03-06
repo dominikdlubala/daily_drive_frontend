@@ -97,60 +97,68 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
   return (
     <form onSubmit={handleSubmit} className="form form--workout-free">
       <h2 className="form-title">Trening wolny</h2>
-      <input
-        required
-        type="text"
-        className="form-input form-input--workout-free-title"
-        placeholder="Tytuł treningu"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div className="form-group-wrapper">
+        <div className="form-group form-group--workout-free">
+          <input
+            required
+            type="text"
+            className="form-input form-input--workout-free-title"
+            placeholder="Tytuł treningu"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+      </div>
 
       <div className="workout-section">
         <h3>Ćwiczenia siłowe</h3>
         {weightExercises.map((exercise, index) => (
         // fix key
-          <div key={index} className="exercise-group">
-            <input
-              required
-              type="text"
-              className="form-input"
-              placeholder={`Ćwiczenie ${index + 1}`}
-              value={exercise.name}
-              onChange={(e) => updateExercise("weight", index, e.target.value)}
-            />
-            <button type="button" onClick={() => removeExercise("weight", index)}>
-              <FaTrashAlt />
-            </button>
+          <div key={index} className="form-group form-group--workout-free">
+            <div className="form-subgroup">
+              <input
+                required
+                type="text"
+                className="form-input"
+                placeholder={`Ćwiczenie ${index + 1}`}
+                value={exercise.name}
+                onChange={(e) => updateExercise("weight", index, e.target.value)}
+              />
+              <button type="button" className="btn btn-remove" onClick={() => removeExercise("weight", index)}>
+                <FaTrashAlt />
+              </button>
+            </div>
           </div>
         ))}
-        <button type="button" onClick={() => addExercise("weight")}>Dodaj ćwiczenie +</button>
+        <button type="button" className="btn--workout-template btn-add--workout-template" onClick={() => addExercise("weight")}>Dodaj ćwiczenie +</button>
       </div>
 
       <div className="workout-section">
         <h3>Ćwiczenia cardio</h3>
         {cardioExercises.map((exercise, index) => (
         // fix key
-          <div key={index} className="exercise-group">
-            <input
-              required
-              type="text"
-              className="form-input"
-              placeholder={`Ćwiczenie ${index + 1}`}
-              value={exercise.name}
-              onChange={(e) => updateExercise("cardio", index, e.target.value)}
-            />
-            <button type="button" onClick={() => removeExercise("cardio", index)}>
-              <FaTrashAlt />
-            </button>
+          <div key={index} className="form-group form-group--workout-free">
+            <div className="form-subgroup">
+              <input
+                required
+                type="text"
+                className="form-input"
+                placeholder={`Ćwiczenie ${index + 1}`}
+                value={exercise.name}
+                onChange={(e) => updateExercise("cardio", index, e.target.value)}
+              />
+              <button type="button" className="btn btn-remove" onClick={() => removeExercise("cardio", index)}>
+                <FaTrashAlt />
+              </button>
+            </div>
           </div>
         ))}
-        <button type="button" onClick={() => addExercise("cardio")}>Dodaj ćwiczenie +</button>
+        <button type="button" className="btn--workout-template btn-add--workout-template" onClick={() => addExercise("cardio")}>Dodaj ćwiczenie +</button>
       </div>
 
       <div className="workout-actions">
-        <button type="submit">Zapisz trening</button>
-        {currentWorkout && <button type="button" onClick={handleWorkoutEnd}>Zakończ trening</button>}
+        <button type="submit" className="btn-submit btn-submit--workout-template">Zapisz trening</button>
+        {currentWorkout && <button type="button" className="btn-submit btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button>}
       </div>
     </form>
   );

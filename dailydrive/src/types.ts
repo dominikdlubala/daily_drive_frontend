@@ -22,12 +22,6 @@ export type MyError = {
     message?: string; 
 }
 
-export type Exercise = {
-    name: string; 
-    sets?: ExerciseSet[] | null;
-}
-
-
 export type ExerciseSet = {
     setNumber: number; 
     reps: number; 
@@ -84,4 +78,14 @@ export type CurrentWorkoutApiReturn = {
 
 export type WorkoutState = {
     currentWorkout: CurrentWorkout | null; 
+}
+
+export type Exercise = {
+    name: string; 
+    type: "weight" | "cardio"; 
+}
+
+export type ExerciseApiReturn = {
+    data?: Exercise[] | null; 
+    error?: { message: string } | null; 
 }
