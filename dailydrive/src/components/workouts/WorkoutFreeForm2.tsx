@@ -1,9 +1,8 @@
 import { useState, useEffect, FormEvent } from "react";
-import { FaTrashAlt } from "react-icons/fa";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { setWorkout, updateWorkout, endWorkout, resetWorkout } from "../../store";
+import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout } from "../../store";
 
 import type { CurrentWorkout, WeightExercise, CardioExercise } from "../../types";
 import ExerciseSearch from "../exercise/ExerciseSearch";
@@ -29,13 +28,20 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
   const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
 
   useEffect(() => {
+    dispatch(fetchCurrentWorkout());
+    console.log("fetch");
+  }, [dispatch]);
+
+  useEffect(() => {
     if (currentWorkout) {
       setTitle(currentWorkout.workoutSession.name || "");
       setWeightExercises(currentWorkout.workoutSession.weightExercises || []);
       setCardioExercises(currentWorkout.workoutSession.cardioExercises || []);
     }
-  }, [currentWorkout]);
+  }, []);
 
+
+//   WAZNE - SYNC WORKOUT DZIALA NIEPOPRAWNIE -> NIE ZAPISUJE NOWYCH DANYCH
   const syncWorkout = () => {
     if (currentWorkout) {
       dispatch(updateWorkout({
@@ -53,7 +59,8 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
                 name: title, 
                 weightExercises, 
                 cardioExercises,
-                startTime: undefined
+                startTime: new Date().toISOString(), 
+                endTime: new Date().toISOString()
             }
         }))
     }
@@ -104,17 +111,27 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: Date.now() } }));
+        dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: new Date().toISOString() } }));
         dispatch(endWorkout()); 
         dispatch(resetWorkout());
         handleModalClose && handleModalClose();
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     syncWorkout();
-    console.log(currentWorkout);
+    console.log("Submit"); 
+
+    if(currentWorkout?.id){
+        const data = await dispatch(updateWorkout(currentWorkout));
+        console.log("update: ");
+        console.log(data);
+    }
+    else if (currentWorkout && !currentWorkout.id ){
+        const data  = await dispatch(startCurrentWorkout(currentWorkout)); 
+        console.log("start: " + data);
+    }
     handleModalClose && handleModalClose();
   };
 
@@ -158,7 +175,8 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
                 onChange={(e) => setNewWeightExerciseName(e.target.value)}
                 required
               />
-              <button type="button" className="btn--workout-template btn-add--workout-template" onClick={handleAddNewWeightExercise}>Dodaj ćwiczenie</button>
+              <button type="button" className="btn--workout-template " onClick={handleAddNewWeightExercise}>Dodaj ćwiczenie</button>
+              <button type="button" className="btn--workout-template btn-cancel" onClick={() => setShowWeightExerciseForm(false)}>Anuluj</button>
             </div>
           ) : (
             <button type="button" className="btn--workout-template btn-add--workout-template" onClick={() => setShowWeightExerciseForm(true)}>Dodaj ćwiczenie +</button>
@@ -188,7 +206,8 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
                 onChange={(e) => setNewCardioExerciseName(e.target.value)}
                 required
               />
-              <button type="button" className="btn--workout-template btn-add--workout-template" onClick={handleAddNewCardioExercise}>Dodaj ćwiczenie</button>
+              <button type="button" className="btn--workout-template" onClick={handleAddNewCardioExercise}>Dodaj ćwiczenie</button>
+              <button type="button" className="btn--workout-template btn-cancel" onClick={() => setShowCardioExerciseForm(false)}>Anuluj</button>
             </div>
           ) : (
             <button type="button" className="btn--workout-template btn-add--workout-template" onClick={() => setShowCardioExerciseForm(true)}>Dodaj ćwiczenie +</button>
@@ -196,8 +215,8 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
       </div>
 
       <div className="workout-actions">
-        <button type="submit" className="btn-submit btn-submit--workout-template">Zapisz trening</button>
-        {currentWorkout && <button type="button" className="btn-submit btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button>}
+        <button type="submit" className="btn-submit--workout">Zapisz trening</button>
+        {currentWorkout && <button type="button" className="btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button>}
       </div>
     </form>
   );

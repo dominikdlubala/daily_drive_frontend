@@ -81,3 +81,21 @@
   .btn-end--workout:hover {
     background: #c82333;
   }
+
+  .btn-cancel {
+    background: #dc3545;
+  }
+
+.workout-actions {
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+}
+
+.btn-submit--workout {
+    cursor: pointer; 
+    color: #fff; 
+    padding: 1rem 0; 
+    background: var(--primary-color);
+    border: none;
+}

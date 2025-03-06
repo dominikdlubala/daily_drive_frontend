@@ -48,8 +48,8 @@ export type CardioExercise = {
 export type WorkoutSession = {
     id?: number; 
     name?: string | null; 
-    startTime?: Date | number; 
-    endTime?: Date | number | null; 
+    startTime?: string; 
+    endTime?: string | null; 
     weightExercises?: WeightExercise[];
     cardioExercises?: CardioExercise[];
 }

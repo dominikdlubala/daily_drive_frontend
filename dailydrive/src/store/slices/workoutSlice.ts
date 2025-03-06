@@ -14,8 +14,8 @@ const loadWorkoutFromStorage = (): CurrentWorkout | null => {
             ...parsedWorkout,
             workoutSession: {
                 ...parsedWorkout.workoutSession,
-                startTime: parsedWorkout.workoutSession.startTime ? new Date(parsedWorkout.workoutSession.startTime) : undefined,
-                endTime: parsedWorkout.workoutSession.endTime ? new Date(parsedWorkout.workoutSession.endTime) : null,
+                startTime: parsedWorkout.workoutSession.startTime,
+                endTime: parsedWorkout.workoutSession.endTime,
             },
         };
     } catch (error) {
@@ -26,7 +26,15 @@ const loadWorkoutFromStorage = (): CurrentWorkout | null => {
 
 const saveWorkoutToStorage = (workout: CurrentWorkout | null) => {
     if (workout) {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(workout));
+        const serializedWorkout = {
+            ...workout,
+            workoutSession: {
+                ...workout.workoutSession,
+                startTime: workout.workoutSession.startTime ? new Date(workout.workoutSession.startTime).toISOString() : undefined,
+                endTime: workout.workoutSession.endTime ? new Date(workout.workoutSession.endTime).toISOString() : null,
+            },
+        };
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(serializedWorkout));
     } else {
         localStorage.removeItem(LOCAL_STORAGE_KEY);
     }
@@ -67,7 +75,8 @@ export const workoutSlice = createSlice({
                 ...action.payload,
                 workoutSession: {
                     ...action.payload.workoutSession,
-                    startTime: Date.now()
+                    startTime: new Date().toISOString(), 
+                    endTime: new Date().toISOString()
                 },
             };
             saveWorkoutToStorage(state.currentWorkout);
@@ -87,7 +96,7 @@ export const workoutSlice = createSlice({
         endWorkout(state) {
             if (!state.currentWorkout) return;
 
-            state.currentWorkout.workoutSession.endTime = Date.now();
+            state.currentWorkout.workoutSession.endTime = new Date().toISOString();
             saveWorkoutToStorage(state.currentWorkout);
         },
         resetWorkout(state) {
@@ -110,7 +119,6 @@ export const workoutSlice = createSlice({
 
 export const { setWorkout, updateWorkout, endWorkout, resetWorkout } = workoutSlice.actions;
 export default workoutSlice.reducer;
-
 // import { createSlice, PayloadAction } from '@reduxjs/toolkit'; 
 // import type { WorkoutState, CurrentWorkout } from '../../types'; 
 
