@@ -54,11 +54,15 @@ export type WorkoutSession = {
     cardioExercises?: CardioExercise[];
 }
 
+export type WorkoutSessionApiReturn = {
+    data?: WorkoutSession[] | null; 
+    error?: MyError | null; 
+}
+
 export type WorkoutTemplate = {
     id: number; 
     name: string; 
-    weightExercises: string[]; 
-    cardioExercises: string[]; 
+    exercises: Exercise[]
 }
 
 export type WorkoutTemplateApiReturn = {
@@ -81,6 +85,7 @@ export type WorkoutState = {
 }
 
 export type Exercise = {
+    id?: number;
     name: string; 
     type: "weight" | "cardio"; 
 }

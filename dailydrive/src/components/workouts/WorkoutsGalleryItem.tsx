@@ -19,12 +19,12 @@ export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: W
             <ul 
                 className="gallery-item--exercises-list"
             >
-                {workoutData.weightExercises.map((ex, index) => (
+                {workoutData.exercises.map((ex, index) => (
                     <li 
                         className="gallery-item--exercise-item"
-                        key={ex + index}
+                        key={ex.name + index}
                     >
-                        {ex}
+                        {ex.name}
                     </li>
                 )).slice(0, 3)}
             </ul>

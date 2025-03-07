@@ -4,7 +4,7 @@ import { fetchExercisesByName } from "../../services/ExerciseService";
 import { Exercise } from "../../types";
 
 interface ExerciseSearchProps {
-    exerciseType: "weight" | "cardio";
+    exerciseType?: "weight" | "cardio";
     onExerciseSelect: (exercise: { name: string; type: "weight" | "cardio" }) => void;
 }
 
@@ -14,7 +14,7 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
 
   const handleSearch = async (e: FormEvent) => {
     e.preventDefault();
-    const { data, error } = await fetchExercisesByName(exerciseType, searchTerm);
+    const { data, error } = await fetchExercisesByName(searchTerm, exerciseType);
     if(error) {
         console.error(error.message);
     }
@@ -25,6 +25,7 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
   };
 
   const handleSubmit = (exercise: Exercise) => {
+    console.log(exercise);
     onExerciseSelect(exercise); 
     setSearchTerm(""); 
     setSearchResults([]); 

@@ -27,7 +27,6 @@ export const fetchCurrentWorkout = async (): Promise<CurrentWorkoutApiReturn> =>
         const data = await response.json(); 
         return { data }; 
     } catch(err) {
-        console.error(err); 
         return { error: { message: 'Unexpected error | startCurrentWorkout' }}
     }
 }
@@ -43,6 +42,20 @@ export const updateCurrentWorkout = async (workout: CurrentWorkout): Promise<Cur
         })
         if(!response.ok) return { error: { message: await response.text() } }
         const data = await response.json(); 
+        return { data }; 
+    } catch(err) {
+        console.error(err); 
+        return { error: { message: 'Unexpected error | startCurrentWorkout' }}
+    }
+}
+
+export const endCurrentWorkout = async (id: number): Promise<CurrentWorkoutApiReturn> => {
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: 'DELETE'
+        })
+        if(!response.ok) return { error: { message: await response.text() } }
+        const data = await response.json();
         return { data }; 
     } catch(err) {
         console.error(err); 

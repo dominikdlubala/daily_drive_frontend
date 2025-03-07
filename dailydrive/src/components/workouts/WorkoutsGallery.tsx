@@ -23,6 +23,7 @@ export default function WorkoutsGallery() {
 
     const refreshTemplates = async () => {
         const response = await fetchWorkoutTemplates();
+        setTemplateToUpdate(undefined);
         setTemplates(response);
     }
 
@@ -32,24 +33,20 @@ export default function WorkoutsGallery() {
     } 
 
     const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
-        let data; 
         if(add) {
             await addWorkoutTemplate({
                 name: formValues.name, 
-                weightExercises: formValues.weightExercises, 
-                cardioExercises: formValues.cardioExercises
+                exercises: formValues.exercises
             } as Omit<WorkoutTemplate, 'id'>)
         } else {
             await updateWorkoutTemplate({
                 id:  formValues.id,
                 name: formValues.name, 
-                weightExercises: formValues.weightExercises, 
-                cardioExercises: formValues.cardioExercises
+                exercises: formValues.exercises
             } as WorkoutTemplate); 
             setTemplateToUpdate(undefined); 
         } 
 
-        console.log(data); 
         handleModalClose(true); 
     }
 

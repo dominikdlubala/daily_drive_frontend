@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { CurrentWorkout, WorkoutSession, WorkoutState } from '../../types';
-import { startCurrentWorkout as startWorkoutApi, fetchCurrentWorkout as fetchWorkoutApi, updateCurrentWorkout as updateWorkoutApi } from '../../services/WorkoutCurrentService';
+import { startCurrentWorkout as startWorkoutApi, fetchCurrentWorkout as fetchWorkoutApi, updateCurrentWorkout as updateWorkoutApi, endCurrentWorkout as endWorkoutApi } from '../../services/WorkoutCurrentService';
 
 const LOCAL_STORAGE_KEY = 'currentWorkout';
 
@@ -76,6 +76,17 @@ export const updateCurrentWorkout = createAsyncThunk<CurrentWorkout | null, Curr
         return response.data || null; 
     }
 );
+
+export const endCurrentWorkout = createAsyncThunk<CurrentWorkout | null, number>(
+    'workout/endCurrentWorkout',
+    async (id, { rejectWithValue }) => {
+        const response = await endWorkoutApi(id); 
+        if(response.error) {
+            return rejectWithValue(response.error.message);
+        }
+        return response.data || null;
+    }
+)
 
 export const workoutSlice = createSlice({
     name: 'workout',

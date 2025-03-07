@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout } from "../../store";
+import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout, endCurrentWorkout } from "../../store";
 
 import type { CurrentWorkout, WeightExercise, CardioExercise } from "../../types";
 import ExerciseSearch from "../exercise/ExerciseSearch";
@@ -116,7 +116,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        console.log('end');
+        dispatch(endCurrentWorkout(currentWorkout.id as number));
         dispatch(endWorkout()); 
         dispatch(resetWorkout());
         handleModalClose && handleModalClose();

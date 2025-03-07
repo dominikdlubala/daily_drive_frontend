@@ -15,9 +15,14 @@ export const fetchExercises = async (): Promise<ExerciseApiReturn> => {
     }
 }
 
-export const fetchExercisesByName = async (type: string, name: string): Promise<ExerciseApiReturn> => {
+export const fetchExercisesByName = async (name: string, type?: string): Promise<ExerciseApiReturn> => {
     try {
-        const response = await fetch(`${API_URL}/${type}/${name}`);
+        let response; 
+        if(!type) {
+            response = await fetch(`${API_URL}/${name}`); 
+        } else {
+            response = await fetch(`${API_URL}/${name}/${type}`);
+        }
         if(!response.ok) {
             return { error: { message: await response.text() }}
         }
