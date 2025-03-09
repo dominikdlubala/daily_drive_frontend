@@ -284,10 +284,6 @@ li {
   cursor: pointer; 
 }
 
-.btn-delete {
-  cursor: pointer; 
-}
-
 .gallery-item--exercises-list {
   padding: 0.5rem; 
 }
@@ -430,6 +426,11 @@ li {
 
 .btn-end--workout:hover {
   background-color: #ad3434; 
+}
+
+.btn-remove--card {
+  background-color: inherit; 
+  font-size: 1.5rem; 
 }
 
 

@@ -19,13 +19,11 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
         console.error(error.message);
     }
     if(data) {
-        console.log(data);
         setSearchResults(data);
     }
   };
 
   const handleSubmit = (exercise: Exercise) => {
-    console.log(exercise);
     onExerciseSelect(exercise); 
     setSearchTerm(""); 
     setSearchResults([]); 

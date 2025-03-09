@@ -2,7 +2,7 @@ import '../styles/workoutsList.css';
 import { useEffect, useState } from "react"
 import WorkoutsListItem from "./WorkoutsListItem"
 import { WorkoutSession } from "../../types";
-import { fetchWorkoutSessions } from "../../services/WorkoutSessionService";
+import { deleteWorkoutSession, fetchWorkoutSessions } from "../../services/WorkoutSessionService";
 
 export default function WorkoutsList() {
 
@@ -22,7 +22,23 @@ export default function WorkoutsList() {
         fetchWorkoutsData(); 
     }, [])
 
-    console.log(workoutsData)
+    const refetchData = async () => {
+        const { data, error } = await fetchWorkoutSessions(); 
+        if(error) {
+            console.error(error); 
+        } 
+        if(data) {
+            setWorkoutsData(data);
+        }
+    }
+
+    const handleDelete = async (id: number) => {
+        const { data, error } = await deleteWorkoutSession(id); 
+        if(error) {
+            console.error(error); 
+        }
+        await refetchData()
+    }
     
     return (
         <div className="list list-workouts">
@@ -31,6 +47,7 @@ export default function WorkoutsList() {
                     <WorkoutsListItem
                         key={workout.id}
                         workoutsData={workout}
+                        onDelete={() => handleDelete(workout.id as number)}
                      />
                 ))
             }

@@ -52,7 +52,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
                 cardioExercises
             }
         }))
-      dispatch(updateWorkout({
+        dispatch(updateWorkout({
           name: title,
           weightExercises,
           cardioExercises,
@@ -116,10 +116,20 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        dispatch(endCurrentWorkout(currentWorkout.id as number));
-        dispatch(endWorkout()); 
-        dispatch(resetWorkout());
-        handleModalClose && handleModalClose();
+      dispatch(updateCurrentWorkout({
+        ...currentWorkout, 
+        workoutSession: {
+            ...currentWorkout.workoutSession,
+            name: title, 
+            endTime: new Date().toISOString(),
+            weightExercises, 
+            cardioExercises
+        }
+      }))
+      dispatch(endCurrentWorkout(currentWorkout.id as number));
+      dispatch(endWorkout()); 
+      dispatch(resetWorkout());
+      handleModalClose && handleModalClose();
     }
   };
 
