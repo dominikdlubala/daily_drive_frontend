@@ -94,3 +94,29 @@ export type ExerciseApiReturn = {
     data?: Exercise[] | null; 
     error?: { message: string } | null; 
 }
+
+
+
+// Diet Types
+export type Product = {
+    id?: number;
+    name: string; 
+    weight: number; 
+    caloriePer100g: number; 
+    proteinPer100g: number;
+    carbsPer100g: number;
+    fatPer100g: number;
+}
+
+export type Meal = {
+    id?: number; 
+    name: string; 
+    products: Product[]
+}
+
+export type DailyDiet = {
+    id?: number; 
+    date: Date; 
+    meals: Meal[];
+}
+

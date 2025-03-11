@@ -5,12 +5,16 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
 import DietToday from "../components/diet/DietToday";
+import { DailyDiet } from '../types';
 
 export default function DietPage() {
 
     const [dietDate, setDietDate] = useState<Date>(new Date()); 
+    const [dietData, setDietData] = useState<DailyDiet[]>([]); 
 
     const dateChange = ( forwards?: boolean ) => setDietDate(new Date(dietDate.setDate( forwards ? dietDate.getDate() + 1 : dietDate.getDate() - 1 )))
+
+    console.log(dietDate.toISOString())
 
     return (
         <div className="page page-diet">
@@ -20,7 +24,7 @@ export default function DietPage() {
                     {
                         dietDate.getDate() === new Date().getDate()
                         ? 
-                        'Today'
+                        'Dzisiaj'
                         :
                         dietDate.toLocaleDateString()
                     }
