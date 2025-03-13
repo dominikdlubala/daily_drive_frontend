@@ -102,7 +102,7 @@ export type Product = {
     id?: number;
     name: string; 
     weight: number; 
-    caloriePer100g: number; 
+    caloriesPer100g: number; 
     proteinPer100g: number;
     carbsPer100g: number;
     fatPer100g: number;

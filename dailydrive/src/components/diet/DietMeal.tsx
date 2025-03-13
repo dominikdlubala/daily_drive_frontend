@@ -1,19 +1,35 @@
+import { useState } from "react";
+import { Meal } from "../../types";
 import MealProductList from "./MealProductList";
+import Modal from "../primitives/Modal";
+import MealForm from "./MealForm";
 
 interface DietMealProps {
-    mealData: {
-        title: string; 
-        products: { name: string }[]
-    }
+    mealData: Meal
 }
 
 export default function DietMeal({ mealData }: DietMealProps) {
+    const [modalOpen, setModalOpen] = useState(false); 
 
+    const onAddProduct = () => {
+        setModalOpen(true); 
+    }
 
     return (
         <div className="diet-meal">
+            {
+                modalOpen 
+                &&
+                <Modal
+                    isOpen={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                >
+                    <MealForm initialData={mealData} handleModalClose={() => setModalOpen(false)} />
+                </Modal>
+            }
+
             <div className="meal-header">
-                <div className="meal-title">{mealData.title}</div>
+                <div className="meal-title">{mealData.name}</div>
                 <div className="meal-macros">
                     <div className="meal-macros-item">
                         Calories
@@ -29,7 +45,7 @@ export default function DietMeal({ mealData }: DietMealProps) {
                     </div>
                 </div>
             </div>
-            <MealProductList productsData={mealData.products} />
+            <MealProductList productsData={mealData.products} onAddProduct={onAddProduct} />
         </div>
     )
 }
