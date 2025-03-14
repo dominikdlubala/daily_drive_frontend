@@ -235,7 +235,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
       <div className="workout-actions">
         <button type="submit" className="btn-submit--workout">Zapisz trening</button>
-        {currentWorkout && <button type="button" className="btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button>}
+        {currentWorkout?.id ? <button type="button" className="btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button> : ''}
       </div>
     </form>
   );

@@ -133,3 +133,22 @@ input {
     background-color: #048832;  
     transition: ease-in-out 0.3s;
 }
+
+.head-input {
+    display: flex; 
+    min-width: 40%; 
+    font-weight: bold;
+    font-size: 1.25rem; 
+}
+
+.form-group--head {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; 
+}
+.form-group--head button {
+    display: flex;
+    font-size: 1rem;
+}

@@ -4,7 +4,6 @@ import ProductSearch from "./ProductSearch";
 import { MdDelete } from "react-icons/md";
 import { useState, useRef } from "react";
 import ProductForm from "./ProductForm";
-import { addMeal, updateMeal } from "../../services/DietService";
 
 export const round = (value: number, precision: number) => {
     var rounder = Math.pow(10, precision);
@@ -13,17 +12,19 @@ export const round = (value: number, precision: number) => {
 
 interface MealFormProps {
     initialData?: Meal;
+    dietId: number;
     handleModalClose: () => void; 
-    onFormSubmit: () => void;
+    onFormSubmit: (meal: Meal) => void;
+    onDelete: (id: number) => void; 
 }
 
-export default function MealForm({ initialData, handleModalClose, onFormSubmit }: MealFormProps) {
+export default function MealForm({ initialData, dietId, handleModalClose, onFormSubmit, onDelete }: MealFormProps) {
 
     const [modalOpen, setModalOpen] = useState(false); 
     const topRef = useRef<HTMLDivElement>(null);
 
     const { register, handleSubmit, control } = useForm<Meal>({
-        defaultValues: initialData
+        defaultValues: initialData ?? { dailyDietId: dietId }
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -41,12 +42,7 @@ export default function MealForm({ initialData, handleModalClose, onFormSubmit }
     }
 
     const onSubmit: SubmitHandler<Meal> = async (data: Meal) => {
-        const { error } = initialData ? await updateMeal(data) : await addMeal(data);
-        if(error) {
-            console.error(error); 
-        } else {
-            onFormSubmit();
-        }
+        onFormSubmit(data); 
         handleModalClose(); 
     };
 
@@ -73,9 +69,13 @@ export default function MealForm({ initialData, handleModalClose, onFormSubmit }
             }
 
             <form onSubmit={handleSubmit(onSubmit)} className="meal-form">
-                <div ref={topRef} className="form-group">
-                    <label htmlFor="name">Posiłek</label>
-                    <input id="name" {...register("name")} />
+                <div ref={topRef} className="form-group form-group--head">
+                    <input className="head-input" id="name" {...register("name")} />
+                    {
+                        initialData 
+                        &&
+                        <button type="button" className="btn remove-button" onClick={() => onDelete(initialData.id as number)}>Usuń</button>
+                    }
                 </div>
                 <div className="form-group">
                     <label>Produkty</label>

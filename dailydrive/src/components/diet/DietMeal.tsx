@@ -30,7 +30,6 @@ export default function DietMeal({ mealData, onMealChange }: DietMealProps) {
                 </div>
             </div>
             <MealProductList productsData={products} />
-            {/* <button className="btn btn-add--product" onClick={() => onMealChange()}>Dodaj produkty +</button> */}
         </div>
     )
 }

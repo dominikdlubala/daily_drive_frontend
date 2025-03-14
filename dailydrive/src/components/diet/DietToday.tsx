@@ -4,7 +4,7 @@ import { DailyDiet, Meal } from "../../types";
 import DietMeal from "./DietMeal";
 import DietSummary from "./DIetSumary";
 import { useEffect, useState } from 'react';
-import { fetchDietByDate } from '../../services/DietService';
+import { addMeal, deleteMeal, fetchDietByDate, updateMeal } from '../../services/DietService';
 import Modal from '../primitives/Modal';
 import MealForm from './MealForm';
 
@@ -43,6 +43,33 @@ export default function DietToday({ date }: DietTodayProps) {
             setDietData(data);
         }
     }
+    
+    const handleMealDelete = async (id: number) => {
+        const { error } = await deleteMeal(id);
+        if(error) {
+            console.error(error.message);
+        }
+        setModalOpen(false); 
+        refetchData();
+    }
+
+    const handleFormSubmit = async (meal: Meal) => {
+        if(meal.id) {
+            const { error } = await updateMeal(meal);   
+            if(error) {
+                console.error(error.message);
+            }          
+        } else {
+            const { error } = await addMeal({
+                ...meal, 
+                date
+            });
+            if(error) {
+                console.error(error.message);
+            }
+        }
+        refetchData();
+    }
 
     const { meals, totalCalories, totalCarbs, totalFat, totalProtein } = dietData || { meals: [], totalCalories: 0, totalCarbs: 0, totalFat: 0, totalProtein: 0 };
 
@@ -55,7 +82,7 @@ export default function DietToday({ date }: DietTodayProps) {
                     isOpen={modalOpen}
                     onClose={() => setModalOpen(false)}
                 >
-                    <MealForm initialData={formData} handleModalClose={() => setModalOpen(false)} onFormSubmit={refetchData} />
+                    <MealForm initialData={formData} dietId={dietData?.id || 0} handleModalClose={() => setModalOpen(false)} onFormSubmit={handleFormSubmit} onDelete={handleMealDelete} />
                 </Modal>
             }
 

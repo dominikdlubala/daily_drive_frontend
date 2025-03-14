@@ -15,24 +15,24 @@ export default function DietSummary({ data }: DietSummaryProps) {
 
     return (
         <div className="diet-summary">
-            <div className="macros">
-                <div className="macros-item macros-protein ">
-                    Białko
-                    <ProgressBar currentAmount={totalProtein} dailyGoal={200} unitOfMeasure="gram" />
-                </div>
-                <div className="macros-item macros-carbs">
-                    Węglowodany
-                    <ProgressBar currentAmount={totalCarbs} dailyGoal={200} unitOfMeasure="gram" />
-                </div>
-                <div className="macros-item macros-fat">
-                    Tłuszcz
-                    <ProgressBar currentAmount={totalFat} dailyGoal={200} unitOfMeasure="gram" />
-                </div>
-            </div>
             <div className="calories">
                 Kalorie
                 <ProgressBar currentAmount={totalCalories} dailyGoal={2000} unitOfMeasure="kcal" />
-            </div>            
+            </div>   
+            <div className="macros">
+                <div className="macros-item macros-protein ">
+                    Białko 
+                    <ProgressBar currentAmount={totalProtein} dailyGoal={200} unitOfMeasure="g" />
+                </div>
+                <div className="macros-item macros-carbs">
+                    Węglowodany 
+                    <ProgressBar currentAmount={totalCarbs} dailyGoal={200} unitOfMeasure="g" />
+                </div>
+                <div className="macros-item macros-fat">
+                    Tłuszcz 
+                    <ProgressBar currentAmount={totalFat} dailyGoal={200} unitOfMeasure="g" />
+                </div>
+            </div>         
         </div>
     )
 }

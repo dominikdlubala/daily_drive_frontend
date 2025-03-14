@@ -30,7 +30,6 @@ export default function WorkoutsPage() {
     return (
         <div className="page page-workouts">
 
-            <button onClick={() => setIsModalOpen(true)}>workout free form +</button>
             {
                 isModalOpen
                 &&
@@ -55,6 +54,7 @@ export default function WorkoutsPage() {
             </div>
             {content}
 
+            <button className="btn btn-current-workout" onClick={() => setIsModalOpen(true)}>Trening</button>
         </div>
     )
 }

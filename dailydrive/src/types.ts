@@ -115,6 +115,8 @@ export type Meal = {
     totalProtein: number;
     totalCarbs: number;
     totalFat: number;
+    dailyDietId?: number;
+    date?: Date; 
     products: Product[]
 }
 

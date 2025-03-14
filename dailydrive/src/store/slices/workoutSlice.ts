@@ -129,8 +129,10 @@ export const workoutSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCurrentWorkout.fulfilled, (state, action) => {
-                state.currentWorkout = action.payload;
-                saveWorkoutToStorage(state.currentWorkout);
+                if(action.payload?.id){
+                    state.currentWorkout = action.payload;
+                    saveWorkoutToStorage(state.currentWorkout);
+                }
             })
             .addCase(startCurrentWorkout.fulfilled, (state, action) => {
                 state.currentWorkout = action.payload;

@@ -42,7 +42,6 @@ export const addMeal = async (meal: Meal) => {
         const data = await response.json(); 
         return { data }; 
     } catch(err) {
-        // console.error(err); 
         return { error: { message: 'Unexpected error | updateMeal' }}
     }
 }
@@ -62,7 +61,21 @@ export const updateMeal = async (meal: Meal) => {
         const data = await response.json(); 
         return { data }; 
     } catch(err) {
-        // console.error(err); 
+        return { error: { message: 'Unexpected error | updateMeal' }}
+    }
+}
+
+export const deleteMeal = async (id: number) => {
+    try {
+        const response = await fetch(`${API_URL_MEAL}/${id}`, {
+            method: 'DELETE', 
+        })
+        if(!response.ok) {
+            return { error: { message: await response.text() } }
+        }
+        const data = await response.json(); 
+        return { data }; 
+    } catch(err) {
         return { error: { message: 'Unexpected error | updateMeal' }}
     }
 }
