@@ -30,9 +30,6 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
   const [showWeightExerciseForm, setShowWeightExerciseForm] = useState(false);
   const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
 
-
-  console.log(currentWorkout)
-
   useEffect(() => {
     dispatch(fetchCurrentWorkout());
   }, [dispatch]);
@@ -206,12 +203,12 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
               onChange={(e) => setNewWeightExerciseBodyPart(e.target.value as BodyPart)}
               required
             >
-              <option value="chest">Klatka piersiowa</option>
-              <option value="back">Plecy</option>
-              <option value="legs">Nogi</option>
-              <option value="shoulders">Barki</option>
-              <option value="arms">Ramiona</option>
-              <option value="other">Inne</option>
+              <option value="Chest">Klatka piersiowa</option>
+              <option value="Back">Plecy</option>
+              <option value="Legs">Nogi</option>
+              <option value="Shoulders">Barki</option>
+              <option value="Arms">Ramiona</option>
+              <option value="Other">Inne</option>
             </select>
               <button type="button" className="btn--workout-template " onClick={handleAddNewWeightExercise}>Dodaj ćwiczenie</button>
               <button type="button" className="btn--workout-template btn-cancel" onClick={() => setShowWeightExerciseForm(false)}>Anuluj</button>

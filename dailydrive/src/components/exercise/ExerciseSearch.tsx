@@ -20,10 +20,8 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
     }
     if(data) {
         setSearchResults(data);
-        console.log(data);
     }
   };
-
 
   const handleSubmit = (exercise: Exercise) => {
     onExerciseSelect(exercise); 
