@@ -1,26 +1,37 @@
 import ProgressBar from "../primitives/ProgressBar"
 
-export default function DietSummary() {
+interface DietSummaryProps {
+    data: {
+        totalCalories: number;
+        totalProtein: number;
+        totalCarbs: number;
+        totalFat: number;
+    }
+}
+
+export default function DietSummary({ data }: DietSummaryProps) {
+
+    const { totalCalories, totalProtein, totalCarbs, totalFat } = data;
 
     return (
         <div className="diet-summary">
             <div className="macros">
                 <div className="macros-item macros-protein ">
-                    Protein
-                    <ProgressBar currentAmount={80} dailyGoal={200} unitOfMeasure="gram" />
+                    Białko
+                    <ProgressBar currentAmount={totalProtein} dailyGoal={200} unitOfMeasure="gram" />
                 </div>
                 <div className="macros-item macros-carbs">
-                    Carbs
-                    <ProgressBar currentAmount={80} dailyGoal={200} unitOfMeasure="gram" />
+                    Węglowodany
+                    <ProgressBar currentAmount={totalCarbs} dailyGoal={200} unitOfMeasure="gram" />
                 </div>
                 <div className="macros-item macros-fat">
-                    Fat
-                    <ProgressBar currentAmount={80} dailyGoal={200} unitOfMeasure="gram" />
+                    Tłuszcz
+                    <ProgressBar currentAmount={totalFat} dailyGoal={200} unitOfMeasure="gram" />
                 </div>
             </div>
             <div className="calories">
-                Calories
-                <ProgressBar currentAmount={1200} dailyGoal={2000} unitOfMeasure="kcal" />
+                Kalorie
+                <ProgressBar currentAmount={totalCalories} dailyGoal={2000} unitOfMeasure="kcal" />
             </div>            
         </div>
     )

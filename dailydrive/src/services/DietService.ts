@@ -27,6 +27,26 @@ export const fetchProductByName = async (name: string) => {
     }
 }
 
+export const addMeal = async (meal: Meal) => {
+    try {
+        const response = await fetch(`${API_URL_MEAL}`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(meal)
+        })
+        if(!response.ok) {
+            return { error: { message: await response.text() } }
+        }
+        const data = await response.json(); 
+        return { data }; 
+    } catch(err) {
+        // console.error(err); 
+        return { error: { message: 'Unexpected error | updateMeal' }}
+    }
+}
+
 export const updateMeal = async (meal: Meal) => {
     try {
         const response = await fetch(`${API_URL_MEAL}/${meal.id}`, {

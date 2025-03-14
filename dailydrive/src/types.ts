@@ -111,12 +111,20 @@ export type Product = {
 export type Meal = {
     id?: number; 
     name: string; 
+    totalCalories: number;
+    totalProtein: number;
+    totalCarbs: number;
+    totalFat: number;
     products: Product[]
 }
 
 export type DailyDiet = {
     id?: number; 
     date: Date; 
+    totalCalories: number;
+    totalProtein: number;
+    totalCarbs: number;
+    totalFat: number;
     meals: Meal[];
 }
 

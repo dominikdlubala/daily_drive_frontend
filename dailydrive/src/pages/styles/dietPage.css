@@ -4,6 +4,7 @@
     width: 60vw; 
     align-items: center;
     margin: auto; 
+    margin-bottom: 2rem; 
 }
 
 .diet-summary {
@@ -49,6 +50,11 @@
     border-radius: 15px; 
     margin-top: 1rem; 
     padding: 1rem; 
+    cursor: pointer;
+}
+.diet-meal:hover {
+    background-color: #dddddd;
+    transition: ease-in-out 0.3s;
 }
 
 .meal-header {
@@ -70,6 +76,7 @@
 .meal-product-item {
     display: flex;
     justify-content: space-between;
+    background-color: #fff; 
     border: 2px solid black; 
     padding: 0.5rem; 
     border-radius: 10px;

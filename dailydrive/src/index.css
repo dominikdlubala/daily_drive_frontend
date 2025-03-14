@@ -40,7 +40,8 @@ li {
 
 /* Page general */
 .page {
-  height: 90vh; 
+  min-height: 90vh; 
+  margin-bottom: 2rem;
 }
 
 

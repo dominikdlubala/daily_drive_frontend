@@ -118,3 +118,18 @@ input {
     color: red; 
     font-size: 0.8rem;
 }
+
+.btn-add--meal {
+    background-color: #06a93f; 
+    color: #fff; 
+    margin-top: 1rem; 
+    width: 100%; 
+    border: none;
+    border-radius: 10px; 
+    padding: 0.5rem; 
+    cursor: pointer; 
+}
+.btn-add--meal:hover {
+    background-color: #048832;  
+    transition: ease-in-out 0.3s;
+}

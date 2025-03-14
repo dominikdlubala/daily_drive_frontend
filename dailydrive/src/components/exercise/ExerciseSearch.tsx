@@ -30,7 +30,7 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
   }
 
   return (
-    <div className="exercise-search">
+    <div className="search exercise-search">
       <input
         type="text"
         placeholder="Wyszukaj ćwiczenie"

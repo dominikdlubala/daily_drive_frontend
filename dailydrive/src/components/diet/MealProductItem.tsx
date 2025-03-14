@@ -1,24 +1,22 @@
+import { Product } from "../../types";
+import { round } from "./MealForm";
+
 interface MealProductItemProps {
-    productData: { name: string } 
+    productData: Product; 
 }
 
 export default function MealProductItem({ productData }: MealProductItemProps) {
 
+    const { name, weight, caloriesPer100g } = productData;
+
     return (
         <div className="meal-product-item">
-            <div className="product-title">{productData.name}</div>
+            <div className="product-title">{name} ({weight}g)</div>
             <div className="product-macros">
                 <div className="product-macros-item">
-                    Calories
                 </div>
                 <div className="product-macros-item">
-                    Protein
-                </div>
-                <div className="product-macros-item">
-                    Carbs
-                </div>
-                <div className="product-macros-item">
-                    Fat
+                    {round(caloriesPer100g * (weight * 0.01), 1)}kcal
                 </div>
             </div>
         </div>

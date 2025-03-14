@@ -1,51 +1,36 @@
-import { useState } from "react";
 import { Meal } from "../../types";
 import MealProductList from "./MealProductList";
-import Modal from "../primitives/Modal";
-import MealForm from "./MealForm";
 
 interface DietMealProps {
     mealData: Meal
+    onMealChange: (meal?: Meal) => void; 
 }
 
-export default function DietMeal({ mealData }: DietMealProps) {
-    const [modalOpen, setModalOpen] = useState(false); 
+export default function DietMeal({ mealData, onMealChange }: DietMealProps) {
 
-    const onAddProduct = () => {
-        setModalOpen(true); 
-    }
+    const { name, products, totalCalories, totalProtein, totalCarbs, totalFat } = mealData;
 
     return (
-        <div className="diet-meal">
-            {
-                modalOpen 
-                &&
-                <Modal
-                    isOpen={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                >
-                    <MealForm initialData={mealData} handleModalClose={() => setModalOpen(false)} />
-                </Modal>
-            }
-
+        <div className="diet-meal" onClick={() => onMealChange(mealData)}>
             <div className="meal-header">
-                <div className="meal-title">{mealData.name}</div>
+                <div className="meal-title">{name}</div>
                 <div className="meal-macros">
                     <div className="meal-macros-item">
-                        Calories
+                        B: {totalProtein}
                     </div>
                     <div className="meal-macros-item">
-                        Protein
+                        W: {totalCarbs}
                     </div>
                     <div className="meal-macros-item">
-                        Carbs
+                        T: {totalFat}
                     </div>
                     <div className="meal-macros-item">
-                        Fat
+                        Kcal: {totalCalories}
                     </div>
                 </div>
             </div>
-            <MealProductList productsData={mealData.products} onAddProduct={onAddProduct} />
+            <MealProductList productsData={products} />
+            {/* <button className="btn btn-add--product" onClick={() => onMealChange()}>Dodaj produkty +</button> */}
         </div>
     )
 }
