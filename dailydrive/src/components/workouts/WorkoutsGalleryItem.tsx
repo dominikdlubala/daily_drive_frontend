@@ -17,7 +17,8 @@ const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
             weightExercises: template.exercises.filter(ex => ex.type === 'weight').map(ex => ({
                 name: ex.name, 
                 type: ex.type,
-                sets: [] as ExerciseSet[]
+                sets: [] as ExerciseSet[],
+                bodyPart: ex.bodyPart === 'cardio' ? 'other' : ex.bodyPart
             })),
             cardioExercises: template.exercises.filter(ex => ex.type === 'cardio').map(ex => ({
                 name: ex.name, 

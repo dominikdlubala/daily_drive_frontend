@@ -5,7 +5,7 @@ import { Exercise } from "../../types";
 
 interface ExerciseSearchProps {
     exerciseType?: "weight" | "cardio";
-    onExerciseSelect: (exercise: { name: string; type: "weight" | "cardio" }) => void;
+    onExerciseSelect: (exercise: Exercise) => void;
 }
 
 export default function ExerciseSearch({ exerciseType, onExerciseSelect }: ExerciseSearchProps) {
@@ -20,8 +20,10 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
     }
     if(data) {
         setSearchResults(data);
+        console.log(data);
     }
   };
+
 
   const handleSubmit = (exercise: Exercise) => {
     onExerciseSelect(exercise); 

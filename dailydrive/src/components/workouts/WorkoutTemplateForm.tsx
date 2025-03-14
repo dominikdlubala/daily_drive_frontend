@@ -22,7 +22,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
     const [title, setTitle] = useState<string>(initialData?.name || '');
 
     const addExercise = () => {
-        const newExercise: Exercise = { name: '', type: 'weight' };
+        const newExercise: Exercise = { name: '', type: 'weight', bodyPart: 'other' };
         setExercises([...exercises, newExercise]);
     }
 

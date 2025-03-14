@@ -33,6 +33,7 @@ export type WeightExercise = {
     name: string; 
     description?: string; 
     type: string; 
+    bodyPart: 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other';
     sets: ExerciseSet[];
 }
 
@@ -88,6 +89,7 @@ export type Exercise = {
     id?: number;
     name: string; 
     type: "weight" | "cardio"; 
+    bodyPart: 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'cardio' | 'other';
 }
 
 export type ExerciseApiReturn = {

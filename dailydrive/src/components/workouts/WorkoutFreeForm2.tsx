@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout, endCurrentWorkout } from "../../store";
 
-import type { CurrentWorkout, WeightExercise, CardioExercise } from "../../types";
+import type { CurrentWorkout, WeightExercise, CardioExercise, Exercise } from "../../types";
 import ExerciseSearch from "../exercise/ExerciseSearch";
 import ExerciseDetails from "../exercise/ExerciseDetails";
 
@@ -15,6 +15,8 @@ interface WorkoutFreeFormProps {
     handleModalClose: (updatedWorkout?: CurrentWorkout) => void;
 }
 
+type BodyPart = 'chest' | 'back' | 'legs' | 'shoulders' | 'arms' | 'other';
+
 export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormProps) {
   const dispatch = useAppDispatch();
   const currentWorkout = useAppSelector((state) => state.workout.currentWorkout);
@@ -23,9 +25,13 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
   const [weightExercises, setWeightExercises] = useState<WeightExercise[]>(currentWorkout?.workoutSession.weightExercises || []);
   const [cardioExercises, setCardioExercises] = useState<CardioExercise[]>(currentWorkout?.workoutSession.cardioExercises || []);
   const [newWeightExerciseName, setNewWeightExerciseName] = useState("");
+  const [newWeightExerciseBodyPart, setNewWeightExerciseBodyPart] = useState<BodyPart>("other");
   const [newCardioExerciseName, setNewCardioExerciseName] = useState("");
   const [showWeightExerciseForm, setShowWeightExerciseForm] = useState(false);
   const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
+
+
+  console.log(currentWorkout)
 
   useEffect(() => {
     dispatch(fetchCurrentWorkout());
@@ -71,9 +77,9 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
     }
   };
 
-  const handleExerciseSelect = (exercise: { name: string; type: "weight" | "cardio" }) => {
+  const handleExerciseSelect = (exercise: Exercise) => {
     if (exercise.type === "weight") {
-      setWeightExercises([...weightExercises, { name: exercise.name, type: "weight", sets: [] }]);
+      setWeightExercises([...weightExercises, { name: exercise.name, type: "weight", sets: [], bodyPart: (exercise.bodyPart === 'cardio' ? 'other' : exercise.bodyPart) }]);
     } else {
       setCardioExercises([...cardioExercises, { name: exercise.name, type: "cardio", intensity: 0, duration: 0 }]);
     }
@@ -101,7 +107,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   const handleAddNewWeightExercise = (e: FormEvent) => {
     e.preventDefault();
-    setWeightExercises([...weightExercises, { name: newWeightExerciseName, type: "weight", sets: [] }]);
+    setWeightExercises([...weightExercises, { name: newWeightExerciseName, type: "weight", sets: [], bodyPart: newWeightExerciseBodyPart }]);    
     setNewWeightExerciseName("");
     setShowWeightExerciseForm(false);
   };
@@ -194,6 +200,19 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
                 onChange={(e) => setNewWeightExerciseName(e.target.value)}
                 required
               />
+            <select
+              className="form-input"
+              value={newWeightExerciseBodyPart}
+              onChange={(e) => setNewWeightExerciseBodyPart(e.target.value as BodyPart)}
+              required
+            >
+              <option value="chest">Klatka piersiowa</option>
+              <option value="back">Plecy</option>
+              <option value="legs">Nogi</option>
+              <option value="shoulders">Barki</option>
+              <option value="arms">Ramiona</option>
+              <option value="other">Inne</option>
+            </select>
               <button type="button" className="btn--workout-template " onClick={handleAddNewWeightExercise}>Dodaj ćwiczenie</button>
               <button type="button" className="btn--workout-template btn-cancel" onClick={() => setShowWeightExerciseForm(false)}>Anuluj</button>
             </div>

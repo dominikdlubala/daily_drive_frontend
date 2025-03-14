@@ -52,7 +52,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
   const addExercise = (type: "weight" | "cardio") => {
     if (type === "weight") {
-      setWeightExercises([...weightExercises, { name: "", type: type, sets: [] }]);
+      setWeightExercises([...weightExercises, { name: "", type: type, sets: [], bodyPart: 'other' }]);
     } else {
       setCardioExercises([...cardioExercises, { name: "", type:type, intensity: 0, duration: 0 }]);
     }
