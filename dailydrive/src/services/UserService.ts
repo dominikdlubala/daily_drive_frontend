@@ -1,4 +1,4 @@
-import type { User, UserLoginApiReturn } from '../types'; 
+import type { UserLoginApiReturn } from '../types'; 
 
 const API_URL = '/api/User'; 
 

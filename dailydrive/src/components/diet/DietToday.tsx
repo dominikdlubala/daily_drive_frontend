@@ -1,6 +1,6 @@
 import '../styles/dietToday.css';
 
-import { DailyDiet, Meal } from "../../types";
+import { DailyDiet, Meal, UserGoal } from "../../types";
 import DietMeal from "./DietMeal";
 import DietSummary from "./DIetSumary";
 import { useEffect, useState } from 'react';
@@ -9,11 +9,12 @@ import Modal from '../primitives/Modal';
 import MealForm from './MealForm';
 
 interface DietTodayProps {
-    date: Date; 
+    date: Date;
+    dietGoal: UserGoal;
 }
 
-export default function DietToday({ date }: DietTodayProps) {
-
+export default function DietToday({ date, dietGoal }: DietTodayProps) {
+    
     const [dietData, setDietData] = useState<DailyDiet | null>(null);
     const [modalOpen, setModalOpen] = useState(false); 
     const [formData, setFormData] = useState<Meal | undefined>(undefined);
@@ -86,7 +87,7 @@ export default function DietToday({ date }: DietTodayProps) {
                 </Modal>
             }
 
-            <DietSummary data={{ totalCalories, totalProtein, totalCarbs, totalFat }} />
+            <DietSummary data={{ totalCalories, totalProtein, totalCarbs, totalFat }} dietGoal={dietGoal} />
 
             {
                 meals.map((meal, index) => (

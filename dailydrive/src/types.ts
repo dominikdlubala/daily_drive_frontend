@@ -7,6 +7,14 @@ export type User = {
     registrationDate?: Date; 
 }
 
+export type UserGoal = {
+    id?: number; 
+    goalCalories: number;
+    goalProtein: number;
+    goalCarbs: number;
+    goalFat: number;
+}
+
 export type UserApiReturn = {
     data?: User | User[] | null; 
     error?: MyError | null; 

@@ -1,3 +1,4 @@
+import { UserGoal } from "../../types";
 import ProgressBar from "../primitives/ProgressBar"
 
 interface DietSummaryProps {
@@ -6,31 +7,33 @@ interface DietSummaryProps {
         totalProtein: number;
         totalCarbs: number;
         totalFat: number;
-    }
+    }, 
+    dietGoal?: UserGoal;
 }
 
-export default function DietSummary({ data }: DietSummaryProps) {
+export default function DietSummary({ data, dietGoal }: DietSummaryProps) {
 
     const { totalCalories, totalProtein, totalCarbs, totalFat } = data;
+    const { goalCalories, goalProtein, goalCarbs, goalFat } = dietGoal || { goalCalories: 2000, goalProtein: 200, goalCarbs: 200, goalFat: 200 };
 
     return (
         <div className="diet-summary">
             <div className="calories">
                 Kalorie
-                <ProgressBar currentAmount={totalCalories} dailyGoal={2000} unitOfMeasure="kcal" />
+                <ProgressBar currentAmount={totalCalories} dailyGoal={goalCalories} unitOfMeasure="kcal" />
             </div>   
             <div className="macros">
                 <div className="macros-item macros-protein ">
                     Białko 
-                    <ProgressBar currentAmount={totalProtein} dailyGoal={200} unitOfMeasure="g" />
+                    <ProgressBar currentAmount={totalProtein} dailyGoal={goalProtein} unitOfMeasure="g" />
                 </div>
                 <div className="macros-item macros-carbs">
                     Węglowodany 
-                    <ProgressBar currentAmount={totalCarbs} dailyGoal={200} unitOfMeasure="g" />
+                    <ProgressBar currentAmount={totalCarbs} dailyGoal={goalCarbs} unitOfMeasure="g" />
                 </div>
                 <div className="macros-item macros-fat">
                     Tłuszcz 
-                    <ProgressBar currentAmount={totalFat} dailyGoal={200} unitOfMeasure="g" />
+                    <ProgressBar currentAmount={totalFat} dailyGoal={goalFat} unitOfMeasure="g" />
                 </div>
             </div>         
         </div>

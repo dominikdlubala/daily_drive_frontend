@@ -1,12 +1,30 @@
 import './styles/dietPage.css'; 
 
-import { useState } from 'react'; 
+import { useEffect, useState } from 'react'; 
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { FaCircleArrowRight } from "react-icons/fa6";
 
 import DietToday from "../components/diet/DietToday";
+import { MyError, UserGoal } from '../types';
+import { getUserGoals } from '../services/UserGoalService';
 
 export default function DietPage() {
+    
+    const [userGoal, setUserGoal] = useState<UserGoal | undefined>(undefined);
+    const [error, setError] = useState<MyError>();
+
+    useEffect(() => {
+        const fetchUserGoal = async () => { 
+            const { data, error } = await getUserGoals('token'); 
+            if(error) {
+                setError(error);
+            } else {
+                setUserGoal(data);
+            }
+        }
+
+        fetchUserGoal();
+    }, []);
 
     const [dietDate, setDietDate] = useState<Date>(new Date()); 
 
@@ -27,7 +45,7 @@ export default function DietPage() {
                 </div>
                 <FaCircleArrowRight onClick={() => dateChange(true)} className="btn-change-date btn-change-date--forward"/>
             </div>
-            <DietToday date={dietDate} />
+            <DietToday date={dietDate} dietGoal={userGoal as UserGoal} />
         </div>
     )
 }
