@@ -61,6 +61,9 @@ export type WorkoutSession = {
     endTime?: string | null; 
     weightExercises?: WeightExercise[];
     cardioExercises?: CardioExercise[];
+
+    bodyPart?: BodyPart; 
+    weightLifted?: number; 
 }
 
 export type WorkoutSessionApiReturn = {
@@ -140,3 +143,36 @@ export type DailyDiet = {
     meals: Meal[];
 }
 
+
+// Home Page
+export type HomePageData = {
+    weightLifted: number;
+    timeSpent: number;
+    workoutSessions: HomePageWorkoutSessionDTO[];
+    mostTrained: BodyPart[];
+    recommendedBodyPart: BodyPart;
+    averageCal: number;
+    averageProtein: number;
+    averageCarbs: number;
+    averageFat: number;
+    userGoal: UserGoal;
+    dailyDiets: HomePageDailyDietDTO[];
+    hardestToReachGoal: string;
+    recommendedInDiet: string;
+    dailyDietToday?: DailyDiet;
+    lastWorkoutSessions: WorkoutSession[];
+}
+
+export type HomePageWorkoutSessionDTO = {
+    name?: string;
+    timeSpent: number;
+    weightLifted: number;
+    date: Date;
+}
+
+export type HomePageDailyDietDTO = {
+    totalCalories: number;
+    date: Date;
+}
+
+export type BodyPart = 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other' 

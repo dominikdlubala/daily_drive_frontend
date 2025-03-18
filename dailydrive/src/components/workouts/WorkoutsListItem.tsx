@@ -28,17 +28,17 @@ export default function WorkoutsListItem({ onDelete, workoutsData }: WorkoutsLis
             </div>
             <div className="card-body">
                 <ul className="exercise-list">
-                    {weightExercises?.map(ex => (
+                    {weightExercises?.map((ex, index) => (
                         <li 
                             className="exercise-item"
-                            key={ex.id}    
+                            key={(ex.id as number) + index}    
                         >   
                             <div className="exercise-name">{ex.name}</div>
                             <ul className="sets">
                                 {ex.sets.map(set => (
                                     <li 
                                         className="set"
-                                        key={set.setNumber}
+                                        key={Math.random()}
                                     >
                                         {set.reps} x {set.weight} kg
                                     </li>
@@ -46,10 +46,10 @@ export default function WorkoutsListItem({ onDelete, workoutsData }: WorkoutsLis
                             </ul>
                         </li>
                     ))}
-                    {cardioExercises?.map(ex => (
+                    {cardioExercises?.map((ex, index) => (
                         <li 
                             className="exercise-item"
-                            key={ex.id}    
+                            key={(ex.id as number) + index}    
                         >   
                             <div className="exercise-name">{ex.name}</div>
                             <div className="cardio-details">

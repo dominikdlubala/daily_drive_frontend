@@ -3,10 +3,29 @@ import { useNavigate } from 'react-router-dom';
 
 // icons
 import { FaCalendarAlt, FaClock, FaFire } from "react-icons/fa";
+import { useEffect, useState } from 'react';
+import { HomePageData, MyError } from '../types';
+import { fetchHomePageData } from '../services/HomePageService';
 
 export default function HomePage() {
 
     const navigate = useNavigate(); 
+    const [homeData, setHomeData] = useState<HomePageData>();
+    const [error, setError] = useState<MyError>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data, error } = await fetchHomePageData();
+            if(error) {
+                console.error(error)
+            } else {
+                setHomeData(data)
+            }
+        }
+        fetchData();
+    }, [])
+
+    console.log(homeData); 
 
     return (
         <div className="page page-home">

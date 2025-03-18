@@ -22,6 +22,9 @@ export default function WorkoutsList() {
         fetchWorkoutsData(); 
     }, [])
 
+
+    console.log(workoutsData)
+
     const refetchData = async () => {
         const { data, error } = await fetchWorkoutSessions(); 
         if(error) {
@@ -45,7 +48,7 @@ export default function WorkoutsList() {
             {
                 workoutsData.map((workout, index) => (
                     <WorkoutsListItem
-                        key={workout.id}
+                        key={(workout.id as number) + index}
                         workoutsData={workout}
                         onDelete={() => handleDelete(workout.id as number)}
                      />

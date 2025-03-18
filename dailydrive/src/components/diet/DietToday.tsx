@@ -31,6 +31,8 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
         fetchData(); 
     }, [date]);
 
+    console.log(dietData); 
+
     const handleMealChange = (meal?: Meal) => {
         setFormData(meal);
         setModalOpen(true); 
