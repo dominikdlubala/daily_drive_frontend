@@ -4,28 +4,40 @@ import { useNavigate } from 'react-router-dom';
 // icons
 import { FaCalendarAlt, FaClock, FaFire } from "react-icons/fa";
 import { useEffect, useState } from 'react';
-import { HomePageData, MyError } from '../types';
+import { BodyPart, HomePageData, MyError } from '../types';
 import { fetchHomePageData } from '../services/HomePageService';
 
 export default function HomePage() {
 
     const navigate = useNavigate(); 
-    const [homeData, setHomeData] = useState<HomePageData>();
-    const [error, setError] = useState<MyError>();
+    const [homeData, setHomeData] = useState<HomePageData | null>(null);
+    // const [error, setError] = useState<MyError>();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
             const { data, error } = await fetchHomePageData();
             if(error) {
                 console.error(error)
             } else {
                 setHomeData(data)
+                setIsLoading(false);
             }
         }
         fetchData();
     }, [])
 
-    console.log(homeData); 
+    const translateBodyPart = (bodyPart?: BodyPart) => { 
+        switch(bodyPart) {
+            case 'chest': return 'Klatka piersiowa';
+            case 'back': return 'Plecy';
+            case 'shoulders': return 'Barki';
+            case 'legs': return 'Nogi';
+            case 'arms': return 'Ramiona';
+            default: return 'Inne';
+        }
+    }
 
     return (
         <div className="page page-home">
@@ -34,22 +46,28 @@ export default function HomePage() {
                     className="sub-section workouts-section workouts-section--home"
                     onClick={() => navigate('/workouts')}
                 >
-                    <h1 className="sub-section--title workouts-title--home">Trening</h1>
+                    <h1 className="sub-section--title workouts-title--home">Twój tydzień w treningach</h1>
                     <div className="sub-section--details workouts-details--home">
-                        <div className="last-workout--title">
-                            Twój ostatni trening: 
+                        <div className="home-workout-summary">
+                            <div> Podniosłeś: {homeData?.weightLifted} kg </div>
+                            <div> Spędziłeś na treningu: {homeData?.timeSpent} min </div>
                         </div>
-                        <div className="last-workout--details">
-                                <FaCalendarAlt/> 20.10.2024 <FaClock/> 2h 15min <FaFire/> 640kcal
+                        <div className="home-workout-graph">
+                            graph
                         </div>
-                        <div className="workout-week-progress">
-                            Twój postęp w tym tygodniu: 
-                            <img src="" alt="some graph" />
-                        </div>
-                        <div className="workout-week-summary">
-                            W tym tygodniu: 
-                            podniosłeś: 700kg ciężaru
-                            ćwiczyłeś: 17h 23min 
+                        <div className="home-workout-recommendations">
+                            <div> 
+                                Do tej pory najwięcej trenowałeś: 
+                                {homeData?.mostTrained.map(bp => (
+                                    <div className="body-part" key={bp}>
+                                        {translateBodyPart(bp) + ' '}
+                                    </div>
+                                ))} 
+                            </div>
+                            <div> 
+                                W następnym treningu zalecamy trenować: 
+                                <div className="body-part"> {translateBodyPart(homeData?.recommendedBodyPart)} </div>
+                            </div>
                         </div>
                     </div>
                 </div>
