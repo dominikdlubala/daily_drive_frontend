@@ -1,17 +1,20 @@
 import './styles/homePage.css'; 
 import { useNavigate } from 'react-router-dom'; 
 
-// icons
-import { FaCalendarAlt, FaClock, FaFire } from "react-icons/fa";
 import { useEffect, useState } from 'react';
-import { BodyPart, HomePageData, MyError } from '../types';
+import { HomePageData, MyError } from '../types';
 import { fetchHomePageData } from '../services/HomePageService';
+
+import DietSummary from '../components/diet/DIetSumary';
+import LastWorkoutItem from '../components/home/LastWorkoutItem';
+import WorkoutWeekSummary from '../components/home/WorkoutWeekSummary';
+import DietWeekSummary from '../components/home/DietWeekSummary';
 
 export default function HomePage() {
 
     const navigate = useNavigate(); 
     const [homeData, setHomeData] = useState<HomePageData | null>(null);
-    // const [error, setError] = useState<MyError>();
+    const [error, setError] = useState<MyError>();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -19,7 +22,7 @@ export default function HomePage() {
             setIsLoading(true);
             const { data, error } = await fetchHomePageData();
             if(error) {
-                console.error(error)
+                // setError(error);
             } else {
                 setHomeData(data)
                 setIsLoading(false);
@@ -27,76 +30,73 @@ export default function HomePage() {
         }
         fetchData();
     }, [])
-
-    const translateBodyPart = (bodyPart?: BodyPart) => { 
-        switch(bodyPart) {
-            case 'chest': return 'Klatka piersiowa';
-            case 'back': return 'Plecy';
-            case 'shoulders': return 'Barki';
-            case 'legs': return 'Nogi';
-            case 'arms': return 'Ramiona';
-            default: return 'Inne';
-        }
-    }
-
-    return (
-        <div className="page page-home">
+    
+    let content = (
+        <div className="loading-skeleton">
             <div className="section section--home">
-                <div 
-                    className="sub-section workouts-section workouts-section--home"
-                    onClick={() => navigate('/workouts')}
-                >
-                    <h1 className="sub-section--title workouts-title--home">Twój tydzień w treningach</h1>
-                    <div className="sub-section--details workouts-details--home">
-                        <div className="home-workout-summary">
-                            <div> Podniosłeś: {homeData?.weightLifted} kg </div>
-                            <div> Spędziłeś na treningu: {homeData?.timeSpent} min </div>
-                        </div>
-                        <div className="home-workout-graph">
-                            graph
-                        </div>
-                        <div className="home-workout-recommendations">
-                            <div> 
-                                Do tej pory najwięcej trenowałeś: 
-                                {homeData?.mostTrained.map(bp => (
-                                    <div className="body-part" key={bp}>
-                                        {translateBodyPart(bp) + ' '}
-                                    </div>
-                                ))} 
-                            </div>
-                            <div> 
-                                W następnym treningu zalecamy trenować: 
-                                <div className="body-part"> {translateBodyPart(homeData?.recommendedBodyPart)} </div>
-                            </div>
-                        </div>
+                <div className="sub-section">
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-chart"></div>
+                    <div className="skeleton-recommendations">
+                        <div className="skeleton-recommendation"></div>
+                        <div className="skeleton-recommendation"></div>
                     </div>
                 </div>
-                <div 
-                    className="sub-section diet-section diet-section--home"
-                    onClick={() => navigate('/diet')}
-                >
-                    <h1 className=" sub-section--title diet-title--home">Dieta</h1>
-                    <div className="sub-section--details  diet-details--home">
-                        <div className="todays-diet--progress">
-                            Progress bar
-                        </div>
-                        <div className="todays-diet--title">
-                            Twoje posiłki dzisiaj: 
-                        </div>
-                        <div className="todays-diet--details">
-                            <li className="todays-diet--list-item">
-                                Śniadanie: 50g białko 30g tłuszcz 100g węglowodany
-                            </li>
-                            <li className="todays-diet--list-item">
-                                Obiad: 80g białko 50g tłuszcz 120g węglowodany
-                            </li>
-                            <li className="todays-diet--list-item">
-                                Kolacja: 30g białko 30g tłuszcz 90g węglowodany
-                            </li>
-                        </div>
+                <div className="sub-section">
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-chart"></div>
+                </div>
+            </div>
+            <div className="side-section-home">
+                <div className="side-section">
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-diet-summary"></div>
+                </div>
+                <div className="side-section side-section--workout">
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-last-workouts">
+                        <div className="skeleton-workout-item"></div>
+                        <div className="skeleton-workout-item"></div>
+                        <div className="skeleton-workout-item"></div>
                     </div>
                 </div>
             </div>
+        </div>
+    );
+
+    if(!isLoading) {
+        content = (
+            <>
+                <div className="section section--home">
+                    <WorkoutWeekSummary homeData={homeData} />
+                    <DietWeekSummary homeData={homeData} />
+                </div>
+                <div className="side-section-home">
+                    <div className="side-section" onClick={() => navigate('/diet')}>
+                        <h1>Dieta dzisiaj</h1>
+                        <DietSummary 
+                            data={homeData?.dailyDietToday ? homeData?.dailyDietToday : { totalCalories: 0, totalCarbs: 0, totalFat: 0, totalProtein: 0 }} 
+                            dietGoal={homeData?.userGoal}
+                            isHomePage={true}
+                        />
+                    </div>
+                    <div className="side-section side-section--workout" onClick={() => navigate('/workouts')}>
+                        <h1>Ostatnie treningi</h1>
+                        <div className="side-section-items">
+                            {homeData?.lastWorkoutSessions.map(ws => (
+                                <LastWorkoutItem key={ws.id} workoutData={ws} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
+
+    return (
+        <div className="page page-home">
+            {content}
         </div>
     )
 }

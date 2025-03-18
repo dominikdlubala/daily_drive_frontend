@@ -10,6 +10,6 @@ export const fetchHomePageData = async () => {
         return { data }; 
     } catch(err) {
         console.error(err);
-        return { error: { message: 'Unexpected error | fetchHomePageData' } }
+        return { error: { message: 'Unexpected error | fetchProductByName' }}
     }
 }

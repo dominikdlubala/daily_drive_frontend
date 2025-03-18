@@ -158,7 +158,7 @@ export type HomePageData = {
     userGoal: UserGoal;
     dailyDiets: HomePageDailyDietDTO[];
     hardestToReachGoal: string;
-    recommendedInDiet: string;
+    goalDifference: number;
     dailyDietToday?: DailyDiet;
     lastWorkoutSessions: WorkoutSession[];
 }

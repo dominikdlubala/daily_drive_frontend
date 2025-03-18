@@ -36,7 +36,7 @@ export default function WorkoutsList() {
     }
 
     const handleDelete = async (id: number) => {
-        const { data, error } = await deleteWorkoutSession(id); 
+        const { error } = await deleteWorkoutSession(id); 
         if(error) {
             console.error(error); 
         }

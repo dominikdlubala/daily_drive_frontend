@@ -10,7 +10,7 @@ interface WorkoutsListItemProps {
 export const formatDate = (date: string) => date.split('T')[0].split('-').reverse().join('. ')
 
 export default function WorkoutsListItem({ onDelete, workoutsData }: WorkoutsListItemProps) {
-    const { name, startTime, endTime, weightExercises, cardioExercises } = workoutsData;
+    const { name, startTime, weightExercises, cardioExercises } = workoutsData;
     const startDate = formatDate(startTime as string);
 
     return (
