@@ -10,6 +10,7 @@ import ExerciseDetails from "../exercise/ExerciseDetails";
 
 import "../styles/exercise.css";
 import "../styles/workoutForm.css";
+import { useAuth } from "../../hooks/useAuth";
 
 interface WorkoutFreeFormProps {
     handleModalClose: (updatedWorkout?: CurrentWorkout) => void;
@@ -18,6 +19,9 @@ interface WorkoutFreeFormProps {
 type BodyPart = 'chest' | 'back' | 'legs' | 'shoulders' | 'arms' | 'other';
 
 export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormProps) {
+
+  const { token } = useAuth();  
+
   const dispatch = useAppDispatch();
   const currentWorkout = useAppSelector((state) => state.workout.currentWorkout);
 
@@ -31,7 +35,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
   const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchCurrentWorkout());
+    dispatch(fetchCurrentWorkout({ token }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -47,12 +51,15 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
     if (currentWorkout) {
         dispatch(updateCurrentWorkout({
-            ...currentWorkout, 
-            workoutSession: {
-                ...currentWorkout.workoutSession,
-                name: title, 
-                weightExercises, 
-                cardioExercises
+            token, 
+            workout: {
+              ...currentWorkout, 
+              workoutSession: {
+                  ...currentWorkout.workoutSession,
+                  name: title, 
+                  weightExercises, 
+                  cardioExercises
+              }
             }
         }))
         dispatch(updateWorkout({
@@ -76,7 +83,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
 
   const handleExerciseSelect = (exercise: Exercise) => {
     if (exercise.type === "weight") {
-      setWeightExercises([...weightExercises, { name: exercise.name, type: "weight", sets: [], bodyPart: (exercise.bodyPart === 'cardio' ? 'other' : exercise.bodyPart) }]);
+      setWeightExercises([...weightExercises, { name: exercise.name, type: "weight", sets: [], bodyPart: (exercise.bodyPart) }]);
     } else {
       setCardioExercises([...cardioExercises, { name: exercise.name, type: "cardio", intensity: 0, duration: 0 }]);
     }
@@ -120,16 +127,19 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
       dispatch(updateCurrentWorkout({
-        ...currentWorkout, 
-        workoutSession: {
-            ...currentWorkout.workoutSession,
-            name: title, 
-            endTime: new Date().toISOString(),
-            weightExercises, 
-            cardioExercises
+        token, 
+        workout: {
+          ...currentWorkout, 
+          workoutSession: {
+              ...currentWorkout.workoutSession,
+              name: title, 
+              endTime: new Date().toISOString(),
+              weightExercises, 
+              cardioExercises
+          }
         }
       }))
-      dispatch(endCurrentWorkout(currentWorkout.id as number));
+      dispatch(endCurrentWorkout({token, id: currentWorkout.id as number}));
       dispatch(endWorkout()); 
       dispatch(resetWorkout());
       handleModalClose && handleModalClose();
@@ -144,6 +154,8 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
         dispatch(updateWorkout(currentWorkout.workoutSession));
     } else {
         dispatch(startCurrentWorkout({
+          token, 
+          workout: {
             workoutSession: {
                 name: title, 
                 weightExercises, 
@@ -151,6 +163,7 @@ export default function WorkoutFreeForm2({ handleModalClose }: WorkoutFreeFormPr
                 startTime: new Date().toISOString(), 
                 endTime: new Date().toISOString()
             }
+          }
         }));
     }
     dispatch(resetWorkout());

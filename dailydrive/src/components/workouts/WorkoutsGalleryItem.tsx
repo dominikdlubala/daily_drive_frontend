@@ -3,6 +3,7 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import type { CurrentWorkout, ExerciseSet, WorkoutTemplate } from "../../types";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { startCurrentWorkout } from "../../store";
+import { useAuth } from "../../hooks/useAuth";
 interface WorkoutsGalleryItemProps {
     workoutData: WorkoutTemplate
     onEdit: (template: WorkoutTemplate) => void; 
@@ -18,7 +19,7 @@ const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
                 name: ex.name, 
                 type: ex.type,
                 sets: [] as ExerciseSet[],
-                bodyPart: ex.bodyPart === 'cardio' ? 'other' : ex.bodyPart
+                bodyPart: ex.bodyPart
             })),
             cardioExercises: template.exercises.filter(ex => ex.type === 'cardio').map(ex => ({
                 name: ex.name, 
@@ -32,12 +33,14 @@ const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
 
 export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: WorkoutsGalleryItemProps) {
 
+    const { token } = useAuth(); 
+
     const dispatch = useAppDispatch(); 
 
     const startWorkoutData: CurrentWorkout = templateToCurrent(workoutData);
 
     const handleClick = () => {
-        dispatch(startCurrentWorkout(startWorkoutData));
+        dispatch(startCurrentWorkout({token, workout: startWorkoutData}));
     }
 
     return (

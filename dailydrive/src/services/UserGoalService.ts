@@ -1,8 +1,14 @@
 const API_URL = 'api/UserGoal';
 
-export const getUserGoals = async (token: string) => {
+export const getUserGoals = async (token: string | null) => {
     try {
-        const response = await fetch(API_URL)
+        const response = await fetch(API_URL, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
         if(!response.ok) return { error: { message: await response.text() } }
         const data = await response.json(); 
         return { data }; 

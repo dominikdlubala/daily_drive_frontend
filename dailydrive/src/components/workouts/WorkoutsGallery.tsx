@@ -4,9 +4,12 @@ import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updat
 import { WorkoutTemplate, WorkoutTemplateApiReturn } from "../../types";
 import Modal from "../primitives/Modal";
 import WorkoutTemplateForm, { WorkoutTemplateFormValues } from "./WorkoutTemplateForm";
+import { useAuth } from "../../hooks/useAuth";
 
 
 export default function WorkoutsGallery() {
+
+    const { token } = useAuth(); 
 
     const [templates, setTemplates] = useState<WorkoutTemplateApiReturn | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -14,15 +17,15 @@ export default function WorkoutsGallery() {
 
     useEffect(() => {
         const fetchTemplates = async () => {
-            const response = await fetchWorkoutTemplates(); 
+            const response = await fetchWorkoutTemplates(token as string); 
             setTemplates(response); 
         }
 
         fetchTemplates(); 
-    }, []); 
+    }, [token]); 
 
     const refreshTemplates = async () => {
-        const response = await fetchWorkoutTemplates();
+        const response = await fetchWorkoutTemplates(token as string);
         setTemplateToUpdate(undefined);
         setTemplates(response);
     }
@@ -34,12 +37,12 @@ export default function WorkoutsGallery() {
 
     const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
         if(add) {
-            await addWorkoutTemplate({
+            await addWorkoutTemplate(token as string, {
                 name: formValues.name, 
                 exercises: formValues.exercises
             } as Omit<WorkoutTemplate, 'id'>)
         } else {
-            await updateWorkoutTemplate({
+            await updateWorkoutTemplate(token as string, {
                 id:  formValues.id,
                 name: formValues.name, 
                 exercises: formValues.exercises
@@ -56,7 +59,7 @@ export default function WorkoutsGallery() {
     }
 
     const handleDelete = async (id: number) => {
-        await deleteWorkoutTemplate(id); 
+        await deleteWorkoutTemplate(token as string, id); 
         await refreshTemplates(); 
     }
 

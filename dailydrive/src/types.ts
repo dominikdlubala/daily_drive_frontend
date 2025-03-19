@@ -100,7 +100,7 @@ export type Exercise = {
     id?: number;
     name: string; 
     type: "weight" | "cardio"; 
-    bodyPart: 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'cardio' | 'other';
+    bodyPart: BodyPart;
 }
 
 export type ExerciseApiReturn = {
@@ -175,4 +175,4 @@ export type HomePageDailyDietDTO = {
     date: Date;
 }
 
-export type BodyPart = 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other' 
+export type BodyPart = 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other'

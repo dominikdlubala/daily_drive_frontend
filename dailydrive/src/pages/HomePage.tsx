@@ -17,7 +17,7 @@ export default function HomePage() {
 
     const navigate = useNavigate(); 
     const [homeData, setHomeData] = useState<HomePageData | null>(null);
-    const [error, setError] = useState<MyError>();
+    const [error, setError] = useState<string>();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -25,7 +25,8 @@ export default function HomePage() {
             setIsLoading(true);
             const { data, error } = await fetchHomePageData(token as string);
             if(error) {
-                // setError(error);
+                setError(error);
+                setIsLoading(false);
             } else {
                 setHomeData(data)
                 setIsLoading(false);

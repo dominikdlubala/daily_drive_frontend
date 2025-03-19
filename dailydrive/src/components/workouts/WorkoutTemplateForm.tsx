@@ -2,7 +2,7 @@ import '../styles/workoutForm.css';
 import { FormEvent, useState } from 'react'; 
 import { FaTrashAlt } from "react-icons/fa";
 
-import type { Exercise, WorkoutTemplate } from '../../types';
+import type { BodyPart, Exercise, WorkoutTemplate } from '../../types';
 import ExerciseSearch from '../exercise/ExerciseSearch';
 
 export type WorkoutTemplateFormValues = {
@@ -32,6 +32,8 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
             updatedExercises[index].name = value;
         } else if (field === 'type') {
             updatedExercises[index].type = value as 'weight' | 'cardio';
+        } else if (field === 'bodyPart') {
+            updatedExercises[index].bodyPart = value as BodyPart;
         }
         setExercises(updatedExercises);
     }
@@ -91,6 +93,18 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                             >
                                 <option value="weight">Siłowe</option>
                                 <option value="cardio">Cardio</option>
+                            </select>
+                            <select 
+                                className="form-select form-select--workout-template custom-select"
+                                value={exercise.type}
+                                onChange={(e: FormEvent<HTMLSelectElement>) => updateExercise(index, 'bodyPart', e.currentTarget.value)}
+                            >
+                                <option value="Chest">Klatka piersiowa</option>
+                                <option value="Back">Plecy</option>
+                                <option value="Legs">Nogi</option>
+                                <option value="Shoulders">Barki</option>
+                                <option value="Arms">Ramiona</option>
+                                <option value="Other">Inne</option>
                             </select>
                             <button 
                                 type="button"

@@ -44,10 +44,10 @@ const initialWorkoutState: WorkoutState = {
     currentWorkout: loadWorkoutFromStorage(),
 };
 
-export const fetchCurrentWorkout = createAsyncThunk<CurrentWorkout | null, void>(
+export const fetchCurrentWorkout = createAsyncThunk<CurrentWorkout | null, { token: string | null }>(
     'workout/fetchCurrentWorkout',
-    async (_, { rejectWithValue }) => {
-        const response = await fetchWorkoutApi();
+    async ({ token }, { rejectWithValue }) => {
+        const response = await fetchWorkoutApi(token);
         if (response.error) {
             return rejectWithValue(response.error.message);
         }
@@ -55,10 +55,10 @@ export const fetchCurrentWorkout = createAsyncThunk<CurrentWorkout | null, void>
     }
 );
 
-export const startCurrentWorkout = createAsyncThunk<CurrentWorkout | null, CurrentWorkout>(
+export const startCurrentWorkout = createAsyncThunk<CurrentWorkout | null, { workout: CurrentWorkout, token: string | null }>(
     'workout/startCurrentWorkout',
-    async (workout, { rejectWithValue }) => {
-        const response = await startWorkoutApi(workout);
+    async ({ token, workout }, { rejectWithValue }) => {
+        const response = await startWorkoutApi(token, workout);
         if (response.error) {
             return rejectWithValue(response.error.message);
         }
@@ -66,10 +66,10 @@ export const startCurrentWorkout = createAsyncThunk<CurrentWorkout | null, Curre
     }
 );
 
-export const updateCurrentWorkout = createAsyncThunk<CurrentWorkout | null, CurrentWorkout>(
+export const updateCurrentWorkout = createAsyncThunk<CurrentWorkout | null, { workout: CurrentWorkout, token: string | null }>(
     'workout/updateCurrentWorkout',
-    async (workout, { rejectWithValue }) => {
-        const response = await updateWorkoutApi(workout);
+    async ({ token, workout }, { rejectWithValue }) => {
+        const response = await updateWorkoutApi(token, workout);
         if(response.error) {
             return rejectWithValue(response.error.message);
         }
@@ -77,10 +77,10 @@ export const updateCurrentWorkout = createAsyncThunk<CurrentWorkout | null, Curr
     }
 );
 
-export const endCurrentWorkout = createAsyncThunk<CurrentWorkout | null, number>(
+export const endCurrentWorkout = createAsyncThunk<CurrentWorkout | null, { id: number, token: string | null }>(
     'workout/endCurrentWorkout',
-    async (id, { rejectWithValue }) => {
-        const response = await endWorkoutApi(id); 
+    async ({ token, id }, { rejectWithValue }) => {
+        const response = await endWorkoutApi(token, id); 
         if(response.error) {
             return rejectWithValue(response.error.message);
         }

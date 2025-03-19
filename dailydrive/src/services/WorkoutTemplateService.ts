@@ -2,9 +2,15 @@ import { WorkoutTemplate, WorkoutTemplateApiReturn } from "../types";
 
 const API_URL = 'api/WorkoutTemplate'
 
-export const fetchWorkoutTemplates = async (): Promise<WorkoutTemplateApiReturn> => {
+export const fetchWorkoutTemplates = async (token: string): Promise<WorkoutTemplateApiReturn> => {
     try {
-        const response = await fetch(API_URL); 
+        const response = await fetch(API_URL, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }); 
         if(!response.ok) {
             return { error: { message: await response.text() }}
         }
@@ -15,12 +21,13 @@ export const fetchWorkoutTemplates = async (): Promise<WorkoutTemplateApiReturn>
     }
 }
 
-export const addWorkoutTemplate = async (template: Omit<WorkoutTemplate, 'id'>): Promise<WorkoutTemplateApiReturn> => {
+export const addWorkoutTemplate = async (token: string, template: Omit<WorkoutTemplate, 'id'>): Promise<WorkoutTemplateApiReturn> => {
     try {
         const response = await fetch(API_URL, {
             method: 'POST', 
             headers: {
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }, 
             body: JSON.stringify(template)
         }); 
@@ -35,14 +42,14 @@ export const addWorkoutTemplate = async (template: Omit<WorkoutTemplate, 'id'>):
     }
 }
 
-export const updateWorkoutTemplate = async (template: WorkoutTemplate): Promise<WorkoutTemplateApiReturn> => {
+export const updateWorkoutTemplate = async (token: string, template: WorkoutTemplate): Promise<WorkoutTemplateApiReturn> => {
     try {
-        console.log(JSON.stringify(template))
 
         const response = await fetch(`${API_URL}/${template.id}`, {
             method: 'PUT', 
             headers: {
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${token}`
             }, 
             body: JSON.stringify(template)
         }); 
@@ -57,10 +64,14 @@ export const updateWorkoutTemplate = async (template: WorkoutTemplate): Promise<
     }
 }
 
-export const deleteWorkoutTemplate = async (id: number): Promise<WorkoutTemplateApiReturn> => {
+export const deleteWorkoutTemplate = async (token: string, id: number): Promise<WorkoutTemplateApiReturn> => {
     try {
         const response = await fetch(`${API_URL}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         }); 
         if(!response.ok) return { error: { message: await response.text() }}
         // const data = await response.json(); 
