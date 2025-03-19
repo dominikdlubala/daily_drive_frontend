@@ -16,10 +16,7 @@ export const findUser = async (username: string, password: string): Promise<User
         })
 
         if(!response.ok) {
-            if(response.status === 404){
-                return { token: null, error: { error: true, message: 'User not found' } } 
-            }
-            return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUSer' } }
+            return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
         }
 
         const data = await response.json(); 
@@ -50,6 +47,7 @@ export const loginUser = async (username: string, password: string): Promise<Use
         }
 
         const data = await response.json() as { token: string }; 
+
         return { token: data.token };  
     } catch (error) {
         return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }

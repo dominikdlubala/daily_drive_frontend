@@ -38,10 +38,10 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
             <h1 className=" sub-section--title diet-title--home">Twój tydzień w diecie</h1>
             <div className="sub-section--details  diet-details--home">
                 <div className="home-diet-summary">
-                    <div> Średnio kcal: <span>{homeData?.averageCal} / {homeData?.userGoal.goalCalories} kcal</span></div>
-                    <div> Średnio białka: <span>{homeData?.averageProtein} / {homeData?.userGoal.goalProtein} g</span></div>
-                    <div> Średnio węglowodanów: <span>{homeData?.averageCarbs} / {homeData?.userGoal.goalCarbs} g</span></div>
-                    <div> Średnio tłuszczy: <span>{homeData?.averageFat} / {homeData?.userGoal.goalFat} g</span></div>
+                    <div> Średnio kcal: <span>{homeData?.averageCal || 0} / {homeData?.userGoal.goalCalories} kcal</span></div>
+                    <div> Średnio białka: <span>{homeData?.averageProtein || 0} / {homeData?.userGoal.goalProtein} g</span></div>
+                    <div> Średnio węglowodanów: <span>{homeData?.averageCarbs || 0} / {homeData?.userGoal.goalCarbs} g</span></div>
+                    <div> Średnio tłuszczy: <span>{homeData?.averageFat || 0} / {homeData?.userGoal.goalFat} g</span></div>
                 </div>
                 <div className="home-workout-graph">
                     <ResponsiveContainer width="100%" height={300}>

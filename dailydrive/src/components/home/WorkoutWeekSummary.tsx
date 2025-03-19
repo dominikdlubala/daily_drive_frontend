@@ -38,8 +38,8 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
             <h1 className="sub-section--title workouts-title--home">Twój tydzień w treningach</h1>
             <div className="sub-section--details workouts-details--home">
                 <div className="home-workout-summary">
-                    <div> Łącznie podniosłeś: <span>{homeData?.weightLifted} kg</span></div>
-                    <div> Spędziłeś na treningu: <span>{homeData?.timeSpent} min</span></div>
+                    <div> Łącznie podniosłeś: <span>{homeData?.weightLifted || 0} kg</span></div>
+                    <div> Spędziłeś na treningu: <span>{homeData?.timeSpent || 0} min</span></div>
                 </div>
                 <div className="home-workout-graph">
                     <ResponsiveContainer width="100%" height={300}>

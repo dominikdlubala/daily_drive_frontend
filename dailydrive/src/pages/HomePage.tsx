@@ -9,8 +9,11 @@ import DietSummary from '../components/diet/DIetSumary';
 import LastWorkoutItem from '../components/home/LastWorkoutItem';
 import WorkoutWeekSummary from '../components/home/WorkoutWeekSummary';
 import DietWeekSummary from '../components/home/DietWeekSummary';
+import { useAuth } from '../hooks/useAuth';
 
 export default function HomePage() {
+
+    const { token } = useAuth();
 
     const navigate = useNavigate(); 
     const [homeData, setHomeData] = useState<HomePageData | null>(null);
@@ -20,7 +23,7 @@ export default function HomePage() {
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
-            const { data, error } = await fetchHomePageData();
+            const { data, error } = await fetchHomePageData(token as string);
             if(error) {
                 // setError(error);
             } else {
