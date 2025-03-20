@@ -19,19 +19,15 @@ export default function RegisterPage() {
     const navigate = useNavigate(); 
 
     const onSubmit: SubmitHandler<RegisterFormValues> = async (formValues: RegisterFormValues) => {
-        try {
-            const { error } = await registerUser(formValues); 
-            if(error){
-                setIsError({ error: true, message: error.message }); 
-            } else {
-                setIsSuccess(true); 
-                setTimeout(() => {
-                    navigate('/login'); 
-                }, 3500); 
-            }
-        } catch(error) {
-            setIsError({ error: true, message: 'Unexpected error with registering a user'})
-            setIsSuccess(false); 
+        console.log(formValues);
+        const { error } = await registerUser(formValues); 
+        if(error){
+            setIsError({ error: true, message: error.message }); 
+        } else {
+            setIsSuccess(true); 
+            setTimeout(() => {
+                navigate('/login'); 
+            }, 3500); 
         }
     }
 

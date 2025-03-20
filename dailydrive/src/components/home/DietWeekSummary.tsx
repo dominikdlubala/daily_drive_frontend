@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { HomePageData } from "../../types";
 import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
@@ -6,6 +7,14 @@ interface DietWeekSummaryProps {
 }
 
 export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
+
+    const [showError, setShowError] = useState(false);
+
+    useEffect(() => {
+        if(!homeData?.dailyDiets.some(dd => dd.totalCalories !== 0)) {
+            setShowError(true);
+        }
+    }, [homeData])
 
     const generateChartData = () => {
         const daysOfWeek = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
@@ -36,6 +45,7 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
             className="sub-section diet-section diet-section--home"
         >
             <h1 className=" sub-section--title diet-title--home">Twój tydzień w diecie</h1>
+            { showError && <div className="week-summary--error">Dodaj więcej danych aby zobaczyć statystyki</div>}
             <div className="sub-section--details  diet-details--home">
                 <div className="home-diet-summary">
                     <div> Średnio kcal: <span>{homeData?.averageCal || 0} / {homeData?.userGoal.goalCalories} kcal</span></div>

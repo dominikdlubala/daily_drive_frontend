@@ -1,11 +1,20 @@
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { BodyPart, HomePageData } from '../../types';
+import { useEffect, useState } from 'react';
 
 interface WorkoutWeekSummaryProps {
     homeData: HomePageData | null;
 }
 
 export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps) {
+
+    const [showError, setShowError] = useState(false);
+
+    useEffect(() => {
+        if(homeData?.weightLifted === 0) {
+            setShowError(true);
+        }
+    }, [homeData])
 
     const translateBodyPart = (bodyPart?: BodyPart) => { 
         switch(bodyPart) {
@@ -36,6 +45,7 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
             className="sub-section workouts-section workouts-section--home"
         >
             <h1 className="sub-section--title workouts-title--home">Twój tydzień w treningach</h1>
+            { showError && <div className="week-summary--error">Dodaj więcej danych aby zobaczyć statystyki</div>}
             <div className="sub-section--details workouts-details--home">
                 <div className="home-workout-summary">
                     <div> Łącznie podniosłeś: <span>{homeData?.weightLifted || 0} kg</span></div>

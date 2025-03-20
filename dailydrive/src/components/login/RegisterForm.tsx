@@ -41,9 +41,9 @@ export const calculateMacro = (gender: Gender, height: number, weight: number, a
                 return 0;
         }
     }
-    if(gender === 'male') {
+    if(gender === 'Male') {
         bmr = (13.7516 * weight) + (5.0033 * height) - (6.7550 * age) + 66.4730;
-    } else if (gender === 'female') {
+    } else if (gender === 'Female') {
         bmr = (9.5634 * weight) + (1.8500 * height) - (4.6760 * age) + 655.0955;
     } else {
         bmr = (((13.7516+9.5634)/2) * weight) + (((5.0033+1.8500)/2) * height) - (((6.7550+4.6760/2)) * age) + ((66.4730+655.0955)/2);
@@ -196,9 +196,9 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                     { ...register("gender", { required: { value: true, message: 'To pole jest wymagane'} })}
                 >
                     <option value="" disabled>Wybierz płeć</option>
-                    <option value="male">Mężczyzna</option>
-                    <option value="female">Kobieta</option>
-                    <option value="other">Inne</option>
+                    <option value="Male">Mężczyzna</option>
+                    <option value="Female">Kobieta</option>
+                    <option value="Other">Inne</option>
                 </select>
                 { errors.gender && <span className="input-validate">{errors.gender.message}</span> }
             </div>

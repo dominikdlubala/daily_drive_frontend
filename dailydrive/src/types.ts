@@ -4,14 +4,16 @@ export type User = {
     // password: string; 
     firstName?: string | null; 
     lastName?: string | null; 
-    height?: number; 
-    weight?: number;
+    email?: string; 
+    height: number; 
+    weight: number;
     gender: Gender;
     activityLevel: ActivityLevel;
     registrationDate?: Date; 
+    userGoal?: UserGoal; 
 }
 
-export type Gender = 'male' | 'female' | 'other';
+export type Gender = 'Male' | 'Female' | 'Other';
 export type ActivityLevel = 'LowActivity' | 'MediumActivity' | 'HighActivity';
 export type WeightGoal = 'WeightLoss' | 'WeightGain' | 'WeightMaintenance';
 

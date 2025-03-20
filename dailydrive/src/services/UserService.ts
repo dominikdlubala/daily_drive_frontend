@@ -1,30 +1,7 @@
+import { RegisterFormValues } from '../components/login/RegisterForm';
 import type { UserLoginApiReturn } from '../types'; 
 
 const API_URL = '/api/User'; 
-
-// export const findUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
-//     try {
-//         const response = await fetch(`${API_URL}/find`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 username: username, 
-//                 password: password
-//             })
-//         })
-
-//         if(!response.ok) {
-//             return { token: null, error: { error: true, message: await response.text() } }
-//         }
-
-//         const data = await response.json(); 
-//         return { token: data };  
-//     } catch (error) {
-//         return { token: null, error: { error: true, message: 'Unexpected error in UserService/findUser' } }
-//     }
-// }
 
 export const loginUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
     try {
@@ -51,22 +28,15 @@ export const loginUser = async (username: string, password: string): Promise<Use
     }
 }
 
-export const registerUser = async ({ firstName, lastName, email, username, password }: { firstName: string, lastName: string, email: string, username: string, password: string }): Promise<UserLoginApiReturn> => {
+export const registerUser = async (formValues: RegisterFormValues): Promise<UserLoginApiReturn> => {
     try {
-        console.log(email, username, password)
 
         const response = await fetch(`${API_URL}/register`, {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json', 
             }, 
-            body: JSON.stringify({
-                firstName: firstName, 
-                lastName: lastName,
-                email: email, 
-                username: username, 
-                password: password
-            })
+            body: JSON.stringify(formValues)
         }); 
 
         if (!response.ok) {
@@ -80,3 +50,20 @@ export const registerUser = async ({ firstName, lastName, email, username, passw
     }
 }
 
+export const getUserData = async (token: string | null) => {
+    try {
+        const response = await fetch(`${API_URL}`, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if(!response.ok) return { error: { message: await response.text() } }
+        const data = await response.json();
+        return { data };
+    } catch(err) {
+        console.error(err); 
+        return { error: { message: 'Unexpected error | fetchProductByName' }}
+    }
+}

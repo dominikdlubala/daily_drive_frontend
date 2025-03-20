@@ -20,7 +20,10 @@ export default function Header() {
                 { 
                     token 
                     ? 
-                    <li className="link link-header--login" onClick={() => logout()}>Wyloguj</li> 
+                    <>
+                        <div className="link link-header--login" onClick={() => navigate('/account')}>Moje Konto</div>
+                        <div className="link link-header--login" onClick={() => logout()}>Wyloguj</div> 
+                    </>
                     : 
                     <li className="link link-header--login" onClick={() => navigate('/login')}>Zaloguj się</li>
                 }

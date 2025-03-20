@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage'; 
 import WorkoutsPage from './pages/WorkoutsPage';
 import DietPage from './pages/DietPage';
+import AccountPage from './pages/AccountPage';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,12 @@ const router = createBrowserRouter([
                   <DietPage />
                 </ProtectedRoute>
 
+      }, 
+      {
+        path: '/account', 
+        element: <ProtectedRoute>
+                  <AccountPage/>
+                </ProtectedRoute>
       }
     ]
   }

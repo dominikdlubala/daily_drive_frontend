@@ -33,7 +33,7 @@ export default function HomePage() {
             }
         }
         fetchData();
-    }, [])
+    }, [token])
     
     let content = (
         <div className="loading-skeleton">

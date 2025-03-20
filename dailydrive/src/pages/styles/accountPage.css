@@ -1,0 +1,34 @@
+
+.page-account {
+    display: flex; 
+    justify-content: center;
+    width: 100vw; 
+}
+
+.user-data {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 60vw; 
+    max-width: 1600px; 
+    border: 2px solid black; 
+    border-radius: 30px;
+    padding: 2rem 2rem; 
+    gap: 1rem; 
+}
+
+.user-header {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+}
+
+.avatar-image {
+    height: 200px; 
+}
+
+.user-name {
+    font-size: 4rem; 
+    font-weight: bold; 
+    margin-right: 5rem; 
+}

@@ -96,6 +96,9 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                             </select>
                             <select 
                                 className="form-select form-select--workout-template custom-select"
+                                style={{
+                                    display: exercise.type === 'weight' ? 'block' : 'none'
+                                }}
                                 value={exercise.type}
                                 onChange={(e: FormEvent<HTMLSelectElement>) => updateExercise(index, 'bodyPart', e.currentTarget.value)}
                             >

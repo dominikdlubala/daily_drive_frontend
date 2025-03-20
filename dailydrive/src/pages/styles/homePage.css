@@ -162,6 +162,14 @@
     text-align: center;
 }
 
+.week-summary--error {
+    background-color: #e63d3d;
+    color: #fff; 
+    padding: 0.75rem;
+    border-radius: 10px; 
+
+}
+
 /* skeleton */
 .loading-skeleton {
     display: flex;
