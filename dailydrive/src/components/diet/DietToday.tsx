@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { addMeal, deleteMeal, fetchDietByDate, updateMeal } from '../../services/DietService';
 import Modal from '../primitives/Modal';
 import MealForm from './MealForm';
+import { useAuth } from '../../hooks/useAuth';
 
 interface DietTodayProps {
     date: Date;
@@ -14,6 +15,8 @@ interface DietTodayProps {
 }
 
 export default function DietToday({ date, dietGoal }: DietTodayProps) {
+
+    const { token } = useAuth();
     
     const [dietData, setDietData] = useState<DailyDiet | null>(null);
     const [modalOpen, setModalOpen] = useState(false); 
@@ -21,7 +24,7 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data, error } = await fetchDietByDate(date);
+            const { data, error } = await fetchDietByDate(token, date);
             if(error) {
                 setDietData(null); 
             } else {
@@ -29,9 +32,7 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
             }
         }
         fetchData(); 
-    }, [date]);
-
-    console.log(dietData); 
+    }, [date, token]);
 
     const handleMealChange = (meal?: Meal) => {
         setFormData(meal);
@@ -39,7 +40,7 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
     }
 
     const refetchData = async () => {
-        const { data, error } = await fetchDietByDate(date);
+        const { data, error } = await fetchDietByDate(token, date);
         if(error) {
             setDietData(null); 
         } else {
@@ -48,7 +49,7 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
     }
     
     const handleMealDelete = async (id: number) => {
-        const { error } = await deleteMeal(id);
+        const { error } = await deleteMeal(token, id);
         if(error) {
             console.error(error.message);
         }
@@ -58,12 +59,12 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
 
     const handleFormSubmit = async (meal: Meal) => {
         if(meal.id) {
-            const { error } = await updateMeal(meal);   
+            const { error } = await updateMeal(token, meal);   
             if(error) {
                 console.error(error.message);
             }          
         } else {
-            const { error } = await addMeal({
+            const { error } = await addMeal(token, {
                 ...meal, 
                 date
             });

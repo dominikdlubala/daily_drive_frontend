@@ -4,9 +4,15 @@ const API_URL = 'api/DailyDiet';
 const API_URL_MEAL = 'api/Meal';
 const API_URL_PROD = 'api/Product';
 
-export const fetchDietByDate = async (date: Date) => {
+export const fetchDietByDate = async (token: string | null, date: Date) => {
     try {
-        const response = await fetch(`${API_URL}/${date.toISOString()}`)
+        const response = await fetch(`${API_URL}/${date.toISOString()}`, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
         if(!response.ok) return { error: { message: await response.text() } }
         const data = await response.json(); 
         return { data }; 
@@ -27,12 +33,13 @@ export const fetchProductByName = async (name: string) => {
     }
 }
 
-export const addMeal = async (meal: Meal) => {
+export const addMeal = async (token: string | null, meal: Meal) => {
     try {
         const response = await fetch(`${API_URL_MEAL}`, {
             method: 'POST', 
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(meal)
         })
@@ -46,12 +53,13 @@ export const addMeal = async (meal: Meal) => {
     }
 }
 
-export const updateMeal = async (meal: Meal) => {
+export const updateMeal = async (token: string | null, meal: Meal) => {
     try {
         const response = await fetch(`${API_URL_MEAL}/${meal.id}`, {
             method: 'PUT', 
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(meal)
         })
@@ -65,10 +73,14 @@ export const updateMeal = async (meal: Meal) => {
     }
 }
 
-export const deleteMeal = async (id: number) => {
+export const deleteMeal = async (token: string | null, id: number) => {
     try {
         const response = await fetch(`${API_URL_MEAL}/${id}`, {
             method: 'DELETE', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         })
         if(!response.ok) {
             return { error: { message: await response.text() } }

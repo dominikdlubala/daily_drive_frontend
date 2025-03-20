@@ -1,11 +1,19 @@
 export type User = {
     id: number; 
     username: string; 
-    password: string; 
+    // password: string; 
     firstName?: string | null; 
     lastName?: string | null; 
+    height?: number; 
+    weight?: number;
+    gender: Gender;
+    activityLevel: ActivityLevel;
     registrationDate?: Date; 
 }
+
+export type Gender = 'male' | 'female' | 'other';
+export type ActivityLevel = 'LowActivity' | 'MediumActivity' | 'HighActivity';
+export type WeightGoal = 'WeightLoss' | 'WeightGain' | 'WeightMaintenance';
 
 export type UserGoal = {
     id?: number; 
@@ -13,6 +21,11 @@ export type UserGoal = {
     goalProtein: number;
     goalCarbs: number;
     goalFat: number;
+}
+
+export type RegisterDTO = {
+    user: User; 
+    userGoal: UserGoal; 
 }
 
 export type UserApiReturn = {

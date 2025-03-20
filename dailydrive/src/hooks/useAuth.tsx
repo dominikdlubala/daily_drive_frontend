@@ -76,6 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setToken(null);
+    navigate('/login')
   };
 
   const isTokenExpired = (token: string): boolean => {

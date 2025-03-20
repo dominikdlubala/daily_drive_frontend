@@ -14,7 +14,7 @@ type FormValues = {
 export default function LoginPage() {
 
     const { login } = useAuth(); 
-    const [isError, setIsError] = useState<boolean>(false); 
+    const [error, setError] = useState<string | undefined>(); 
 
     const { 
         register, 
@@ -23,12 +23,8 @@ export default function LoginPage() {
     } = useForm<FormValues>(); 
 
     const onSubmit: SubmitHandler<FormValues> = async ({ username, password }) => {
-        try {
-            const { error } = await login({ username, password }); 
-            error && setIsError(true)
-        } catch(error) {
-            setIsError(true); 
-        }
+        const { error } = await login({ username, password }); 
+        error && setError(error.message)
     }
 
     return (
@@ -58,7 +54,7 @@ export default function LoginPage() {
                                 required:{
                                     value: true, 
                                     message: 'Hasło jest wymagane'
-                                }
+                                }, 
                             })}
                         />
                     </div>
@@ -66,7 +62,7 @@ export default function LoginPage() {
                         <span className="input-validate">{Object.entries(errors)[0][1].message}</span>
                     )}
                     {
-                        isError && <span className="input-validate input-validate--login">Użytkownik nie istnieje lub błąd połączenia z bazą</span>
+                        error && <span className="input-validate input-validate--login">{error}</span>
                     }
                     <button 
                         className="btn-submit--login"

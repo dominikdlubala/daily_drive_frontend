@@ -29,11 +29,16 @@ const router = createBrowserRouter([
       }, 
       {
         path: '/workouts', 
-        element: <WorkoutsPage />
+        element: <ProtectedRoute>
+                  <WorkoutsPage />
+                </ProtectedRoute>
       }, 
       {
         path: '/diet', 
-        element: <DietPage />
+        element: <ProtectedRoute>
+                  <DietPage />
+                </ProtectedRoute>
+
       }
     ]
   }
