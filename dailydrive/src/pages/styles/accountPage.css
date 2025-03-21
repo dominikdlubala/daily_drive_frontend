@@ -32,3 +32,36 @@
     font-weight: bold; 
     margin-right: 5rem; 
 }
+
+.user-main-data {
+    border: 2px solid black; 
+    border-radius: 15px; 
+    padding: 1rem; 
+}
+
+.user-data-head {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-edit {
+    background-color: var(--primary-color); 
+    color: white; 
+    padding: 0.75rem 1rem; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+.user-main-data--title {
+    padding: 0.5rem; 
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.user-data--item {
+    display: flex; 
+    padding: 0.5rem; 
+    justify-content: space-between;
+}

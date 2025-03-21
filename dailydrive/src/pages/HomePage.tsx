@@ -87,9 +87,15 @@ export default function HomePage() {
                     <div className="side-section side-section--workout" onClick={() => navigate('/workouts')}>
                         <h1>Ostatnie treningi</h1>
                         <div className="side-section-items">
-                            {homeData?.lastWorkoutSessions.map(ws => (
-                                <LastWorkoutItem key={ws.id} workoutData={ws} />
-                            ))}
+                            {
+                                homeData?.lastWorkoutSessions.length === 0
+                                ?
+                                <div className="no-workouts">Nie masz jeszcze żadnych treningów</div>
+                                :
+                                homeData?.lastWorkoutSessions.map(ws => (
+                                    <LastWorkoutItem key={ws.id} workoutData={ws} />
+                                ))
+                            }
                         </div>
                     </div>
                 </div>

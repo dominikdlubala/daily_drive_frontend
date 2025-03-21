@@ -49,8 +49,8 @@ export const calculateMacro = (gender: Gender, height: number, weight: number, a
         bmr = (((13.7516+9.5634)/2) * weight) + (((5.0033+1.8500)/2) * height) - (((6.7550+4.6760/2)) * age) + ((66.4730+655.0955)/2);
     }
     const calories = bmr * activityLevelMultiplier[activityLevel] + weightGoalMultiplier(bmr, weightGoal);
-    const protein = (calories * 0.4) / 4; 
-    const carbs = (calories * 0.4) / 4; 
+    const protein = (calories * 0.35) / 4; 
+    const carbs = (calories * 0.45) / 4; 
     const fat = (calories * 0.2) / 9;
     return {
         calories: Math.round(calories),
@@ -233,6 +233,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                     <option value="WeightGain">Chcę nabrać masy</option>
                     <option value="WeightMaintenance">Chcę utrzymać wagę</option>
                 </select>
+                { errors.weightGoal && <span className="input-validate">{errors.weightGoal.message}</span> }
             </div>  
             <div className="form-macro-inputs">
                 <div className="form-group">
@@ -247,6 +248,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                             }, 
                         }) }
                     />
+               { errors.goalCalories && <span className="input-validate">{errors.goalCalories.message}</span> }                    
                 </div>  
                 <div className="form-group">
                     <label className="form-label">Cel białka (g) *</label>
@@ -260,6 +262,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                             }, 
                         }) }
                     />
+               { errors.goalProtein && <span className="input-validate">{errors.goalProtein.message}</span> }                    
                 </div>  
                 <div className="form-group">
                     <label className="form-label">Cel węglowodanów (g) *</label>
@@ -273,6 +276,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                             }, 
                         }) }
                     />
+               { errors.goalCarbs && <span className="input-validate">{errors.goalCarbs.message}</span> }                    
                 </div>  
                 <div className="form-group">
                     <label className="form-label">Cel tłuszczu (g) *</label>
@@ -286,6 +290,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                             }, 
                         }) }
                     />
+               { errors.goalFat && <span className="input-validate">{errors.goalFat.message}</span> }                    
                 </div>  
             </div>
             {
@@ -307,6 +312,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                         }
                     }) }
                 />
+                { errors.username && <span className="input-validate">{errors.username.message}</span> }
             </div>
             <div className="form-group">
                 <label className="form-label">Hasło</label>
@@ -317,9 +323,18 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                         required: {
                             value: true, 
                             message: 'Hasło jest wymagane'
+                        },
+                        minLength: {
+                            value: 6,
+                            message: 'Hasło musi mieć co najmniej 6 znaków'
+                        },
+                        pattern: {
+                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                            message: 'Hasło musi zawierać co najmniej jedną cyfrę, jedną dużą literę, jedną małą literę i jeden znak specjalny'
                         }
                     }) }
                 />
+                { errors.password && <span className="input-validate">{errors.password.message}</span> }
             </div>
         </>
     )

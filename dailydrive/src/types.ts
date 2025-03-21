@@ -8,6 +8,7 @@ export type User = {
     height: number; 
     weight: number;
     gender: Gender;
+    age: number; 
     activityLevel: ActivityLevel;
     registrationDate?: Date; 
     userGoal?: UserGoal; 
@@ -19,6 +20,7 @@ export type WeightGoal = 'WeightLoss' | 'WeightGain' | 'WeightMaintenance';
 
 export type UserGoal = {
     id?: number; 
+    weightGoal: WeightGoal;
     goalCalories: number;
     goalProtein: number;
     goalCarbs: number;

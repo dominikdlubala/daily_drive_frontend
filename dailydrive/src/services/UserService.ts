@@ -1,3 +1,4 @@
+import { UserDataFormValues } from '../components/account/EditUserDataForm';
 import { RegisterFormValues } from '../components/login/RegisterForm';
 import type { UserLoginApiReturn } from '../types'; 
 
@@ -66,4 +67,26 @@ export const getUserData = async (token: string | null) => {
         console.error(err); 
         return { error: { message: 'Unexpected error | fetchProductByName' }}
     }
+}
+
+
+export const updateUserData = async (token: string | null, userData: UserDataFormValues) => {
+    try {
+        const response = await fetch(`${API_URL}`, {
+            method: 'PUT', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }, 
+            body: JSON.stringify(userData)
+        });
+        if(!response.ok) {
+            return { error: { message: await response.text() } }
+        }
+        const data = await response.json();
+        return { data };
+    } catch(err) {
+        console.error(err); 
+        return { error: { message: 'Unexpected error | fetchProductByName' }}
+    } 
 }

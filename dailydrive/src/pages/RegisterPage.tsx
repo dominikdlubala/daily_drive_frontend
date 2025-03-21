@@ -19,7 +19,6 @@ export default function RegisterPage() {
     const navigate = useNavigate(); 
 
     const onSubmit: SubmitHandler<RegisterFormValues> = async (formValues: RegisterFormValues) => {
-        console.log(formValues);
         const { error } = await registerUser(formValues); 
         if(error){
             setIsError({ error: true, message: error.message }); 
@@ -27,7 +26,7 @@ export default function RegisterPage() {
             setIsSuccess(true); 
             setTimeout(() => {
                 navigate('/login'); 
-            }, 3500); 
+            }, 2500); 
         }
     }
 
@@ -35,14 +34,14 @@ export default function RegisterPage() {
         if(isSuccess){
             const timer = setTimeout(() => {
                 setIsSuccess(false); 
-            }, 3000); 
+            }, 2000); 
 
             return () => clearTimeout(timer); 
         }
         if(isError) {
             const timer = setTimeout(() => {
                 setIsError({ ...isError, error: false })
-            }, 3000);
+            }, 2000);
 
             return () => clearTimeout(timer); 
         }
