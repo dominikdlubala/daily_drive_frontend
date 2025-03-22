@@ -64,25 +64,30 @@ export default function WorkoutsGallery() {
     }
 
     return (
-        <div className="gallery gallery-workouts">
-            {
-                isModalOpen
-                &&
-                <Modal
-                    isOpen={isModalOpen}
-                    onClose={handleModalClose}
-                >
-                    <WorkoutTemplateForm initialData={templateToUpdate} handleSubmit={handleFormSubmit} />
-                </Modal>
-            }
+        <>
+            <div className="workout-page--head">
+                <div className="page-title">Szablony treningowe</div>
+                <button
+                    className="workout-templ--add"
+                    onClick={() => setIsModalOpen(true)}    
+                >Dodaj szablon +</button>
+            </div>
+            <div className="gallery gallery-workouts">
+                {
+                    isModalOpen
+                    &&
+                    <Modal
+                        isOpen={isModalOpen}
+                        onClose={handleModalClose}
+                    >
+                        <WorkoutTemplateForm initialData={templateToUpdate} handleSubmit={handleFormSubmit} />
+                    </Modal>
+                }
 
-            {templates?.data?.map((el, index) => (
-                <WorkoutsGalleryItem key={el.id + index} workoutData={el} onEdit={handleEdit} onDelete={handleDelete}/>
-            ))}
-            <button
-                className="btn-primary workout-template--add-btn"
-                onClick={() => setIsModalOpen(true)}    
-            >Dodaj szablon</button>
-        </div>
+                {templates?.data?.map((el, index) => (
+                    <WorkoutsGalleryItem key={el.id + index} workoutData={el} onEdit={handleEdit} onDelete={handleDelete}/>
+                ))}
+            </div>
+        </>
     )
 }

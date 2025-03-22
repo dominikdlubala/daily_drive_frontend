@@ -45,6 +45,7 @@
     border: 1px solid #ddd; 
     border-top: none; 
     border-radius: 10px;
+    overflow:auto; 
     /* backdrop-filter: blur(15px); */
   }
   

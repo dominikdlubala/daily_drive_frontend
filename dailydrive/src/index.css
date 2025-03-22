@@ -1,6 +1,9 @@
 * {
   --primary-color: #2093ff; 
   --primary-color-hover: #5eaef9;
+
+  --green-btn: #319b5a;
+  --red-btn: #d44343;
   box-sizing: border-box; 
 }
 
@@ -49,6 +52,11 @@ li {
   margin-bottom: 2rem;
 }
 
+.page-title {
+  font-size: 2rem; 
+  font-weight: bold; 
+  margin-bottom: 1rem; 
+}
 
 /* Form general */
 .form-wrapper {
@@ -250,61 +258,6 @@ li {
 .drawer--list-item:hover {
   cursor: pointer; 
   background-color: #1981f78b;
-}
-
-
-
-
-/* Workouts */
-/* Workouts gallery */
-
-.gallery-workouts {
-  display: flex; 
-  flex-wrap: wrap; 
-  width: 100%; 
-  justify-content: center;
-}
-
-.gallery-item--workouts {
-  border: 2px solid var(--primary-color); 
-  display: flex; 
-  flex-direction: column;
-  max-width: 250px; 
-  min-width: 200px; 
-  flex-grow: 1; 
-  border-radius: 15px;
-  overflow: hidden; 
-  margin: 1rem; 
-}
-
-.gallery-item--header {
-  display: flex; 
-  justify-content: space-between;
-  text-align: center; 
-  background-color: var(--primary-color);
-  padding: 0.5rem;
-  color: #fff;  
-}
-
-.btn-edit {
-  cursor: pointer; 
-}
-
-.gallery-item--exercises-list {
-  padding: 0.5rem; 
-}
-
-.gallery-item--button-start {
-  margin: 0 0.5rem 0.5rem 0.5rem; 
-  border: none; 
-  background-color: var(--primary-color); 
-  color: #fff; 
-  padding: 0.25rem; 
-  cursor: pointer; 
-  border-radius: 15px;
-}
-.gallery-item--button-start:hover {
-  background-color: var(--primary-color-hover)
 }
 
 

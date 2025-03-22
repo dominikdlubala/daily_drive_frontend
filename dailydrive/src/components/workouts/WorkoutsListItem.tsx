@@ -1,4 +1,3 @@
-import "../styles/workoutsList.css";
 import { WorkoutSession } from "../../types"
 import { MdDelete } from "react-icons/md";
 
@@ -14,19 +13,19 @@ export default function WorkoutsListItem({ onDelete, workoutsData }: WorkoutsLis
     const startDate = formatDate(startTime as string);
 
     return (
-        <div className="card">
-            <div className="card-header">
-                <div className="card-subheader">
-                    <div className="card-header-date">{startDate}</div>
-                    <div className="card-header-buttons">
-                        <button className="btn-remove btn-remove--card" onClick={onDelete}><MdDelete/></button>
+        <div className="list-workout--item">
+            <div className="list-workout--item-header">
+                <div className="list-workout--item-subheader">
+                    <div className="list-workout--item-header-date">{startDate}</div>
+                    <div className="list-workout--item-header-buttons">
+                        <button className="btn-remove btn-remove--list-workout--item" onClick={onDelete}><MdDelete/></button>
                     </div>
                 </div>
-                <div className="card-header-title">
+                <div className="list-workout--item-header-title">
                     {name}
                 </div>
             </div>
-            <div className="card-body">
+            <div className="list-workout--item-body">
                 <ul className="exercise-list">
                     {weightExercises?.map((ex, index) => (
                         <li 

@@ -46,9 +46,11 @@ export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: W
     return (
         <div className="gallery-item gallery-item--workouts">
             <div className="gallery-item--header">
-                <MdEdit className="btn-edit" onClick={() => onEdit(workoutData)} />
                 {workoutData.name}
-                <MdDelete className="btn-delete" onClick={() => onDelete(workoutData.id)} />
+                <div className="header-buttons">
+                    <MdEdit className="btn-edit--gallery" onClick={() => onEdit(workoutData)} />
+                    <MdDelete className="btn-delete--gallery" onClick={() => onDelete(workoutData.id)} />
+                </div>
             </div>
             <ul 
                 className="gallery-item--exercises-list"
@@ -58,7 +60,7 @@ export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: W
                         className="gallery-item--exercise-item"
                         key={ex.name + index}
                     >
-                        {ex.name}
+                        - {ex.name}
                     </li>
                 )).slice(0, 3)}
             </ul>

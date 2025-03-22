@@ -42,6 +42,9 @@ export default function StatisticsPage() {
                 </div>
             </div>
             <div className="statistics--head">
+                <div className="page-title">
+                    Statystyki treningowe
+                </div>
                 Poniżej znajdziesz porównanie wyników Twoich najczęściej wykonywanych ćwiczeń w wybranym okresie czasowym. 
                 <div className="statistics--subhead">
                     <div>

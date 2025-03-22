@@ -1,4 +1,3 @@
-import '../styles/workoutsList.css';
 import { useEffect, useState } from "react"
 import WorkoutsListItem from "./WorkoutsListItem"
 import { WorkoutSession } from "../../types";
@@ -42,18 +41,39 @@ export default function WorkoutsList() {
         }
         await refetchData()
     }
+
+    const workoutsByMonth = workoutsData.reduce((acc, workout) => {
+        const month = new Date(workout.startTime!).toLocaleString('pl-PL', { month: 'long', year: 'numeric' });
+        if (!acc[month]) {
+            acc[month] = [];
+        }
+        acc[month].push(workout);
+        return acc;
+    }, {} as Record<string, WorkoutSession[]>);
     
     return (
-        <div className="list list-workouts">
-            {
-                workoutsData.map((workout, index) => (
-                    <WorkoutsListItem
-                        key={(workout.id as number) + index}
-                        workoutsData={workout}
-                        onDelete={() => handleDelete(workout.id as number)}
-                     />
-                ))
-            }
-        </div>
+        <>
+            <div className="workout-page--head">
+                <div className="page-title">Historia treningów</div>
+            </div>
+            <div className="list list-workouts">
+                {Object.keys(workoutsByMonth).map(month => (
+                    <div className="month-wrapper" key={month}>
+                        <div className="month-title">{month[0].toUpperCase()+month.slice(1)}</div>
+                        <div className="workouts-list">
+                            {
+                                workoutsByMonth[month].map((workout, index) => (
+                                    <WorkoutsListItem
+                                        key={(workout.id as number) + index}
+                                        workoutsData={workout}
+                                        onDelete={() => handleDelete(workout.id as number)}
+                                    />
+                                ))
+                            }
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </>
     )
 }

@@ -34,7 +34,7 @@ export default function StatisticsListItem({ stat }: { stat: WorkoutStatistic })
                     <span>Ćwiczenie: </span>{stat.name}
                 </div>
                 <div className="statistic-data--item">
-                    <span>Najsłaby wynik: </span>{stat.lowest1RM} (1RM w kg)
+                    <span>Najsłabszy wynik: </span>{stat.lowest1RM} (1RM w kg)
                 </div>
                 <div className="statistic-data--item">
                     <span>Najlepszy wynik: </span>{stat.highest1RM} (1RM w kg)

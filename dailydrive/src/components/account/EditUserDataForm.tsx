@@ -30,7 +30,8 @@ export default function EditUserDataForm({ onSubmit, userData }: EditUserDataFor
         <form className="form form-edit--data" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label className="form-label">Nazwa użytkownika</label>
-                    <input 
+                    <input
+                        className="form-input" 
                         type="text" 
                         {...register('username', 
                             { required: {
@@ -44,19 +45,22 @@ export default function EditUserDataForm({ onSubmit, userData }: EditUserDataFor
                 </div>
                 <div className="form-group">
                     <label className="form-label">Imię</label>
-                    <input 
+                    <input
+                        className="form-input" 
                         type="text" 
                         {...register('firstName')} />
                 </div>
                 <div className="form-group">
                     <label className="form-label">Nazwisko</label>
-                    <input 
+                    <input
+                        className="form-input" 
                         type="text" 
                         {...register('lastName')} />
                 </div>
                 <div className="form-group">
                     <label className="form-label">E-mail</label>
-                    <input 
+                    <input
+                        className="form-input" 
                         type="text"                      
                         { ...register("email", {
                             required: {
