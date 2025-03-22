@@ -60,6 +60,7 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
                         onChange={(e) => handleSetChange(index, "weight", parseInt(e.target.value))}
                         className="exercise-detail--input"
                     />
+                    kg
                 </div>
             ))}
             <button className="btn-add btn-add--workout-template" onClick={handleSetAdd}>Dodaj serię</button>

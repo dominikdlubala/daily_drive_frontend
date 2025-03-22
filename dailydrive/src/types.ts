@@ -193,3 +193,21 @@ export type HomePageDailyDietDTO = {
 }
 
 export type BodyPart = 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other'
+
+
+// Statistics
+export type WorkoutStatistic = {
+    name: string; 
+    firstDate: string; 
+    lastDate: string; 
+    highest1RM: number; 
+    lowest1RM: number;
+    percentageChange: number; 
+    weightExerciseStats: WeightExerciseStat[];
+}
+
+export type WeightExerciseStat = {
+    name: string; 
+    date: string; 
+    potential1RM: number;
+}

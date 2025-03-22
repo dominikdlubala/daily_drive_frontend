@@ -16,6 +16,9 @@ export default function Header() {
             <Link to={'/'} className="link link-header link-header--logo">
                 DailyDrive
             </Link>
+            <Link to={'/statistics'} className="link link-header link-header--logo">
+                Statystyki
+            </Link>
             <div className="link link-header link-header--left">
                 { 
                     token 

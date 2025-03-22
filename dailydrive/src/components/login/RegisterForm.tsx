@@ -150,11 +150,20 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                 <label className="form-label">Wzrost (cm) *</label>
                 <input 
                     type="number" 
+                    step="0.1"
                     className="form-input" 
                     { ...register("height", {
                         required: {
                             value: true, 
                             message: 'To pole jest wymagane'
+                        },
+                        min: {
+                            value: 50, 
+                            message: 'Minimalny wzrost to 50 cm'
+                        },
+                        max: {
+                            value: 250, 
+                            message: 'Maksymalny wzrost to 250 cm'
                         }
                     }) }
                 />
@@ -164,11 +173,20 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                 <label className="form-label">Waga (kg) *</label>
                 <input 
                     type="number" 
+                    step="0.1"
                     className="form-input" 
                     { ...register("weight", {
                         required: {
                             value: true, 
                             message: 'To pole jest wymagane'
+                        },
+                        min: {
+                            value: 20, 
+                            message: 'Minimalna waga to 20 kg'
+                        },
+                        max: {
+                            value: 200, 
+                            message: 'Maksymalna waga to 200 kg'
                         }
                     }) }
                 />
@@ -178,11 +196,20 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                 <label className="form-label">Wiek *</label>
                 <input 
                     type="number" 
+                    step="0.1"
                     className="form-input" 
                     { ...register("age", {
                         required: {
                             value: true, 
                             message: 'To pole jest wymagane'
+                        },
+                        min: {
+                            value: 1, 
+                            message: 'Minimalny wiek to 1 rok'
+                        }, 
+                        max: {
+                            value: 120, 
+                            message: 'Maksymalny wiek to 120 lat'
                         }
                     }) }
                 />

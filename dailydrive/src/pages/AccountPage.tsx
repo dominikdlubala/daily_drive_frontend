@@ -6,12 +6,10 @@ import { useAuth } from "../hooks/useAuth";
 import { getUserData, updateUserData } from "../services/UserService";
 import { MdEdit } from 'react-icons/md';
 import Modal from '../components/primitives/Modal';
-import EditDataForm, { EditDataFormValues } from '../components/account/EditDataForm';
 import { SubmitHandler } from 'react-hook-form';
 import EditUserDataForm, { UserDataFormValues } from '../components/account/EditUserDataForm';
 import EditUserGoalForm, { UserGoalFormValues } from '../components/account/EditUserGoalForm';
 import { updateUserGoal } from '../services/UserGoalService';
-import Prompt from '../components/primitives/Prompt';
 
 export default function AccountPage() {
     const { token } = useAuth(); 

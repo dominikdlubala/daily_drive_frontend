@@ -1,6 +1,6 @@
 .form--workout-free {
     background: #fff;
-    padding: 20px;
+    padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
@@ -116,4 +116,8 @@
   border-color: #66afe9;
   outline: none;
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.workout-template--exercises-title {
+  margin-top: 1rem;
 }

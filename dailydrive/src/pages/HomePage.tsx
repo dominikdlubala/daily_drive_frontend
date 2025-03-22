@@ -84,7 +84,7 @@ export default function HomePage() {
                             isHomePage={true}
                         />
                     </div>
-                    <div className="side-section side-section--workout" onClick={() => navigate('/workouts')}>
+                    <div className="side-section side-section--workout" onClick={() => navigate('/workouts?content=pastWorkouts')}>
                         <h1>Ostatnie treningi</h1>
                         <div className="side-section-items">
                             {
