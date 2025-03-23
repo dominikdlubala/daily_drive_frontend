@@ -23,7 +23,12 @@ export default function MealForm({ initialData, dietId, handleModalClose, onForm
     const [modalOpen, setModalOpen] = useState(false); 
     const topRef = useRef<HTMLDivElement>(null);
 
-    const { register, handleSubmit, control } = useForm<Meal>({
+    const { 
+        register, 
+        handleSubmit,
+        control, 
+        formState: { errors, isSubmitting }
+    } = useForm<Meal>({
         defaultValues: initialData ?? { dailyDietId: dietId }
     });
 
@@ -68,20 +73,25 @@ export default function MealForm({ initialData, dietId, handleModalClose, onForm
                 <ProductForm onSubmit={handleProductSubmit} onCancel={() => setModalOpen(false)} />
             }
 
-            <form onSubmit={handleSubmit(onSubmit)} className="meal-form">
-                <div ref={topRef} className="form-group form-group--head">
-                    <input className="head-input" id="name" {...register("name")} />
+            <form onSubmit={handleSubmit(onSubmit)} className="form meal-form">
+                <div ref={topRef} className="form-group">
+                    <label  className="form-input--label">Nazwa posiłku</label>
+                    <input className="form-input" id="name" {...register("name", {
+                        required: { value: true, message: 'Nazwa posiłku jest wymagana' },
+                        minLength: { value: 3, message: 'Nazwa posiłku musi mieć przynajmniej 3 znaki' }
+                    })} />
                     {
                         initialData 
                         &&
                         <button type="button" className="btn remove-button" onClick={() => onDelete(initialData.id as number)}>Usuń</button>
                     }
+                    {errors.name && <span className="input-validate">{errors.name.message}</span>}
                 </div>
                 <div className="form-group">
                     <label>Produkty</label>
                     <ProductSearch handleSelect={onProductSelect} />
-                    <button type="button" onClick={handleAddProductClick} className="add-button">
-                        Dodaj własny produkt
+                    <button type="button" onClick={handleAddProductClick} className="btn-add">
+                        Dodaj własny produkt +
                     </button>
                     {fields.map((field, index) => {
                         const weight = products?.[index]?.weight || 0;
@@ -97,7 +107,11 @@ export default function MealForm({ initialData, dietId, handleModalClose, onForm
                                             <input
                                                 type="number"
                                                 id={`products.${index}.weight`}
-                                                {...register(`products.${index}.weight` as const)}
+                                                {...register(`products.${index}.weight` as const, {
+                                                    required: { value: true, message: 'Waga jest wymagana' },
+                                                    min: { value: 0, message: 'Waga musi być większa od 0' },
+                                                    max: { value: 5000, message: 'Waga nie może przekraczać 5000g' }
+                                                })}
                                                 step="0.01"
                                             />
                                             gram
@@ -129,7 +143,8 @@ export default function MealForm({ initialData, dietId, handleModalClose, onForm
                     )}
                     
                 </div>
-                <button type="submit" className="submit-button">Zapisz</button>
+                {errors.products && <span className="input-validate">{errors.products.message}</span>}
+                <button type="submit" className="btn-submit" disabled={isSubmitting}>{isSubmitting ? 'Zapisuję...' : 'Zapisz' }</button>
             </form>
         </>
     );

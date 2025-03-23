@@ -11,23 +11,31 @@ export default function WorkoutsGallery() {
 
     const { token } = useAuth(); 
 
-    const [templates, setTemplates] = useState<WorkoutTemplateApiReturn | null>(null); 
+    const [templates, setTemplates] = useState<WorkoutTemplate[] | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [templateToUpdate, setTemplateToUpdate] = useState<WorkoutTemplate | undefined>(undefined); 
 
     useEffect(() => {
         const fetchTemplates = async () => {
-            const response = await fetchWorkoutTemplates(token as string); 
-            setTemplates(response); 
+            const { data, error } = await fetchWorkoutTemplates(token as string); 
+            if(error) {
+                console.error(error); 
+            } else if(data) {
+                setTemplates(data as WorkoutTemplate[]); 
+            }
         }
 
         fetchTemplates(); 
     }, [token]); 
 
     const refreshTemplates = async () => {
-        const response = await fetchWorkoutTemplates(token as string);
+        const { data, error } = await fetchWorkoutTemplates(token as string);
         setTemplateToUpdate(undefined);
-        setTemplates(response);
+        if(error) {
+            console.error(error); 
+        } else if(data) {
+            setTemplates(data as WorkoutTemplate[]);
+        }
     }
 
     const handleModalClose = async (formSubmitted?: boolean) => {
@@ -84,7 +92,7 @@ export default function WorkoutsGallery() {
                     </Modal>
                 }
 
-                {templates?.data?.map((el, index) => (
+                {templates?.map((el, index) => (
                     <WorkoutsGalleryItem key={el.id + index} workoutData={el} onEdit={handleEdit} onDelete={handleDelete}/>
                 ))}
             </div>

@@ -58,7 +58,7 @@ export type WeightExercise = {
     name: string; 
     description?: string; 
     type: string; 
-    bodyPart: 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other';
+    bodyPart: BodyPart;
     sets: ExerciseSet[];
 }
 
@@ -192,7 +192,7 @@ export type HomePageDailyDietDTO = {
     date: Date;
 }
 
-export type BodyPart = 'chest' | 'back' | 'shoulders' | 'legs' | 'arms' | 'other'
+export type BodyPart = 'Chest' | 'Back' | 'Shoulders' | 'Legs' | 'Arms' | 'Other'
 
 
 // Statistics

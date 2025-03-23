@@ -23,7 +23,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
     const [error, setError] = useState<string | null>(null);
 
     const addExercise = () => {
-        const newExercise: Exercise = { name: '', type: 'weight', bodyPart: 'other' };
+        const newExercise: Exercise = { name: '', type: 'weight', bodyPart: 'Other' };
         setExercises([...exercises, newExercise]);
     }
 
@@ -46,6 +46,10 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        if(exercises.some(exercise => exercise.name.trim() === '')) {
+            setError('Wpisz nazwę wszystkich ćwiczeń');
+            return; 
+        }
         if (title.trim() === '') {
             setError('Wpisz tytuł treningu');
             return;
@@ -72,7 +76,8 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
         >
             <h2 className="form-title">Szablon treningu</h2>
             <div className="form-group-wrapper">
-                <div className="form-group form-group--workout-template">
+                <div className="form-group">
+                    <label className="form-input--label">Nazwa szablonu</label>
                     <input 
                         type="text" 
                         className="form-input form-input--workout-template form-input--workout-template-title"
@@ -81,13 +86,12 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                         onChange={(e: FormEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)}
                     />
                 </div>
-                <div className="workout-template--exercises">
                     <ExerciseSearch onExerciseSelect={handleExerciseSelect}/>
-                    <div className="workout-template--exercises-title">Ćwiczenia</div>
+                <div className="workout-template--exercises">
+                    <label className="form-input--label">Ćwiczenia</label>
                     {exercises.map((exercise, index) => (
                         <div key={index} className="form-group form-group--workout-template">
                             <input 
-                                required
                                 type="text"
                                 className="form-input form-input--workout-template"
                                 placeholder={`Ćwiczenie nr ${index + 1}`}
@@ -107,7 +111,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                                 style={{
                                     display: exercise.type === 'weight' ? 'block' : 'none'
                                 }}
-                                value={exercise.type}
+                                value={exercise.bodyPart}
                                 onChange={(e: FormEvent<HTMLSelectElement>) => updateExercise(index, 'bodyPart', e.currentTarget.value)}
                             >
                                 <option value="Chest">Klatka piersiowa</option>
@@ -128,7 +132,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                     ))}
                     <button 
                         type="button"
-                        className="btn--workout-template btn-add--workout-template"
+                        className="btn-add"
                         onClick={addExercise}
                     >
                         Dodaj ćwiczenie +

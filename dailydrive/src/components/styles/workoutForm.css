@@ -1,8 +1,4 @@
 .form--workout-free {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
   }
   
@@ -20,12 +16,7 @@
     flex-direction: column;
   }
   
-  .form-input--workout-free-title {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-  }
+
   
   .workout-section {
     margin-bottom: 20px;
@@ -45,9 +36,6 @@
     margin-top: 10px;
   }
   
-  .btn--workout-template:hover {
-    background: var(--primary-color-hover);
-  }
   
   .workout-actions {
     display: flex;
@@ -118,6 +106,14 @@
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
+.workout-template--exercises  {
+  width: 100%; 
+  margin-top: 1.5rem; 
+}
+.workout-template--exercises .form-input--label  {
+  font-size: 1.2rem; 
+  margin-bottom: 1rem; 
+}
 .workout-template--exercises-title {
   margin-top: 1rem;
 }

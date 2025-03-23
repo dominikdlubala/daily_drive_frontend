@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
 import WorkoutsList from '../components/workouts/WorkoutsList';
 import Modal from '../components/primitives/Modal';
-import WorkoutFreeForm2 from '../components/workouts/WorkoutFreeForm2';
+import WorkoutFreeForm from '../components/workouts/WorkoutFreeForm';
 
 export default function WorkoutsPage() {
     const location = useLocation();
@@ -46,7 +46,7 @@ export default function WorkoutsPage() {
         <div className="page page-workouts">
             {isModalOpen && (
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <WorkoutFreeForm2 handleModalClose={() => setIsModalOpen(false)} />
+                    <WorkoutFreeForm handleModalClose={() => setIsModalOpen(false)} />
                 </Modal>
             )}
 

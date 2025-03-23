@@ -98,7 +98,7 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
                 ))
             }
 
-            <button className="btn btn-add--meal" onClick={() => handleMealChange()}>Dodaj posiłek +</button>
+            <button className="btn-add" onClick={() => handleMealChange()}>Dodaj posiłek +</button>
 
         </div>
     )

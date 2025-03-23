@@ -12,22 +12,6 @@
     background-color: #08c94c;
 }
 
-.meal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.meal-form input {
-    width: 100px; 
-    margin-right: 0.5rem; 
-}
 
 .form-group {
     display: flex;
@@ -75,11 +59,6 @@ label {
     font-weight: bold;
 }
 
-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
 
 .remove-button,
 .add-button,

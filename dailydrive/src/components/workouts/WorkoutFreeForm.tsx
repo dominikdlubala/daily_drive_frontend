@@ -1,23 +1,44 @@
 import { useState, useEffect, FormEvent } from "react";
-import { FaTrashAlt } from "react-icons/fa";
 
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { setWorkout, updateWorkout, endWorkout, resetWorkout } from "../../store";
+import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout, endCurrentWorkout } from "../../store";
 
-import type { CurrentWorkout, WeightExercise, CardioExercise } from "../../types";
+import type { CurrentWorkout, WeightExercise, CardioExercise, Exercise, BodyPart } from "../../types";
+import ExerciseSearch from "../exercise/ExerciseSearch";
+import ExerciseDetails from "../exercise/ExerciseDetails";
+
+import "../styles/exercise.css";
+import "../styles/workoutForm.css";
+import { useAuth } from "../../hooks/useAuth";
 
 interface WorkoutFreeFormProps {
-  handleModalClose?: (updatedWorkout?: CurrentWorkout) => void;
+    handleModalClose: (updatedWorkout?: CurrentWorkout) => void;
 }
 
 export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
+
+  const { token } = useAuth();  
+
   const dispatch = useAppDispatch();
   const currentWorkout = useAppSelector((state) => state.workout.currentWorkout);
 
   const [title, setTitle] = useState(currentWorkout?.workoutSession.name || "");
   const [weightExercises, setWeightExercises] = useState<WeightExercise[]>(currentWorkout?.workoutSession.weightExercises || []);
   const [cardioExercises, setCardioExercises] = useState<CardioExercise[]>(currentWorkout?.workoutSession.cardioExercises || []);
+  const [newWeightExerciseName, setNewWeightExerciseName] = useState("");
+  const [newWeightExerciseBodyPart, setNewWeightExerciseBodyPart] = useState<BodyPart>('Other');
+  const [newCardioExerciseName, setNewCardioExerciseName] = useState("");
+  const [showWeightExerciseForm, setShowWeightExerciseForm] = useState(false);
+  const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
+
+  const [error, setError] = useState<string | null>(null);
+  const [newExError, setNewExError] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    dispatch(fetchCurrentWorkout({ token }));
+  }, [token, dispatch]);
 
   useEffect(() => {
     if (currentWorkout) {
@@ -27,45 +48,57 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     }
   }, [currentWorkout]);
 
+
   const syncWorkout = () => {
+
     if (currentWorkout) {
-      // dispatch(updateWorkout({
-      //   ...currentWorkout,
-      //   workoutSession: {
-      //     ...currentWorkout.workoutSession,
-      //     name: title,
-      //     weightExercises,
-      //     cardioExercises,
-      //   }
-      // }));
+        dispatch(updateCurrentWorkout({
+            token, 
+            workout: {
+              ...currentWorkout, 
+              workoutSession: {
+                  ...currentWorkout.workoutSession,
+                  name: title, 
+                  weightExercises, 
+                  cardioExercises
+              }
+            }
+        }))
+        dispatch(updateWorkout({
+          name: title,
+          weightExercises,
+          cardioExercises,
+        }
+      ));
     } else {
         dispatch(setWorkout({
             workoutSession: {
                 name: title, 
                 weightExercises, 
                 cardioExercises,
-                startTime: undefined
+                startTime: new Date().toISOString(), 
+                endTime: new Date().toISOString()
             }
         }))
     }
   };
 
-  const addExercise = (type: "weight" | "cardio") => {
-    if (type === "weight") {
-      setWeightExercises([...weightExercises, { name: "", type: type, sets: [], bodyPart: 'other' }]);
+  const handleExerciseSelect = (exercise: Exercise) => {
+    if (exercise.type === "weight") {
+      setWeightExercises([...weightExercises, { name: exercise.name, type: "weight", sets: [], bodyPart: (exercise.bodyPart) }]);
     } else {
-      setCardioExercises([...cardioExercises, { name: "", type:type, intensity: 0, duration: 0 }]);
+      setCardioExercises([...cardioExercises, { name: exercise.name, type: "cardio", intensity: 0, duration: 0 }]);
     }
   };
 
-  const updateExercise = (type: "weight" | "cardio", index: number, value: string) => {
+  const updateExercise = (type: "weight" | "cardio", index: number, updatedExercise: WeightExercise | CardioExercise) => {
     if (type === "weight") {
       const updated = [...weightExercises];
-      updated[index].name = value;
+      updated[index] = updatedExercise as WeightExercise;
       setWeightExercises(updated);
     } else {
       const updated = [...cardioExercises];
-      updated[index].name = value;
+      updated[index] = updatedExercise as CardioExercise;
       setCardioExercises(updated);
     }
   };
@@ -78,20 +111,88 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     }
   };
 
+  const handleAddNewWeightExercise = (e: FormEvent) => {
+    e.preventDefault();
+    if(!newWeightExerciseName) {
+      setNewExError("Podaj nazwę ćwiczenia");
+      return; 
+    }
+    setNewExError(null);
+    setWeightExercises([...weightExercises, { name: newWeightExerciseName, type: "weight", sets: [], bodyPart: newWeightExerciseBodyPart }]);    
+    setNewWeightExerciseName("");
+    setShowWeightExerciseForm(false);
+  };
+
+  const handleAddNewCardioExercise = (e: FormEvent) => {
+    e.preventDefault();
+    if(!newCardioExerciseName) {
+      setNewExError("Podaj nazwę ćwiczenia");
+      return; 
+    }
+    setNewExError(null);
+    setCardioExercises([...cardioExercises, { name: newCardioExerciseName, type: "cardio", intensity: 0, duration: 0 }]);
+    setNewCardioExerciseName("");
+    setShowCardioExerciseForm(false);
+  };
+
+
   const handleWorkoutEnd = () => {
     if (currentWorkout) {
-        // dispatch(updateWorkout({ ...currentWorkout, workoutSession: { ...currentWorkout.workoutSession, endTime: new Date().toISOString() } }));
-        dispatch(endWorkout()); 
-        dispatch(resetWorkout());
-        handleModalClose && handleModalClose();
+      dispatch(updateCurrentWorkout({
+        token, 
+        workout: {
+          ...currentWorkout, 
+          workoutSession: {
+              ...currentWorkout.workoutSession,
+              name: title, 
+              endTime: new Date().toISOString(),
+              weightExercises, 
+              cardioExercises
+          }
+        }
+      }))
+      dispatch(endCurrentWorkout({token, id: currentWorkout.id as number}));
+      dispatch(endWorkout()); 
+      dispatch(resetWorkout());
+      handleModalClose && handleModalClose();
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(cardioExercises)
     syncWorkout();
-    console.log(currentWorkout);
-    handleModalClose && handleModalClose();
+    if(!title) {
+        setError("Podaj tytuł treningu");
+        return; 
+    }
+    if(weightExercises.some(ex => ex.sets.some(set => (set.reps === 0) || set.weight === 0))) {
+        setError("Ilość powtórzen i ciężar muszą być większe od 0.");
+        return; 
+    }
+    if(cardioExercises.some(ex => ex.intensity === 0 || ex.duration === 0)) {
+        setError("Intensywność i czas trwania muszą być większe od 0.");
+        return; 
+    }
+
+    if(currentWorkout?.id){
+        dispatch(updateWorkout(currentWorkout.workoutSession));
+    } else {
+        dispatch(startCurrentWorkout({
+          token, 
+          workout: {
+            workoutSession: {
+                name: title, 
+                weightExercises, 
+                cardioExercises,
+                startTime: new Date().toISOString(), 
+                endTime: new Date().toISOString()
+            }
+          }
+        }));
+    }
+    dispatch(resetWorkout());
+    handleModalClose();
   };
 
   return (
@@ -99,8 +200,8 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
       <h2 className="form-title">Trening wolny</h2>
       <div className="form-group-wrapper">
         <div className="form-group form-group--workout-free">
+          <label className="form-input--label">Nazwa treningu</label>
           <input
-            required
             type="text"
             className="form-input form-input--workout-free-title"
             placeholder="Tytuł treningu"
@@ -110,257 +211,89 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
         </div>
       </div>
 
-      <div className="workout-section">
+
+      <div className="form-group">
         <h3>Ćwiczenia siłowe</h3>
+        <ExerciseSearch exerciseType="weight" onExerciseSelect={handleExerciseSelect} />
+        {showWeightExerciseForm ? (
+          <div className="form-group form-group--workout-free">
+            <input
+              type="text"
+              className="form-input"
+              placeholder="Nazwa nowego ćwiczenia siłowego"
+              value={newWeightExerciseName}
+              onChange={(e) => setNewWeightExerciseName(e.target.value)}
+              required
+            />
+          <select
+            className="form-input"
+            value={newWeightExerciseBodyPart}
+            onChange={(e) => setNewWeightExerciseBodyPart(e.target.value as BodyPart)}
+            required
+          >
+            <option value="Chest">Klatka piersiowa</option>
+            <option value="Back">Plecy</option>
+            <option value="Legs">Nogi</option>
+            <option value="Shoulders">Barki</option>
+            <option value="Arms">Ramiona</option>
+            <option value="Other">Inne</option>
+          </select>
+            {newExError && <span className="input-validate">{newExError}</span>}
+            <button type="button" className="btn--workout-template " onClick={handleAddNewWeightExercise}>Dodaj ćwiczenie</button>
+            <button type="button" className="btn--workout-template btn-cancel" onClick={() => setShowWeightExerciseForm(false)}>Anuluj</button>
+          </div>
+          ) : (
+            <button type="button" className="btn--workout-template btn-add" onClick={() => setShowWeightExerciseForm(true)}>Dodaj ćwiczenie +</button>
+        )}
+
         {weightExercises.map((exercise, index) => (
-        // fix key
           <div key={index} className="form-group form-group--workout-free">
-            <div className="form-subgroup">
-              <input
-                required
-                type="text"
-                className="form-input"
-                placeholder={`Ćwiczenie ${index + 1}`}
-                value={exercise.name}
-                onChange={(e) => updateExercise("weight", index, e.target.value)}
-              />
-              <button type="button" className="btn btn-remove" onClick={() => removeExercise("weight", index)}>
-                <FaTrashAlt />
-              </button>
-            </div>
+            <ExerciseDetails 
+                index={index+1} 
+                exercise={{...exercise, type: 'weight'}} 
+                onExerciseUpdate={(updatedExercise) => updateExercise("weight", index, updatedExercise)} 
+                onDelete={() => removeExercise("weight", index)}
+            />
           </div>
         ))}
-        <button type="button" className="btn--workout-template btn-add--workout-template" onClick={() => addExercise("weight")}>Dodaj ćwiczenie +</button>
       </div>
 
-      <div className="workout-section">
+      <div className="form-group">
         <h3>Ćwiczenia cardio</h3>
-        {cardioExercises.map((exercise, index) => (
-        // fix key
-          <div key={index} className="form-group form-group--workout-free">
-            <div className="form-subgroup">
+        <ExerciseSearch exerciseType="cardio" onExerciseSelect={handleExerciseSelect} />
+        {showCardioExerciseForm ? (
+            <div className="form-group form-group--workout-free">
               <input
-                required
                 type="text"
                 className="form-input"
-                placeholder={`Ćwiczenie ${index + 1}`}
-                value={exercise.name}
-                onChange={(e) => updateExercise("cardio", index, e.target.value)}
+                placeholder="Nazwa nowego ćwiczenia cardio"
+                value={newCardioExerciseName}
+                onChange={(e) => setNewCardioExerciseName(e.target.value)}
               />
-              <button type="button" className="btn btn-remove" onClick={() => removeExercise("cardio", index)}>
-                <FaTrashAlt />
-              </button>
+              {newExError && <span className="input-validate">{newExError}</span>}
+              <button type="button" className="btn--workout-template" onClick={handleAddNewCardioExercise}>Dodaj ćwiczenie</button>
+              <button type="button" className="btn--workout-template btn-cancel" onClick={() => setShowCardioExerciseForm(false)}>Anuluj</button>
             </div>
+          ) : (
+            <button type="button" className="btn--workout-template btn-add" onClick={() => setShowCardioExerciseForm(true)}>Dodaj ćwiczenie +</button>
+          )}
+      </div>
+        {cardioExercises.map((exercise, index) => (
+          <div key={index} className="form-group form-group--workout-free">
+            <ExerciseDetails 
+                index={index+1} 
+                exercise={exercise} 
+                onExerciseUpdate={(updatedExercise) => updateExercise("cardio", index, updatedExercise)} 
+                onDelete={() => removeExercise("cardio", index)}
+            />
           </div>
         ))}
-        <button type="button" className="btn--workout-template btn-add--workout-template" onClick={() => addExercise("cardio")}>Dodaj ćwiczenie +</button>
-      </div>
 
+      {error && <span className="input-validate">{error}</span> }
       <div className="workout-actions">
-        <button type="submit" className="btn-submit btn-submit--workout-template">Zapisz trening</button>
-        {currentWorkout && <button type="button" className="btn-submit btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button>}
+        <button type="submit" className="btn-submit">Zapisz trening</button>
+        {currentWorkout?.id ? <button type="button" className="btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button> : ''}
       </div>
     </form>
   );
 }
-
-// import { useState, useEffect } from 'react'; 
-// import { FaTrashAlt } from "react-icons/fa";
-
-// import { useAppDispatch } from '../../hooks/useAppDispatch';
-// import { useAppSelector } from '../../hooks/useAppSelector';
-// import { updateWorkout, endWorkout, resetWorkout } from '../../store';
-
-// import type { CurrentWorkout, Exercise, ExerciseSet } from '../../types';
-
-// interface WorkoutFreeFormProps {
-//     handleModalClose?: (updatedWorkout?: CurrentWorkout) => void; 
-// }
-
-// // do zrobienia: 
-// // przenieść funkcje dodajace cwiczenia, serie do osobnego pliku. 
-
-// export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
-
-//     const dispatch = useAppDispatch(); 
-//     const currentWorkout = useAppSelector((state) => state.workout.currentWorkout); 
-
-//     const [exercises, setExercises] = useState(currentWorkout.exercises || []); 
-//     const [title, setTitle] = useState<string>(currentWorkout.title || ''); 
-
-//     useEffect(() => {
-//         setExercises(currentWorkout.exercises); 
-//         setTitle(currentWorkout.title); 
-//     }, [currentWorkout]); 
-
-//     const syncWorkout = (updatedWorkout: { isWorkoutActive?: boolean, title?: string, exercises?: Exercise[] }) => {
-//         dispatch(updateWorkout(updatedWorkout)); 
-//     }
-
-//     const addExercise = () => {
-//         setExercises([...exercises, { name: "", sets: [] }]); 
-//     }
-
-//     const updateExercise = (index: number, value: string) => {
-//         const updatedExercises = [...exercises]; 
-//         updatedExercises[index].name = value; 
-//         setExercises(updatedExercises); 
-//     }
-
-//     const removeExercise = (index: number) => {
-//         const updatedExercises = exercises.filter((_, i) => i !== index); 
-//         setExercises(updatedExercises); 
-//     }
-
-//     const addSet = (exerciseIndex: number) => {
-//         const updatedExercises = exercises.map((exercise, index) => {
-//             if (index === exerciseIndex) {
-//                 const newSets = [...(exercise.sets || []), { reps: 0, weight: 0 }];
-//                 return { ...exercise, sets: newSets };
-//             }
-//             return exercise;
-//         });
-    
-//         setExercises(updatedExercises);
-//     };
-
-//     const updateSet = (exerciseIndex: number, setIndex: number, field: 'reps' | 'weight', value: number) => {
-//         const updatedExercises = [...exercises]; 
-//         if(!updatedExercises[exerciseIndex].sets){
-//             updatedExercises[exerciseIndex].sets = [] as ExerciseSet[]; 
-//         }
-//         updatedExercises[exerciseIndex].sets![setIndex][field] = value; 
-//         setExercises(updatedExercises); 
-//     }
-
-//     const removeSet = (exerciseIndex: number, setIndex: number) => {
-//         const updatedExercises = [...exercises]; 
-//         updatedExercises[exerciseIndex].sets = updatedExercises[exerciseIndex].sets?.filter((_, index) => index !== setIndex); 
-//         setExercises(updatedExercises); 
-//     }
-
-//     const handleWorkoutEnd = () => {
-//         dispatch(endWorkout({ isWorkoutActive: false, title, exercises })); 
-//         dispatch(resetWorkout()); 
-//         handleModalClose && handleModalClose(); 
-//     }
-
-//     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//         e.preventDefault(); 
-//         syncWorkout({ isWorkoutActive: true, title, exercises }); 
-//         handleModalClose && handleModalClose(); 
-//     }
-
-//     return (
-//         <form 
-//             onSubmit={handleSubmit}
-//             className="form form--workout-free"
-//         >
-//             <h2 className="form-title">Trening wolny</h2>
-//             <div className="form-group-wrapper">
-//                 <div className="form-group form-group--workout-free">
-//                     <input 
-//                         required
-//                         type="text" 
-//                         className="form-input form-input--workout-free form-input--workout-free-title"
-//                         placeholder="Tytuł treningu"
-//                         value={title}
-//                         onChange={(e: React.FormEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)}
-//                     />
-//                 </div>
-//                 {exercises.map((exercise, index) => (
-//                     <div
-//                         key={index}
-//                         className="form-group form-group--workout-free"
-//                     >
-//                         <div className="form-subgroup">
-//                             <input 
-//                                 required
-//                                 type="text" className="form-input form-input--workout-free" 
-//                                 placeholder={`Ćwiczenie nr ${index + 1}`}
-//                                 value={exercise.name}
-//                                 onChange={(e: React.FormEvent<HTMLInputElement>) => updateExercise(index, e.currentTarget.value)}
-//                             />
-//                             <button 
-//                                 type="button"   
-//                                 className="btn btn-remove"
-//                                 onClick={() => removeExercise(index)}
-//                             >
-//                                 <FaTrashAlt />
-//                             </button>
-//                         </div>
-//                         {exercise.sets?.map((set, setIndex) => (
-//                             <div key={setIndex} className="form-subgroup form-subgroup--set">
-//                                 <label className="form-input--label">Seria {setIndex + 1}</label>
-//                                 <input 
-//                                     required
-//                                     type="text" className="form-input form-input--workout-free form-input--set" 
-//                                     placeholder={`Powt.`}
-//                                     value={set.reps}
-//                                     onChange={(e: React.FormEvent<HTMLInputElement>) => updateSet(index, setIndex, 'reps', parseInt(e.currentTarget.value))}
-//                                 />
-//                                 <input 
-//                                     required
-//                                     type="text" className="form-input form-input--workout-free form-input--set" 
-//                                     placeholder={`Kg`}
-//                                     value={set.weight || ''}
-//                                     onChange={(e: React.FormEvent<HTMLInputElement>) => updateSet(index, setIndex, 'weight', parseInt(e.currentTarget.value))}
-//                                 />
-//                                 <button 
-//                                     type="button"   
-//                                     className="btn btn-remove"
-//                                     onClick={() => removeSet(index, setIndex)}
-//                                 >
-//                                     <FaTrashAlt />
-//                                 </button>
-//                             </div>
-//                         ))}
-//                         <button 
-//                             type="button"
-//                             className="btn--workout-template btn-add--workout-template btn-add--set"
-//                             onClick={() => addSet(index)}
-//                         >
-//                             Dodaj serie +
-//                         </button>
-//                     </div>
-//                 ))}
-
-//                 <button 
-//                     type="button"
-//                     className="btn--workout-template btn-add--workout-template"
-//                     onClick={() => addExercise()}
-//                 >
-//                     Dodaj ćwiczenie +
-//                 </button>
-//             </div>
-
-
-            
-
-//             {
-//                 currentWorkout.isWorkoutActive
-//                 ?
-//                 <div className="buttons--workout-active">
-//                     <button 
-//                         className="btn-submit btn-submit--workout-template"
-//                     >
-//                         Zaktualizuj trening
-//                     </button>
-//                     <button
-//                         onClick={handleWorkoutEnd}
-//                         className="btn-submit btn-end--workout"
-//                     >
-//                         Zakończ trening
-//                     </button>
-//                 </div>
-//                 :
-//                 <button 
-//                     type="submit"
-//                     className="btn-submit btn-submit--workout-template"
-//                 >
-//                     Rozpocznij trening
-//                 </button>
-//             }
-//         </form>
-//     )
-// }

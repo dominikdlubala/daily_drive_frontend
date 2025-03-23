@@ -18,11 +18,11 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
 
     const translateBodyPart = (bodyPart?: BodyPart) => { 
         switch(bodyPart) {
-            case 'chest': return 'Klatka piersiowa';
-            case 'back': return 'Plecy';
-            case 'shoulders': return 'Barki';
-            case 'legs': return 'Nogi';
-            case 'arms': return 'Ramiona';
+            case 'Chest': return 'Klatka piersiowa';
+            case 'Back': return 'Plecy';
+            case 'Shoulders': return 'Barki';
+            case 'Legs': return 'Nogi';
+            case 'Arms': return 'Ramiona';
             default: return 'Inne';
         }
     }

@@ -71,8 +71,8 @@ li {
 }
 
 .form {
-  width: 100%;
-  /* max-width: 700px; */
+  width: 50vw;
+  max-width: 700px;
   margin: auto;
   display: flex; 
   flex-direction: column;
@@ -97,7 +97,7 @@ li {
   padding: 0.7rem;
   font-size: 1rem;
   border: none; 
-  border-bottom: 1px solid darkgray;
+  border-bottom: 2px solid #c5c5c5;
   transition: border-color 0.2s ease;
   outline: none; 
   transition: ease-out 0.5s border-color; 
@@ -111,17 +111,18 @@ li {
   color: red;
   font-size: 0.9rem;
   display: block;
-  margin-bottom: 1rem;
+  margin-top: 0.25rem; 
+  /* margin-bottom: 0.25rem; */
 }
 
 .btn-submit {
-  width: 70%;
+  width: 100%;
   padding: 0.8rem;
   font-size: 1rem; 
   background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -183,15 +184,53 @@ li {
 /* Header */
 .header {
   display: flex; 
-  justify-content: space-around; 
+  justify-content: space-between; 
   align-items: center; 
-  height: 10vh;
-  background-color: #2093ff;  
-  color: #fff; 
+  position: relative; 
+  /* background-color:rgba(51, 122, 253, 0.637);  */
+  height: 10vh; 
+  padding: 0 3.5rem; 
+}
+
+.header-links--left {
+  display: flex; 
+  gap: 1rem; 
+}
+
+.header-links--mid {
+  position: absolute; 
+  left: 50%;
+  transform: translateX(-50%); 
+  font-size: 2rem; 
+}
+
+.header-links--right {
+  display: flex; 
+  gap: 1rem; 
 }
 
 .link-header {
+  color: black; 
+  border: 1px solid black; 
+  font-size: 1.2rem; 
+  border-radius: 15px; 
+  padding: 0.5rem; 
+}
+
+.link-header--logo {
+  font-size: 2rem; 
+  font-weight: bold; 
+  border: none; 
+}
+
+.link-header--logout {
+  color: #e63d3d;
+}
+
+.link-header--active {
+  background-color: var(--primary-color); 
   color: #fff; 
+  border: none; 
 }
 
 /* Buttons */
@@ -282,7 +321,7 @@ li {
   max-width: 70vw; 
   overflow-y: auto; 
   padding: 3rem;
-  margin: auto;
+  /* margin: auto; */
   background-color: #fff;
   border-radius: 15px;
 }
@@ -312,7 +351,6 @@ li {
 }
 
 .form-input--label {
-  margin-left: 0.5rem; 
   align-content: center; 
 }
 
@@ -325,14 +363,6 @@ li {
   margin-bottom: 1rem; 
 }
 
-.form-input--workout-template {
-  margin-right: 1rem ;
-}
-
-.form-input--workout-template-title {
-  margin: 0; 
-  width: 50%;   
-}
 
 .btn-remove {
   background-color: #fff; 
@@ -348,18 +378,19 @@ li {
   color: #ad3434; 
 }
 
-.btn-add--workout-template {
+.btn-add {
   border: none; 
   background-color: #319b5a; 
   color: #fff; 
-  padding: 0.5rem; 
-  border-radius: 30px; 
+  padding: 0.75rem; 
+  border-radius: 10px; 
   cursor: pointer; 
   transition: ease 0.3s background-color; 
+  width: 100%; 
 }
 
-.btn-add--workout-template:hover {
-  background-color: #4a805e;
+.btn-add:hover {
+  background-color: #2a7f4b; 
 }
 
 .btn-add--set {

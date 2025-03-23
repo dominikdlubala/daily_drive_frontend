@@ -12,6 +12,7 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Exercise[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const resultsRef = useRef<HTMLUListElement | null>(null); 
 
@@ -28,13 +29,18 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
 
   const handleSearch = async (e: FormEvent) => {
     e.preventDefault();
+    if(!searchTerm) {
+      setError('Wpisz nazwę ćwiczenia');
+      return; 
+    } 
     const { data, error } = await fetchExercisesByName(searchTerm, exerciseType);
     if(error) {
-        console.error(error.message);
+      setError(error.message);
     }
     if(data) {
         setSearchResults(data);
         setShowResults(true); 
+        setError(null);
     }
   };
 
@@ -48,13 +54,16 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
 
   return (
     <div className="search exercise-search">
-      <input
-        type="text"
-        placeholder="Wyszukaj ćwiczenie"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>Szukaj</button>
+      <div className="search-input">
+        <input
+          type="text"
+          placeholder="Wyszukaj ćwiczenie"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button onClick={handleSearch}>Szukaj</button>
+      </div>
+      {error && <span className="input-validate">{error}</span> }
 
       {searchResults.length > 0 && showResults && (
         <ul ref={resultsRef}>

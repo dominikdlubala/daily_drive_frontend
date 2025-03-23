@@ -64,7 +64,7 @@ export default function WorkoutsList() {
                             {
                                 workoutsByMonth[month].map((workout, index) => (
                                     <WorkoutsListItem
-                                        key={(workout.id as number) + index}
+                                        key={(workout.id as number)}
                                         workoutsData={workout}
                                         onDelete={() => handleDelete(workout.id as number)}
                                     />

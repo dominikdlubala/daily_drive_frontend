@@ -89,7 +89,7 @@ export const workoutDrawerConfig = {
     // }, 
     customWorkout: {
         title: 'Trening wolny', 
-        content: (handleModalClose: () => void) =>  <WorkoutFreeForm />
+        content: (handleModalClose: () => void) =>  <div>empty</div>
     }, 
     cardioSession: {
         title: 'Sesja cardio', 

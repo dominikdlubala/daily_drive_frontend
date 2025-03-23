@@ -2,7 +2,7 @@ import './styles/homePage.css';
 import { useNavigate } from 'react-router-dom'; 
 
 import { useEffect, useState } from 'react';
-import { HomePageData, MyError } from '../types';
+import { HomePageData } from '../types';
 import { fetchHomePageData } from '../services/HomePageService';
 
 import DietSummary from '../components/diet/DIetSumary';
@@ -35,6 +35,8 @@ export default function HomePage() {
         fetchData();
     }, [token])
     
+    console.log(homeData);
+
     let content = (
         <div className="loading-skeleton">
             <div className="section section--home">

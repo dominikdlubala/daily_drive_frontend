@@ -19,9 +19,14 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
     onExerciseUpdate(updatedDetails);
   };
 
+  const handleCardioStatChange = (field: string, value: number) => {
+    const updatedCardio = { ...details, [field]: (isNaN(value) ? 0 : value) };
+    setDetails(updatedCardio);
+    onExerciseUpdate(updatedCardio);
+  }
   const handleSetChange = (index: number, field: string, value: number) => {
     const updatedSets = (details as WeightExercise).sets.map((set, i) => 
-      i === index ? { ...set, [field]: value } : set
+      i === index ? { ...set, [field]: (isNaN(value) ? 0 : value) } : set
     );
     handleDetailChange("sets", updatedSets);
   };
@@ -31,6 +36,10 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
     const newSet = { reps: 0, weight: 0 };
     handleDetailChange("sets", [...(details as WeightExercise).sets, newSet]);
   };
+  const handleSetRemove = (index: number) => {
+    const updatedSets = (details as WeightExercise).sets.filter((_, i) => i !== index);
+    handleDetailChange("sets", updatedSets);
+  }
 
   return (
     <div className="exercise-details">
@@ -61,9 +70,12 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
                         className="exercise-detail--input"
                     />
                     kg
+                    <button type="button" className="btn btn-remove" onClick={() => handleSetRemove(index)}>
+                        <FaTrashAlt />
+                    </button>
                 </div>
             ))}
-            <button className="btn-add btn-add--workout-template" onClick={handleSetAdd}>Dodaj serię</button>
+            <button className="btn-add btn-add" onClick={handleSetAdd}>Dodaj serię</button>
             </div>
         ) : (
             <div className="exercise-details--cardio">
@@ -72,14 +84,14 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
                 type="number"
                 placeholder="Intensywność"
                 value={(details as CardioExercise).intensity}
-                onChange={(e) => handleDetailChange("intensity", parseInt(e.target.value))}
+                onChange={(e) => handleCardioStatChange("intensity", parseInt(e.target.value))}
                 className="exercise-detail--input"
             />
             <input
                 type="number"
                 placeholder="Czas trwania (min)"
                 value={(details as CardioExercise).duration}
-                onChange={(e) => handleDetailChange("duration", parseInt(e.target.value))}
+                onChange={(e) => handleCardioStatChange("duration", parseInt(e.target.value))}
                 className="exercise-detail--input"
             />
             </div>
