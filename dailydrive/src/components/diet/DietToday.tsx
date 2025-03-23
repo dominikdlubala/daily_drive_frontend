@@ -8,6 +8,7 @@ import { addMeal, deleteMeal, fetchDietByDate, updateMeal } from '../../services
 import Modal from '../primitives/Modal';
 import MealForm from './MealForm';
 import { useAuth } from '../../hooks/useAuth';
+import { usePrompt } from '../../hooks/usePrompt';
 
 interface DietTodayProps {
     date: Date;
@@ -17,6 +18,7 @@ interface DietTodayProps {
 export default function DietToday({ date, dietGoal }: DietTodayProps) {
 
     const { token } = useAuth();
+    const { success, fault } = usePrompt(); 
     
     const [dietData, setDietData] = useState<DailyDiet | null>(null);
     const [modalOpen, setModalOpen] = useState(false); 
@@ -51,25 +53,33 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
     const handleMealDelete = async (id: number) => {
         const { error } = await deleteMeal(token, id);
         if(error) {
-            console.error(error.message);
+            fault('Nie udało się usunąć posiłku!'); 
+            return;
         }
+        success('Pomyślnie usunięto posiłek!');
         setModalOpen(false); 
         refetchData();
     }
 
     const handleFormSubmit = async (meal: Meal) => {
         if(meal.id) {
-            const { error } = await updateMeal(token, meal);   
+            const { data, error } = await updateMeal(token, meal);   
             if(error) {
-                console.error(error.message);
-            }          
+                // toast.error('Nie udało się zaktualizować posiłku!');
+            } 
+            if(data) {
+                success('Pomyślnie zaktualizowano posiłek!');
+            }         
         } else {
-            const { error } = await addMeal(token, {
+            const { data, error } = await addMeal(token, {
                 ...meal, 
                 date
             });
             if(error) {
-                console.error(error.message);
+
+            } 
+            if(data) {
+                success('Pomyślnie dodano posiłek!');
             }
         }
         refetchData();

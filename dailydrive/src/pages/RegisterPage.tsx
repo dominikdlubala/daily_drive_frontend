@@ -50,13 +50,9 @@ export default function RegisterPage() {
 
     return (
         <div className="page page-register">
-            <div className="form-wrapper form-wrapper--register">
+            <div className="form-wrapper--login">
                 <RegisterForm onSubmit={onSubmit} />
             </div>
-
-            { isSuccess && <Prompt success handleClose={() => setIsSuccess(false)}>Użytkownik został zarejestrowany</Prompt>}
-            { isError.error && <Prompt error handleClose={() => setIsError({ ...isError, error: false })}>{isError.message}</Prompt>}
-
         </div>
     )
 }

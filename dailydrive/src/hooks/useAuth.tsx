@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
+import { createContext, useContext, useMemo, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -34,10 +34,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         try {
           const decoded: DecodedToken = jwtDecode(token);
+          const expiresIn = (decoded.exp *1000) - Date.now(); 
 
           const tokenTimer = setTimeout(() => {
             logout()
-          }, decoded.exp); 
+          }, expiresIn); 
 
           return () => clearTimeout(tokenTimer); 
 

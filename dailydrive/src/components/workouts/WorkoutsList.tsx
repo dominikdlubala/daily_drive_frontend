@@ -3,10 +3,12 @@ import WorkoutsListItem from "./WorkoutsListItem"
 import { WorkoutSession } from "../../types";
 import { deleteWorkoutSession, fetchWorkoutSessions } from "../../services/WorkoutSessionService";
 import { useAuth } from '../../hooks/useAuth';
+import { usePrompt } from "../../hooks/usePrompt";
 
 export default function WorkoutsList() {
 
     const { token } = useAuth();
+    const { success, fault } = usePrompt();
 
     const [workoutsData, setWorkoutsData] = useState([] as WorkoutSession[]);
 
@@ -37,8 +39,10 @@ export default function WorkoutsList() {
     const handleDelete = async (id: number) => {
         const { error } = await deleteWorkoutSession(token, id); 
         if(error) {
-            console.error(error); 
-        }
+            fault(error.message as string);
+            return 
+        } 
+        success('Trening został usunięty');
         await refetchData()
     }
 

@@ -29,10 +29,10 @@ export default function LoginPage() {
 
     return (
         <div className="page page-login">
-            <div className="form-wrapper form-wrapper--login">
+            <div className="form-wrapper--login">
                 <form className="form form-login" onSubmit={handleSubmit(onSubmit)}>
                     <h1 className="form-title form-title--login">Zaloguj się</h1>
-                    <div className="form-group--login">
+                    <div className="form-group">
                         <input 
                             type="text" 
                             className="form-input--login"
@@ -45,7 +45,7 @@ export default function LoginPage() {
                             })}
                         />
                     </div>
-                    <div className="form-group--login">
+                    <div className="form-group">
                         <input 
                             type="password" 
                             className="form-input--login" 
@@ -65,7 +65,7 @@ export default function LoginPage() {
                         error && <span className="input-validate input-validate--login">{error}</span>
                     }
                     <button 
-                        className="btn-submit--login"
+                        className="btn-submit"
                         type="submit"
                         disabled={isSubmitting}
                     >

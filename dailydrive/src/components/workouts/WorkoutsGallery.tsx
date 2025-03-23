@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import WorkoutsGalleryItem from "./WorkoutsGalleryItem"
 import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../services/WorkoutTemplateService";
-import { WorkoutTemplate, WorkoutTemplateApiReturn } from "../../types";
+import { WorkoutTemplate } from "../../types";
 import Modal from "../primitives/Modal";
 import WorkoutTemplateForm, { WorkoutTemplateFormValues } from "./WorkoutTemplateForm";
 import { useAuth } from "../../hooks/useAuth";
+import { usePrompt } from "../../hooks/usePrompt";
 
 
 export default function WorkoutsGallery() {
 
     const { token } = useAuth(); 
+    const { success, fault } = usePrompt(); 
 
     const [templates, setTemplates] = useState<WorkoutTemplate[] | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -45,17 +47,28 @@ export default function WorkoutsGallery() {
 
     const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
         if(add) {
-            await addWorkoutTemplate(token as string, {
+            const {data, error } = await addWorkoutTemplate(token as string, {
                 name: formValues.name, 
                 exercises: formValues.exercises
             } as Omit<WorkoutTemplate, 'id'>)
+            if(error) {
+                fault(error.message)
+            } else if (data) {
+                success('Szablon treningowy został dodany');
+            }
         } else {
-            await updateWorkoutTemplate(token as string, {
+            const { data, error } = await updateWorkoutTemplate(token as string, {
                 id:  formValues.id,
                 name: formValues.name, 
                 exercises: formValues.exercises
             } as WorkoutTemplate); 
-            setTemplateToUpdate(undefined); 
+            if(error) {
+                fault(error.message)
+            } else if (data) {
+                success('Szablon treningowy zaktualizowany');
+                setTemplateToUpdate(undefined); 
+            }
+            
         } 
 
         handleModalClose(true); 
@@ -67,8 +80,13 @@ export default function WorkoutsGallery() {
     }
 
     const handleDelete = async (id: number) => {
-        await deleteWorkoutTemplate(token as string, id); 
-        await refreshTemplates(); 
+        const { data, error } = await deleteWorkoutTemplate(token as string, id);
+        if(error) {
+            fault(error.message)
+        } else if (data) {
+            success('Szablon treningowy został usunięty');
+            await refreshTemplates(); 
+        }
     }
 
     return (

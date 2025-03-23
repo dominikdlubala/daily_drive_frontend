@@ -4,6 +4,7 @@
 
   --green-btn: #319b5a;
   --red-btn: #d44343;
+  --red-btn-hover: #ad3434;
   box-sizing: border-box; 
 }
 
@@ -61,7 +62,8 @@ li {
 /* Form general */
 .form-wrapper {
   width: 100%;
-  max-width: 700px;
+  width: 700px;
+
   padding: 3rem;
   margin: auto;
   font-family: "Nunito", sans-serif;
@@ -131,6 +133,20 @@ li {
   background-color: var(--primary-color-hover);
 }
 
+.btn-cancel {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem; 
+  background-color: var(--red-btn);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-cancel:hover {
+  background-color: var(--red-btn-hover);
+}
 
 /* Prompt general */
 .prompt {
@@ -146,7 +162,7 @@ li {
   align-items: center; 
   transition: opacity 5s ease-in-out;
   opacity: 1; 
-  animation: fadeIn 3s forwards; 
+  animation: fadeIn 5s forwards; 
 }
 
 .prompt-error {

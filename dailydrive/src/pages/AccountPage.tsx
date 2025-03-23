@@ -10,9 +10,11 @@ import { SubmitHandler } from 'react-hook-form';
 import EditUserDataForm, { UserDataFormValues } from '../components/account/EditUserDataForm';
 import EditUserGoalForm, { UserGoalFormValues } from '../components/account/EditUserGoalForm';
 import { updateUserGoal } from '../services/UserGoalService';
+import { usePrompt } from '../hooks/usePrompt';
 
 export default function AccountPage() {
     const { token } = useAuth(); 
+    const { success, fault } = usePrompt();
 
     const [userData, setUserData] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -53,8 +55,9 @@ export default function AccountPage() {
         const { error } = await updateUserData(token, formValues);
         console.log(error); 
         if(error) {
-            setError(error.message);
+            fault(error.message);
         } else {
+            success('Dane zostały zaktualizowane');
             setIsModalOpen(false);
             refetchData();
         }
@@ -62,8 +65,9 @@ export default function AccountPage() {
     const onSubmitGoal: SubmitHandler<UserGoalFormValues> = async (formValues: UserGoalFormValues) => {
         const { error } = await updateUserGoal(token, formValues, userData?.userGoal?.id as number);
         if(error) {
-            setError(error.message);
+            fault(error.message);
         } else {
+            success('Cel został zaktualizowany');
             setIsModalOpen(false);
             refetchData(); 
         }

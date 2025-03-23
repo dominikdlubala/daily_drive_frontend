@@ -75,16 +75,16 @@ export default function MealForm({ initialData, dietId, handleModalClose, onForm
 
             <form onSubmit={handleSubmit(onSubmit)} className="form meal-form">
                 <div ref={topRef} className="form-group">
+                    {
+                        initialData 
+                        &&
+                        <button type="button" className="btn remove-button" onClick={() => onDelete(initialData.id as number)}>Usuń posiłek</button>
+                    }
                     <label  className="form-input--label">Nazwa posiłku</label>
                     <input className="form-input" id="name" {...register("name", {
                         required: { value: true, message: 'Nazwa posiłku jest wymagana' },
                         minLength: { value: 3, message: 'Nazwa posiłku musi mieć przynajmniej 3 znaki' }
                     })} />
-                    {
-                        initialData 
-                        &&
-                        <button type="button" className="btn remove-button" onClick={() => onDelete(initialData.id as number)}>Usuń</button>
-                    }
                     {errors.name && <span className="input-validate">{errors.name.message}</span>}
                 </div>
                 <div className="form-group">

@@ -10,14 +10,13 @@
   }
   
   .form-wrapper--login {
-    width: 100%;
-    max-width: 700px;
     padding: 3rem;
     margin: auto;
     font-family: "Nunito", sans-serif;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    border: 2px solid black; 
+    border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative; 
   }
   
   .form-login {
@@ -25,8 +24,6 @@
     max-width: 700px;
     margin: auto;
   }
-  
-  
   .form-title--login {
     color: #333;
     font-size: 2rem;

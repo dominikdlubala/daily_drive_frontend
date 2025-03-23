@@ -48,6 +48,7 @@ export default function ProductSearch({ handleSelect }: ProductSearchProps) {
         if(error) {
           setError(error); 
         } else {
+          setError(null);
           setSearchResult([]);
           setShowResults(false);
           setSearchTerm(''); 

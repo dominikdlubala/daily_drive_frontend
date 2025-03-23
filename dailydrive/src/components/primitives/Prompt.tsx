@@ -1,26 +1,42 @@
-import { ReactNode } from 'react'; 
-import { createPortal } from 'react-dom';
-import classNames from 'classnames';  
+import React, { useEffect, useRef } from 'react';
+import classNames from 'classnames';
 
 interface PromptProps {
-    children: ReactNode
-    success?: boolean; 
-    error?: boolean; 
-    handleClose: () => void; 
+    children: React.ReactNode;
+    type: 'success' | 'error';
+    onClose: () => void;
 }
 
-export default function Prompt({ children, success, error, handleClose }: PromptProps) {
+export default function Prompt({ children, type, onClose }: PromptProps) {
+    const promptRef = useRef<HTMLDivElement | null>(null);
 
-    const processedClassNames = classNames('prompt', {'prompt-success': success}, {'prompt-error': error})
+    useEffect(() => {
+        const promptElement = promptRef.current;
+        if (promptElement) {
+            const handleAnimationEnd = () => {
+                onClose();
+            };
+            promptElement.addEventListener('animationend', handleAnimationEnd);
 
-    return createPortal(
-        <div className={processedClassNames}>
+            return () => {
+                promptElement.removeEventListener('animationend', handleAnimationEnd);
+            };
+        }
+    }, [onClose]);
+
+    const processedClassNames = classNames(
+        'prompt',
+        { 'prompt-success': type === 'success' },
+        { 'prompt-error': type === 'error' }
+    );
+
+    return (
+        <div ref={promptRef} className={processedClassNames}>
             {children}
             <button 
                 className="btn-close--prompt"
-                onClick={() => handleClose()}
+                onClick={onClose}
             >x</button>
-        </div>, 
-        document.querySelector('.modal-container') as Element
-    )
+        </div>
+    );
 }
