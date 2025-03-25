@@ -20,7 +20,7 @@ interface WorkoutFreeFormProps {
 export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
 
   const { token } = useAuth(); 
-  const { success, fault } = usePrompt();  
+  const { success } = usePrompt();  
 
   const dispatch = useAppDispatch();
   const currentWorkout = useAppSelector((state) => state.workout.currentWorkout);

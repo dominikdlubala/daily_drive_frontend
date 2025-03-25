@@ -10,14 +10,15 @@ import LastWorkoutItem from '../components/home/LastWorkoutItem';
 import WorkoutWeekSummary from '../components/home/WorkoutWeekSummary';
 import DietWeekSummary from '../components/home/DietWeekSummary';
 import { useAuth } from '../hooks/useAuth';
+import { usePrompt } from '../hooks/usePrompt';
 
 export default function HomePage() {
 
     const { token } = useAuth();
+    const { fault } = usePrompt(); 
 
     const navigate = useNavigate(); 
     const [homeData, setHomeData] = useState<HomePageData | null>(null);
-    const [error, setError] = useState<string>();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function HomePage() {
             setIsLoading(true);
             const { data, error } = await fetchHomePageData(token as string);
             if(error) {
-                setError(error);
+                fault(error);
                 setIsLoading(false);
             } else {
                 setHomeData(data)
@@ -33,7 +34,7 @@ export default function HomePage() {
             }
         }
         fetchData();
-    }, [token])
+    }, [token, fault])
     
 
     let content = (

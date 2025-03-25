@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import { SubmitHandler } from 'react-hook-form'; 
 import { useNavigate } from 'react-router-dom'; 
 
-import Prompt from '../components/primitives/Prompt'; 
-
 import { registerUser } from '../services/UserService';
 import type { MyError } from '../types'; 
 import RegisterForm, { RegisterFormValues } from '../components/login/RegisterForm';
