@@ -295,8 +295,8 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
       {error && <span className="input-validate">{error}</span> }
       <div className="workout-actions">
-        <button type="submit" className="btn-submit">Zapisz trening</button>
-        {currentWorkout?.id ? <button type="button" className="btn-end--workout" onClick={handleWorkoutEnd}>Zakończ trening</button> : ''}
+        <button type="submit" className="btn-submit btn-submit-workout">Zapisz trening</button>
+        {currentWorkout?.id ? <button type="button" className="btn-cancel" onClick={handleWorkoutEnd}>Zakończ trening</button> : ''}
       </div>
     </form>
   );
