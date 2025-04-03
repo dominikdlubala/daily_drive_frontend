@@ -15,7 +15,7 @@ export type User = {
 }
 
 export type Gender = 'Male' | 'Female' | 'Other';
-export type ActivityLevel = 'LowActivity' | 'MediumActivity' | 'HighActivity';
+export type ActivityLevel = 'LowActivity' | 'MediumActivity' | 'HighActivity' | 'Adaptive';
 export type WeightGoal = 'WeightLoss' | 'WeightGain' | 'WeightMaintenance';
 
 export type UserGoal = {
@@ -25,6 +25,11 @@ export type UserGoal = {
     goalProtein: number;
     goalCarbs: number;
     goalFat: number;
+
+    additionalCalories?: number;
+    additionalProtein?: number;
+    additionalCarbs?: number;
+    additionalFat?: number;
 }
 
 export type RegisterDTO = {
@@ -81,6 +86,7 @@ export type WorkoutSession = {
 
     bodyPart?: BodyPart; 
     weightLifted?: number; 
+    MET?: number; 
 }
 
 export type WorkoutSessionApiReturn = {

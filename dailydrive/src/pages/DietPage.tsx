@@ -28,6 +28,7 @@ export default function DietPage() {
         fetchUserGoal();
     }, [token]);
 
+
     const [dietDate, setDietDate] = useState<Date>(new Date()); 
 
     const dateChange = ( forwards?: boolean ) => setDietDate(new Date(dietDate.setDate( forwards ? dietDate.getDate() + 1 : dietDate.getDate() - 1 )))

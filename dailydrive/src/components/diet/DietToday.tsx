@@ -63,21 +63,15 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
 
     const handleFormSubmit = async (meal: Meal) => {
         if(meal.id) {
-            const { data, error } = await updateMeal(token, meal);   
-            if(error) {
-                // toast.error('Nie udało się zaktualizować posiłku!');
-            } 
+            const { data } = await updateMeal(token, meal);    
             if(data) {
                 success('Pomyślnie zaktualizowano posiłek!');
             }         
         } else {
-            const { data, error } = await addMeal(token, {
+            const { data } = await addMeal(token, {
                 ...meal, 
                 date
             });
-            if(error) {
-
-            } 
             if(data) {
                 success('Pomyślnie dodano posiłek!');
             }

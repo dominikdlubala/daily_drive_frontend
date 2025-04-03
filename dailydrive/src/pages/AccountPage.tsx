@@ -43,6 +43,7 @@ export default function AccountPage() {
         LowActivity: 'Ćwiczę niewiele (1-2 / tydzień)',
         MediumActivity: 'Ćwiczę umiarkowanie (3-4 / tydzień)',
         HighActivity: '>Ćwiczę często (4-5 / tydzień)',
+        Adaptive: 'System adaptacyjny'
     }
 
     const genders = {

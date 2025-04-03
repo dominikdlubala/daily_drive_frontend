@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form"
 import { ActivityLevel, Gender, WeightGoal } from "../../types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { calculateMacro } from "../login/RegisterForm";
+import Tooltip from "../primitives/Tooltip";
+import { MdQuestionMark } from "react-icons/md";
 
 export type UserGoalFormValues = {
     weight: number;
@@ -59,6 +61,13 @@ export default function EditUserGoalForm({ onSubmit, userGoal }: EditUserGoalFor
             setValue("goalFat", fat);
         }
     }, [gender, height, weight, activityLevel, age, weightGoal, setValue])
+
+    const [isAdaptive, setIsAdaptive] = useState(false); 
+    useEffect(() => {
+        if(isAdaptive) {
+            setValue("activityLevel", "Adaptive" as ActivityLevel); 
+        }
+    }, [isAdaptive, setValue]); 
 
     return (
         <form className="form form-edit--data" onSubmit={handleSubmit(onSubmit)}>
@@ -144,12 +153,26 @@ export default function EditUserGoalForm({ onSubmit, userGoal }: EditUserGoalFor
                 </select>
                 { errors.gender && <span className="input-validate">{errors.gender.message}</span> }
             </div>
-            <div className="form-group">
+            <div className="form-group" >
                 <label className="form-label">Poziom aktywności *</label>
+                <label className="form-checkbox">
+                    <input 
+                        className="adaptive-checkbox"
+                        type="checkbox" 
+                        checked={isAdaptive}
+                        onChange={(e) => setIsAdaptive(e.target.checked)}
+                    />
+                    Ustaw tryb adaptacyjny
+                </label>
+                <div className="adaptive-info">System adaptacyjny analizuje dane o Twoich treningach w konkretnym dniu i na tej podstawie dodaje odpowiednią ilość kalorii i makroelementów do Twojego celu</div>
                 <select 
-                    className="form-input"
+                    className={`form-input ${isAdaptive ? 'form-group--disabled' : ''}`}
                     defaultValue="" 
-                    { ...register("activityLevel", { required: { value: true, message: 'To pole jest wymagane'} })}
+                    disabled={isAdaptive}
+                    { ...register("activityLevel", { required: { 
+                        value: !isAdaptive, 
+                        message: 'To pole jest wymagane'
+                    } })}
                 >
                     <option value="" disabled>Wybierz poziom aktywności</option>
                     <option value="LowActivity">Ćwiczę niewiele (1-2 / tydzień)</option>

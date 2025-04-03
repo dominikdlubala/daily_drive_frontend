@@ -94,6 +94,10 @@ li {
   width: 100%; 
 }
 
+.form-group--disabled {
+  opacity: 0.5;
+}
+
 .form-input {
   width: 100%;
   padding: 0.7rem;
@@ -470,4 +474,17 @@ li {
   font-weight: bold;
   letter-spacing: 0.5px; 
   white-space: nowrap;
+}
+
+.form-group--checkbox {
+  display: flex; 
+  position: relative; 
+  flex-direction: row;
+}
+
+.adaptive-info {
+  font-size: 0.8rem; 
+  background-color: #969696; 
+  padding: 0.5rem; 
+  border-radius: 5px;
 }
