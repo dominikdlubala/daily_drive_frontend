@@ -110,6 +110,10 @@
     margin: auto; 
 }
 
+.diet-summary-home .macros {
+    flex-direction: column;
+}
+
 .side-section-item {
     display: flex; 
     justify-content: space-between; 

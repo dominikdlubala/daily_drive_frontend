@@ -15,9 +15,13 @@ export default function DietPage() {
     const [userGoal, setUserGoal] = useState<UserGoal | undefined>(undefined);
     const [error, setError] = useState<MyError>();
 
+    const [dietDate, setDietDate] = useState<Date>(new Date()); 
+
+    const dateChange = ( forwards?: boolean ) => setDietDate(new Date(dietDate.setDate( forwards ? dietDate.getDate() + 1 : dietDate.getDate() - 1 )))
+
     useEffect(() => {
         const fetchUserGoal = async () => { 
-            const { data, error } = await getUserGoals(token); 
+            const { data, error } = await getUserGoals(token, dietDate.toISOString()); 
             if(error) {
                 setError(error);
             } else {
@@ -26,12 +30,8 @@ export default function DietPage() {
         }
 
         fetchUserGoal();
-    }, [token]);
+    }, [token, dietDate]);
 
-
-    const [dietDate, setDietDate] = useState<Date>(new Date()); 
-
-    const dateChange = ( forwards?: boolean ) => setDietDate(new Date(dietDate.setDate( forwards ? dietDate.getDate() + 1 : dietDate.getDate() - 1 )))
 
     return (
         <div className="page page-diet">

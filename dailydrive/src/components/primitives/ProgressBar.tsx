@@ -1,3 +1,5 @@
+import { round } from "../diet/MealForm";
+
 interface ProgressBarProps {
     currentAmount: number; 
     dailyGoal: number; 
@@ -14,7 +16,7 @@ export default function ProgressBar({ currentAmount, dailyGoal, unitOfMeasure, a
         <div className="progress-bar--container">
             <div className="progress-bar" style={{ width: `${progress}%` }} />
             <span className="progress-bar--text">
-                {`${currentAmount} / ${dailyGoal} ${additional !== null ? `(+${additionalAmount})` : ''} ${unitOfMeasure}`}
+                {`${round(currentAmount, 1)} / ${dailyGoal} ${additional !== null ? `(+${additionalAmount})` : ''} ${unitOfMeasure}`}
             </span>
         </div>
     )
