@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { HomePageData } from "../../types";
 import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { round } from "../diet/MealForm";
 
 interface DietWeekSummaryProps {
     homeData: HomePageData | null;
@@ -22,7 +23,7 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
             const diet = homeData?.dailyDiets.find(d => new Date(d.date).toLocaleDateString('pl-PL', { weekday: 'long' }) === day.toLowerCase());
             return {
                 day,
-                totalCalories: diet ? diet.totalCalories : 0,
+                totalCalories: diet ? Math.round(diet.totalCalories) : 0,
             };
         });
         return chartData;

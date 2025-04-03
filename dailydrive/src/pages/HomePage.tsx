@@ -36,6 +36,7 @@ export default function HomePage() {
         fetchData();
     }, [token, fault])
     
+    console.log(homeData); 
 
     let content = (
         <div className="loading-skeleton">
