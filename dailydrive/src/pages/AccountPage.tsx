@@ -54,7 +54,6 @@ export default function AccountPage() {
 
     const onSubmitData: SubmitHandler<UserDataFormValues> = async (formValues: UserDataFormValues) => {
         const { error } = await updateUserData(token, formValues);
-        console.log(error); 
         if(error) {
             fault(error.message);
         } else {

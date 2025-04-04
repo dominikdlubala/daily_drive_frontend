@@ -65,7 +65,7 @@ export default function LoginPage() {
                         error && <span className="input-validate input-validate--login">{error}</span>
                     }
                     <button 
-                        className="btn-submit"
+                        className="btn-submit btn-submit--login"
                         type="submit"
                         disabled={isSubmitting}
                     >

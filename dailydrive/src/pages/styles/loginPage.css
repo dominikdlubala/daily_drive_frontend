@@ -85,3 +85,7 @@
   .register-link--login a:hover {
     text-decoration: underline;
   }
+
+  .btn-submit--login {
+    margin-top: 0.25rem; 
+  }

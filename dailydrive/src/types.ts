@@ -174,7 +174,7 @@ export type HomePageData = {
     workoutSessions: HomePageWorkoutSessionDTO[];
     mostTrained: BodyPart[];
     recommendedBodyPart: BodyPart;
-    averageCal: number;
+    averageCalories: number;
     averageProtein: number;
     averageCarbs: number;
     averageFat: number;

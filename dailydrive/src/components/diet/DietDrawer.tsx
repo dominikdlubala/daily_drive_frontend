@@ -23,8 +23,7 @@ export default function DietDrawer({ isOpen, onClose }: DietDrawerProps) {
 
     const handleDietDrawerClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.preventDefault(); 
-        const target = e.target as HTMLElement; 
-        console.log(target.dataset); 
+        // const target = e.target as HTMLElement; 
     }
 
     return (

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { HomePageData } from "../../types";
+import { HomePageData, UserGoal } from "../../types";
 import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { round } from "../diet/MealForm";
 
 interface DietWeekSummaryProps {
     homeData: HomePageData | null;
@@ -28,8 +27,14 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
         });
         return chartData;
     };
+    let { minY, maxY } = { minY: (homeData?.userGoal.goalCalories) ? (homeData?.userGoal.goalCalories - 1000) : 0, maxY: (homeData?.userGoal.goalCalories) ? (homeData?.userGoal.goalCalories + 1000) : 0 };
 
     const maxCalories = Math.max(homeData?.userGoal.goalCalories || 0, ...generateChartData().map(data => data.totalCalories));
+    const minCalories = Math.min(...generateChartData().map(data => data.totalCalories));
+
+    if(minCalories < minY ) minY = minCalories - 200; 
+    if(maxCalories > maxY) maxY = maxCalories + 200;
+    
 
     const translateMacro = (macro: string) => {
         switch(macro) {
@@ -41,6 +46,9 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
         }
     }
 
+
+    const computePercentage = ((homeData?.['average'+homeData?.hardestToReachGoal as keyof HomePageData] as number) > (homeData?.userGoal['goal'+homeData?.hardestToReachGoal as keyof UserGoal] as number)) ? 100 : 0; 
+
     return (
         <div 
             className="sub-section diet-section diet-section--home"
@@ -49,7 +57,7 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
             { showError && <div className="week-summary--error">Dodaj więcej danych aby zobaczyć statystyki</div>}
             <div className="sub-section--details  diet-details--home">
                 <div className="home-diet-summary">
-                    <div> Średnio kcal: <span>{homeData?.averageCal || 0} / {homeData?.userGoal.goalCalories} kcal</span></div>
+                    <div> Średnio kcal: <span>{homeData?.averageCalories || 0} / {homeData?.userGoal.goalCalories} kcal</span></div>
                     <div> Średnio białka: <span>{homeData?.averageProtein || 0} / {homeData?.userGoal.goalProtein} g</span></div>
                     <div> Średnio węglowodanów: <span>{homeData?.averageCarbs || 0} / {homeData?.userGoal.goalCarbs} g</span></div>
                     <div> Średnio tłuszczy: <span>{homeData?.averageFat || 0} / {homeData?.userGoal.goalFat} g</span></div>
@@ -59,7 +67,10 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
                         <LineChart data={generateChartData()}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="day" />
-                            <YAxis yAxisId="left" orientation="left" stroke="#8884d8" domain={[0, maxCalories]} />
+                            <YAxis 
+                                yAxisId="left" orientation="left" stroke="#8884d8" 
+                                domain={[minY, maxY]} 
+                            />
                             <Tooltip formatter={(value, name) => [value, name]} />
                             <Legend formatter={(x) => x === 'goalCalories' ? 'Cel kalorii' : 'Kalorie'} />
                             <Line yAxisId="left" type="monotone" dataKey="totalCalories" stroke="#8884d8" name="Kalorie" />
@@ -71,7 +82,7 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
                     <div className='recommendation'> 
                         Najtrudniej jest ci osiągnąć cel:
                         <div className="body-part">
-                            {`${translateMacro(homeData?.hardestToReachGoal as string)} (${ + Math.round(100 - (homeData?.goalDifference as number)) }% celu)`}
+                            {`${translateMacro(homeData?.hardestToReachGoal as string)} (${ computePercentage +  Math.round((homeData?.goalDifference as number)) }% celu)`}
                         </div>
                     </div>
                 </div>
