@@ -23,7 +23,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
     const [error, setError] = useState<string | null>(null);
 
     const addExercise = () => {
-        const newExercise: Exercise = { name: '', type: 'weight', bodyPart: 'Other' };
+        const newExercise: Exercise = { name: '', type: 'Weight', bodyPart: 'Other' };
         setExercises([...exercises, newExercise]);
     }
 
@@ -32,7 +32,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
         if (field === 'name') {
             updatedExercises[index].name = value;
         } else if (field === 'type') {
-            updatedExercises[index].type = value as 'weight' | 'cardio';
+            updatedExercises[index].type = value as 'Weight' | 'Cardio';
         } else if (field === 'bodyPart') {
             updatedExercises[index].bodyPart = value as BodyPart;
         }
@@ -103,13 +103,13 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                                 value={exercise.type}
                                 onChange={(e: FormEvent<HTMLSelectElement>) => updateExercise(index, 'type', e.currentTarget.value)}
                             >
-                                <option value="weight">Siłowe</option>
-                                <option value="cardio">Cardio</option>
+                                <option value="Weight">Siłowe</option>
+                                <option value="Cardio">Cardio</option>
                             </select>
                             <select 
                                 className="form-select form-select--workout-template custom-select"
                                 style={{
-                                    display: exercise.type === 'weight' ? 'block' : 'none'
+                                    display: exercise.type === 'Weight' ? 'block' : 'none'
                                 }}
                                 value={exercise.bodyPart}
                                 onChange={(e: FormEvent<HTMLSelectElement>) => updateExercise(index, 'bodyPart', e.currentTarget.value)}

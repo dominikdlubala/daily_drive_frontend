@@ -122,7 +122,7 @@ export type WorkoutState = {
 export type Exercise = {
     id?: number;
     name: string; 
-    type: "weight" | "cardio"; 
+    type: "Weight" | "Cardio"; 
     bodyPart: BodyPart;
 }
 

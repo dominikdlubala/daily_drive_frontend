@@ -80,11 +80,12 @@ export default function WorkoutsGallery() {
     }
 
     const handleDelete = async (id: number) => {
-        const { data, error } = await deleteWorkoutTemplate(token as string, id);
+        const { error } = await deleteWorkoutTemplate(token as string, id);
         if(error) {
             fault(error.message)
-        } else if (data) {
+        } else {
             success('Szablon treningowy został usunięty');
+            setTemplates(templates?.filter(el => el.id !== id) || null);
             await refreshTemplates(); 
         }
     }
