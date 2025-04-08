@@ -158,10 +158,10 @@ li {
   z-index: 1000; 
   top: 10vh; 
   display: flex; 
-  width: calc(100% - 4rem); 
+  width: calc(100% - 7rem); 
   justify-content: space-between;
   padding: 1rem; 
-  margin: 1rem; 
+  margin: 1rem 3.5rem; 
   border-radius: 10px; 
   align-items: center; 
   transition: opacity 5s ease-in-out;

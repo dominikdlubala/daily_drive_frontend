@@ -10,7 +10,7 @@ export default function StatisticsList({ data }: StatisticsListProps) {
 
     return (
         <div className="statistics-list"> 
-            {data.map((stat, index) => (
+            {data.map((stat) => (
                 <StatisticsListItem key={stat.name} stat={stat} />
             ) )}
         </div>

@@ -139,13 +139,13 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                     </button>
                 </div>
             </div>
-            { error && <span className="input-validate">{error}</span> }
             <button 
                 type="submit"
                 className="btn-submit btn-submit--workout-template"
-            >
+                >
                 Zapisz
             </button>
+            { error && <span className="input-validate">{error}</span> }
         </form>
     )
 }

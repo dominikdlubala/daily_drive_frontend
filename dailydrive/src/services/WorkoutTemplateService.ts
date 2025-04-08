@@ -74,7 +74,6 @@ export const deleteWorkoutTemplate = async (token: string, id: number): Promise<
             }
         }); 
         if(!response.ok) return { error: { message: await response.text() }}
-        // const data = await response.json(); 
         return { data: null }; 
     } catch(err) {
         console.error(err)

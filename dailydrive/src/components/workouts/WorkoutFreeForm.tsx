@@ -50,7 +50,6 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     }
   }, [currentWorkout]);
 
-
   const syncWorkout = () => {
 
     if (currentWorkout) {
@@ -139,6 +138,18 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
 
   const handleWorkoutEnd = () => {
+    if(!title) {
+      setError("Podaj tytuł treningu");
+      return; 
+    }
+    if(weightExercises.some(ex => ex.sets.some(set => (set.reps === 0) || set.weight === 0))) {
+      setError("Ilość powtórzen i ciężar muszą być większe od 0.");
+      return; 
+    }
+    if(cardioExercises.some(ex => ex.intensity === 0 || ex.duration === 0)) {
+      setError("Intensywność i czas trwania muszą być większe od 0.");
+      return; 
+    }
     if (currentWorkout) {
       dispatch(updateCurrentWorkout({
         token, 
@@ -168,11 +179,11 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
         setError("Podaj tytuł treningu");
         return; 
     }
-    if(weightExercises.some(ex => ex.sets.some(set => (set.reps === 0) || set.weight === 0))) {
+    if(weightExercises.some(ex => ex.sets.some(set => (set.reps <= 0) || set.weight <= 0))) {
         setError("Ilość powtórzen i ciężar muszą być większe od 0.");
         return; 
     }
-    if(cardioExercises.some(ex => ex.intensity === 0 || ex.duration === 0)) {
+    if(cardioExercises.some(ex => ex.intensity <= 0 || ex.duration <= 0)) {
         setError("Intensywność i czas trwania muszą być większe od 0.");
         return; 
     }

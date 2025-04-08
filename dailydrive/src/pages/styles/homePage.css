@@ -114,6 +114,10 @@
     flex-direction: column;
 }
 
+.diet-summary-home .macros .macros-item {
+    margin: 0; 
+}
+
 .side-section-item {
     display: flex; 
     justify-content: space-between; 

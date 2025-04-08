@@ -39,7 +39,6 @@ export default function Tooltip({ content, children }: TooltipProps) {
           ref={tooltipRef}
           className="tooltip"
           style={{
-            // position: "absolute",
             backgroundColor: "#333",
             color: "#fff",
             padding: "5px 10px",

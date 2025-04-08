@@ -46,9 +46,7 @@ export default function DietWeekSummary({ homeData }: DietWeekSummaryProps) {
         }
     }
 
-
     const computePercentage = ((homeData?.['average'+homeData?.hardestToReachGoal as keyof HomePageData] as number) > (homeData?.userGoal['goal'+homeData?.hardestToReachGoal as keyof UserGoal] as number)) ? 100 : 0; 
-
     return (
         <div 
             className="sub-section diet-section diet-section--home"

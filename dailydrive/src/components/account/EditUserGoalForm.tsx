@@ -2,8 +2,6 @@ import { useForm } from "react-hook-form"
 import { ActivityLevel, Gender, WeightGoal } from "../../types";
 import { useEffect, useState } from "react";
 import { calculateMacro } from "../login/RegisterForm";
-import Tooltip from "../primitives/Tooltip";
-import { MdQuestionMark } from "react-icons/md";
 
 export type UserGoalFormValues = {
     weight: number;

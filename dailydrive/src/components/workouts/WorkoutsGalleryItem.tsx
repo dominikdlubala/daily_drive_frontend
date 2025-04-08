@@ -44,7 +44,7 @@ export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: W
             fault(error.message as string);
             return
         }
-        success(`Trening ${startWorkoutData.workoutSession.name} rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
+        success(`Trening "${startWorkoutData.workoutSession.name}" rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
     }
 
     return (

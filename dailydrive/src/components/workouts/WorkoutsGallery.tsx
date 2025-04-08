@@ -74,6 +74,11 @@ export default function WorkoutsGallery() {
         handleModalClose(true); 
     }
 
+    const handleAddClick = () => {
+        setTemplateToUpdate(undefined); 
+        setIsModalOpen(true);
+    }
+
     const handleEdit = (template: WorkoutTemplate) => {
         setTemplateToUpdate(template); 
         setIsModalOpen(true); 
@@ -96,7 +101,7 @@ export default function WorkoutsGallery() {
                 <div className="page-title">Szablony treningowe</div>
                 <button
                     className="workout-templ--add"
-                    onClick={() => setIsModalOpen(true)}    
+                    onClick={() => handleAddClick()}    
                 >Dodaj szablon +</button>
             </div>
             <div className="gallery gallery-workouts">
