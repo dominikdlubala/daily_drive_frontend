@@ -152,7 +152,7 @@ li {
   background-color: var(--red-btn-hover);
 }
 
-/* Prompt general */
+
 .prompt {
   position: absolute; 
   z-index: 1000; 

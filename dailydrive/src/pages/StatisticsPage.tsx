@@ -25,6 +25,8 @@ export default function StatisticsPage() {
         fetchData(); 
     }, [token, selectedPeriod]); 
 
+    console.log(statisticsData)
+
 
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
         setSelectedPeriod(event.target.value);

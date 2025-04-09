@@ -66,3 +66,8 @@
     padding: 0.5rem; 
     justify-content: space-between;
 }
+
+.btn-change-password {
+    margin-right: 0.5rem;
+    background-color: var(--green-btn); 
+}
