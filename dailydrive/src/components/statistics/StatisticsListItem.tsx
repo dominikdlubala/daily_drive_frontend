@@ -17,6 +17,8 @@ export default function StatisticsListItem({ stat }: { stat: WorkoutStatistic })
     }
     const minY = stat.lowest1RM; 
     const maxY = stat.highest1RM; 
+ 
+    console.table(generateChartData())
 
     return (
         <div className="statistics-list--item">
@@ -26,7 +28,7 @@ export default function StatisticsListItem({ stat }: { stat: WorkoutStatistic })
                         <Line type="monotone" dataKey="potential1RM" stroke="#8884d8" />
                         <XAxis dataKey="date" />
                         <YAxis 
-                            tickFormatter={value => `${value} kg`} 
+                            tickFormatter={value => `${round(value, 1)} kg`} 
                             domain={[minY, maxY]}    
                         />
                         <Tooltip formatter={(value, name) => [value = value + ' kg', name === 'potential1RM' ? 'Potencjalny 1RM' : name]} />

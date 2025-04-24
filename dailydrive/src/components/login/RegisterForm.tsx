@@ -45,11 +45,11 @@ export const calculateMacro = (gender: Gender, height: number, weight: number, a
         }
     }
     if(gender === 'Male') {
-        bmr = (13.7516 * weight) + (5.0033 * height) - (6.7550 * age) + 66.4730;
+        bmr = 66.4730 + (13.7516 * weight) + (5.0033 * height) - (6.7550 * age);
     } else if (gender === 'Female') {
-        bmr = (9.5634 * weight) + (1.8500 * height) - (4.6760 * age) + 655.0955;
+        bmr =  655.0955 + (9.5634 * weight) + (1.8496 * height) - (4.6756 * age);
     } else {
-        bmr = (((13.7516+9.5634)/2) * weight) + (((5.0033+1.8500)/2) * height) - (((6.7550+4.6760/2)) * age) + ((66.4730+655.0955)/2);
+        bmr = (((13.7516+9.5634)/2) * weight) + (((5.0033+1.8496)/2) * height) - (((6.7550+4.6756/2)) * age) + ((66.4730+655.0955)/2);
     }
     const calories = bmr * activityLevelMultiplier[activityLevel] + weightGoalMultiplier(bmr, weightGoal);
     const protein = (calories * 0.35) / 4; 
@@ -327,7 +327,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                { errors.goalCarbs && <span className="input-validate">{errors.goalCarbs.message}</span> }                    
                 </div>  
                 <div className="form-group">
-                    <label className="form-label">Cel tłuszczu (g) *</label>
+                    <label className="form-label">Cel tłuszczy (g) *</label>
                     <input 
                         type="number" 
                         className="form-input" 

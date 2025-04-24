@@ -237,7 +237,7 @@ export default function EditUserGoalForm({ onSubmit, userGoal }: EditUserGoalFor
             { errors.goalCarbs && <span className="input-validate">{errors.goalCarbs.message}</span> }                    
                 </div>  
                 <div className="form-group">
-                    <label className="form-label">Cel tłuszczu (g) *</label>
+                    <label className="form-label">Cel tłuszczy (g) *</label>
                     <input 
                         type="number" 
                         className="form-input" 

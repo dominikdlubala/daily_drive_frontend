@@ -178,7 +178,7 @@ export default function AccountPage() {
                     <div className="user-data--item">
                         <span className="data-item--label">Płeć: </span> {genders[userData?.gender as Gender]}
                     </div>
-                    <div className="user-main-data--title">Twój cel treningowy</div>
+                    <div className="user-main-data--title">Twój cel dietetyczny</div>
                     <div className="user-data--item">
                         <span className="data-item--label">Cel główny: </span> {userData?.userGoal?.weightGoal === 'WeightLoss' ? 'Redukcja' : userData?.userGoal?.weightGoal === 'WeightGain' ? 'Masa' : 'Utrzymanie'} 
                     </div>

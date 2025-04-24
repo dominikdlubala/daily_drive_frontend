@@ -60,14 +60,14 @@ export default function ChangePasswordForm({ onSubmit }: ChangePasswordFormProps
                 { errors.newPassword && <span className="input-validate">{errors.newPassword.message}</span> }
             </div>
             <div className="form-group">
-                <label className="form-label">Nowe hasło</label>
+                <label className="form-label">Potwierdź hasło</label>
                 <input 
                     type="password" 
                     className="form-input" 
                     { ...register("confirmPassword", {
                         required: {
                             value: true, 
-                            message: 'Potwierdź hasło'
+                            message: 'Nowe hasło musi zostać potwierdzone'
                         }, 
                         validate: (value) => value === newPassword || "Hasła nie są identyczne"
                     }) }

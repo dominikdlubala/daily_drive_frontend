@@ -86,6 +86,7 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
                 value={(details as CardioExercise).intensity}
                 onChange={(e) => handleCardioStatChange("intensity", parseInt(e.target.value))}
                 className="exercise-detail--input"
+                max={10}
             />
             <label className="form-label">Czas trwania (min)</label>
             <input
