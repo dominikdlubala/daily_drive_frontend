@@ -204,7 +204,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                 <label className="form-label">Wiek *</label>
                 <input 
                     type="number" 
-                    step="0.1"
+                    step="1"
                     className="form-input" 
                     { ...register("age", {
                         required: {
