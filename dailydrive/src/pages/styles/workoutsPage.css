@@ -150,6 +150,7 @@ button {
     padding: 1rem; 
     border-radius: 30px; 
     margin-bottom: 2rem; 
+    background-color: #94bbef; 
 }
 
 .month-title {
@@ -169,6 +170,7 @@ button {
     border: 1px solid black;
     border-radius: 10px;
     width: 100%;
+    background-color: #fff;
 }
 
 .list-workout--item-header {
@@ -258,8 +260,4 @@ button {
     background-color: #fff;
     cursor: pointer;
     border-radius: 5px;
-}
-
-.btn-submit--workout-template {
-    margin-top: 1rem; 
 }

@@ -72,9 +72,6 @@ export default function WorkoutsListItem({ onDelete, workoutsData }: WorkoutsLis
                     : 
                     ''
                 }
-                {/* <button className="btn-toggle-exercises" onClick={toggleShowExercises}>
-                            {showAllExercises ? 'Zwiń' : 'Pokaż więcej'}
-                </button> */}
             </div>
         </div>
     )

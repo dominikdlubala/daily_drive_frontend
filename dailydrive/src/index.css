@@ -94,6 +94,10 @@ li {
   width: 100%; 
 }
 
+.form-group--disabled {
+  opacity: 0.5;
+}
+
 .form-input {
   width: 100%;
   padding: 0.7rem;
@@ -148,16 +152,16 @@ li {
   background-color: var(--red-btn-hover);
 }
 
-/* Prompt general */
+
 .prompt {
   position: absolute; 
   z-index: 1000; 
   top: 10vh; 
   display: flex; 
-  width: calc(100% - 4rem); 
+  width: calc(100% - 7rem); 
   justify-content: space-between;
   padding: 1rem; 
-  margin: 1rem; 
+  margin: 1rem 3.5rem; 
   border-radius: 10px; 
   align-items: center; 
   transition: opacity 5s ease-in-out;
@@ -470,4 +474,17 @@ li {
   font-weight: bold;
   letter-spacing: 0.5px; 
   white-space: nowrap;
+}
+
+.form-group--checkbox {
+  display: flex; 
+  position: relative; 
+  flex-direction: row;
+}
+
+.adaptive-info {
+  font-size: 0.8rem; 
+  background-color: #969696; 
+  padding: 0.5rem; 
+  border-radius: 5px;
 }

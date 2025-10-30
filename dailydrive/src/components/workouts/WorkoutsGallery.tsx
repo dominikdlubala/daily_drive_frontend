@@ -74,17 +74,23 @@ export default function WorkoutsGallery() {
         handleModalClose(true); 
     }
 
+    const handleAddClick = () => {
+        setTemplateToUpdate(undefined); 
+        setIsModalOpen(true);
+    }
+
     const handleEdit = (template: WorkoutTemplate) => {
         setTemplateToUpdate(template); 
         setIsModalOpen(true); 
     }
 
     const handleDelete = async (id: number) => {
-        const { data, error } = await deleteWorkoutTemplate(token as string, id);
+        const { error } = await deleteWorkoutTemplate(token as string, id);
         if(error) {
             fault(error.message)
-        } else if (data) {
+        } else {
             success('Szablon treningowy został usunięty');
+            setTemplates(templates?.filter(el => el.id !== id) || null);
             await refreshTemplates(); 
         }
     }
@@ -95,7 +101,7 @@ export default function WorkoutsGallery() {
                 <div className="page-title">Szablony treningowe</div>
                 <button
                     className="workout-templ--add"
-                    onClick={() => setIsModalOpen(true)}    
+                    onClick={() => handleAddClick()}    
                 >Dodaj szablon +</button>
             </div>
             <div className="gallery gallery-workouts">

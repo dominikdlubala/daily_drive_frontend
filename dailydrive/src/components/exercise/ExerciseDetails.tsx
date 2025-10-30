@@ -49,7 +49,7 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
               <FaTrashAlt />
             </button>
         </div>
-        {exercise.type === "weight" ? (
+        {exercise.type === "Weight" ? (
             <div className="exercise-details--weight">
             {(details as WeightExercise).sets.map((set, index) => (
                 <div key={index} className="exercise-detail exercise-detail--set">
@@ -79,14 +79,16 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
             </div>
         ) : (
             <div className="exercise-details--cardio">
-            <h4 className="exercise-details--title">Intensywność i czas trwania</h4>
+            <label className="form-label">Intensywność</label>
             <input
                 type="number"
                 placeholder="Intensywność"
                 value={(details as CardioExercise).intensity}
                 onChange={(e) => handleCardioStatChange("intensity", parseInt(e.target.value))}
                 className="exercise-detail--input"
+                max={10}
             />
+            <label className="form-label">Czas trwania (min)</label>
             <input
                 type="number"
                 placeholder="Czas trwania (min)"
