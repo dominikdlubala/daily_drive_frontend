@@ -1,0 +1,133 @@
+.btn-add--product {
+    background-color: #06a93f; 
+    color: #fff; 
+    margin-top: 1rem; 
+    width: 100%; 
+    border: none;
+    border-radius: 10px; 
+    padding: 0.5rem; 
+    cursor: pointer; 
+}
+.btn-add--product:hover {
+    background-color: #08c94c;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meal-form .form-subgroup {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0; 
+}
+
+.product-subgroup {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.macro {
+    display: flex; 
+    width: 100%; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.macro-group {
+    display: flex; 
+    align-items: center;
+    gap: 0.5rem;
+}
+
+label {
+    font-weight: bold;
+}
+
+
+.remove-button,
+.add-button,
+.submit-button,
+.cancel-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-button {
+    background-color: #ff4d4d;
+    color: white;
+    align-self: flex-end;
+}
+
+.add-button {
+    background-color: #4caf50;
+    color: white;
+    margin-top: 8px;
+}
+
+.submit-button {
+    background-color: #008cba;
+    color: white;
+    align-self: center;
+}
+
+.cancel-button {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.search-error-message {
+    color: red; 
+    font-size: 0.8rem;
+}
+
+.btn-add--meal {
+    background-color: #06a93f; 
+    color: #fff; 
+    margin-top: 1rem; 
+    width: 100%; 
+    border: none;
+    border-radius: 10px; 
+    padding: 0.5rem; 
+    cursor: pointer; 
+}
+.btn-add--meal:hover {
+    background-color: #048832;  
+    transition: ease-in-out 0.3s;
+}
+
+.head-input {
+    display: flex; 
+    min-width: 40%; 
+    font-weight: bold;
+    font-size: 1.25rem; 
+}
+
+.form-group--head {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; 
+}
+.form-group--head button {
+    display: flex;
+    font-size: 1rem;
+}
