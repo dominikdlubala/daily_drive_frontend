@@ -3,11 +3,10 @@ import { useAuth } from '../../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { RxHamburgerMenu } from "react-icons/rx";
-import { set } from 'react-hook-form';
 
 
 function MobileNav() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const navigate = useNavigate(); 
     const location = useLocation();

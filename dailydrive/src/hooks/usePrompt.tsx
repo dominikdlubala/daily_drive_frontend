@@ -44,11 +44,12 @@ export default function PromptProvider({ children }: { children: ReactNode }) {
         <PromptContext.Provider value={{ success, fault, removePrompt }}>
             <div>
                 <div className="prompt-container">
-                    {prompts.map(prompt => (
+                    {prompts.map((prompt, index) => (
                         <Prompt
                             key={prompt.id}
                             type={prompt.type}
                             onClose={() => removePrompt(prompt.id)}
+                            index={index}
                         >
                             {prompt.message}
                         </Prompt>

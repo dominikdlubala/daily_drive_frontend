@@ -1,3 +1,4 @@
+import { ChangePasswordFormValues } from '../components/account/ChangePasswordForm';
 import { UserDataFormValues } from '../components/account/EditUserDataForm';
 import { RegisterFormValues } from '../components/login/RegisterForm';
 import type { UserLoginApiReturn } from '../types'; 
@@ -89,4 +90,24 @@ export const updateUserData = async (token: string | null, userData: UserDataFor
         console.error(err); 
         return { error: { message: 'Unexpected error | fetchProductByName' }}
     } 
+}
+
+export const changePassword = async (token: string | null, changePasswordData: ChangePasswordFormValues): Promise<{ data?: { message: string}, error?: { message: string} }> => {
+    try {
+        const response = await fetch(`${API_URL}/change-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${token}`
+            }, 
+            body: JSON.stringify(changePasswordData)
+        }); 
+        if(!response.ok) {
+            return { error: { message: await response.text() } }; 
+        }
+        const data = await response.json(); 
+        return { data }; 
+    } catch(err: any) {
+        return { error: err }
+    }
 }

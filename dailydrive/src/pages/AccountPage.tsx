@@ -3,7 +3,7 @@ import './styles/accountPage.css';
 import { useEffect, useState } from "react";
 import { ActivityLevel, Gender, User } from "../types";
 import { useAuth } from "../hooks/useAuth";
-import { getUserData, updateUserData } from "../services/UserService";
+import { changePassword, getUserData, updateUserData } from "../services/UserService";
 import { MdEdit } from 'react-icons/md';
 import Modal from '../components/primitives/Modal';
 import { SubmitHandler } from 'react-hook-form';
@@ -11,6 +11,7 @@ import EditUserDataForm, { UserDataFormValues } from '../components/account/Edit
 import EditUserGoalForm, { UserGoalFormValues } from '../components/account/EditUserGoalForm';
 import { updateUserGoal } from '../services/UserGoalService';
 import { usePrompt } from '../hooks/usePrompt';
+import ChangePasswordForm, { ChangePasswordFormValues } from '../components/account/ChangePasswordForm';
 
 export default function AccountPage() {
     const { token } = useAuth(); 
@@ -19,7 +20,7 @@ export default function AccountPage() {
     const [userData, setUserData] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editType, setEditType] = useState<'user' | 'userGoal'>('user');
+    const [editType, setEditType] = useState<'user' | 'userGoal' | 'passwordChange'>('user');
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -43,6 +44,7 @@ export default function AccountPage() {
         LowActivity: 'Ćwiczę niewiele (1-2 / tydzień)',
         MediumActivity: 'Ćwiczę umiarkowanie (3-4 / tydzień)',
         HighActivity: '>Ćwiczę często (4-5 / tydzień)',
+        Adaptive: 'System adaptacyjny'
     }
 
     const genders = {
@@ -53,7 +55,6 @@ export default function AccountPage() {
 
     const onSubmitData: SubmitHandler<UserDataFormValues> = async (formValues: UserDataFormValues) => {
         const { error } = await updateUserData(token, formValues);
-        console.log(error); 
         if(error) {
             fault(error.message);
         } else {
@@ -73,6 +74,18 @@ export default function AccountPage() {
         }
     }
 
+    const onSubmitPassword: SubmitHandler<ChangePasswordFormValues> = async (formValues: ChangePasswordFormValues) => {
+        const { data, error } = await changePassword(token, formValues); 
+        if(error){
+            fault(error.message); 
+        } else if(data) {
+            success(data.message);
+            setIsModalOpen(false); 
+        } else {
+            fault('Coś poszło nie tak'); 
+        }
+    }
+
     return (
         <div className="page page-account">
             {
@@ -82,18 +95,25 @@ export default function AccountPage() {
                     <>
                         {error && <span className="input-validate">{error}</span>}
                         {
-                            editType === 'user' 
-                            ? 
-                            <EditUserDataForm onSubmit={onSubmitData} userData={userData as UserDataFormValues} /> 
-                            : 
-                            <EditUserGoalForm onSubmit={onSubmitGoal} userGoal={{
-                                ...userData?.userGoal, 
-                                height: userData?.height,
-                                weight: userData?.weight,
-                                age: userData?.age,
-                                gender: userData?.gender, 
-                                activityLevel: userData?.activityLevel
-                            } as UserGoalFormValues} />
+
+                            editType === 'passwordChange'
+                            ?
+                            <ChangePasswordForm onSubmit={onSubmitPassword} />
+                            :
+                            (
+                                editType === 'user' 
+                                ? 
+                                <EditUserDataForm onSubmit={onSubmitData} userData={userData as UserDataFormValues} /> 
+                                : 
+                                <EditUserGoalForm onSubmit={onSubmitGoal} userGoal={{
+                                    ...userData?.userGoal, 
+                                    height: userData?.height,
+                                    weight: userData?.weight,
+                                    age: userData?.age,
+                                    gender: userData?.gender, 
+                                    activityLevel: userData?.activityLevel
+                                } as UserGoalFormValues} />
+                            )
                         }
                     </>
                 </Modal>
@@ -110,10 +130,21 @@ export default function AccountPage() {
                 <div className="user-main-data">
                     <div className="user-data-head">
                         <div className="user-main-data--title">Twoje podstawowe dane</div>
-                        <button onClick={() => {
-                            setEditType('user');
-                            setIsModalOpen(true); 
-                        }} className="btn-edit btn-edit--acount"><MdEdit/></button>
+                        <div className="acc-buttons">
+                            <button 
+                                className="btn-edit btn-change-password"
+                                onClick={() => {
+                                    setEditType('passwordChange'); 
+                                    setIsModalOpen(true); 
+                                }}
+                            >
+                                Zmień hasło
+                            </button>
+                            <button onClick={() => {
+                                setEditType('user');
+                                setIsModalOpen(true); 
+                            }} className="btn-edit btn-edit--acount"><MdEdit/></button>
+                        </div>
                     </div>
                     <div className="user-data--item">
                         <span className="data-item--label">Imię i nazwisko: </span> { 
@@ -147,7 +178,7 @@ export default function AccountPage() {
                     <div className="user-data--item">
                         <span className="data-item--label">Płeć: </span> {genders[userData?.gender as Gender]}
                     </div>
-                    <div className="user-main-data--title">Twój cel treningowy</div>
+                    <div className="user-main-data--title">Twój cel dietetyczny</div>
                     <div className="user-data--item">
                         <span className="data-item--label">Cel główny: </span> {userData?.userGoal?.weightGoal === 'WeightLoss' ? 'Redukcja' : userData?.userGoal?.weightGoal === 'WeightGain' ? 'Masa' : 'Utrzymanie'} 
                     </div>

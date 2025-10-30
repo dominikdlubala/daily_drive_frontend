@@ -2,9 +2,9 @@ import { UserGoalFormValues } from "../components/account/EditUserGoalForm";
 
 const API_URL = 'api/UserGoal';
 
-export const getUserGoals = async (token: string | null) => {
+export const getUserGoals = async (token: string | null, date?: string) => {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${API_URL}/${date}`, {
             method: 'GET', 
             headers: {
                 'Content-Type': 'application/json',

@@ -23,18 +23,7 @@ export default function ProductForm({ onSubmit, onCancel }: ProductFormProps) {
                     id="name" 
                     {...register("name", { required: "Nazwa produktu jest wymagana" })} 
                 />
-                {errors.name && <p className="error">{errors.name.message}</p>}
-            </div>
-            <div className="form-group">
-                <label htmlFor="weight">Waga (g)</label>
-                <input 
-                    className="form-input"
-                    type="number" 
-                    id="weight" 
-                    {...register("weight", { required: "Waga jest wymagana", min: 0 })} 
-                    step="0.01"
-                />
-                {errors.weight && <p className="error">{errors.weight.message}</p>}
+                {errors.name && <span className="input-validate">{errors.name.message}</span>}
             </div>
             <div className="form-group">
                 <label htmlFor="caloriesPer100g">Kalorie na 100g</label>
@@ -45,7 +34,7 @@ export default function ProductForm({ onSubmit, onCancel }: ProductFormProps) {
                     {...register("caloriesPer100g", { required: "Kalorie są wymagane", min: 0 })} 
                     step="0.01"
                 />
-                {errors.caloriesPer100g && <p className="error">{errors.caloriesPer100g.message}</p>}
+                {errors.caloriesPer100g && <span className="input-validate">{errors.caloriesPer100g.message}</span>}
             </div>
             <div className="form-group">
                 <label htmlFor="proteinPer100g">Białko na 100g (g)</label>
@@ -56,7 +45,7 @@ export default function ProductForm({ onSubmit, onCancel }: ProductFormProps) {
                     {...register("proteinPer100g", { required: "Białko jest wymagane", min: 0 })} 
                     step="0.01"
                 />
-                {errors.proteinPer100g && <p className="error">{errors.proteinPer100g.message}</p>}
+                {errors.proteinPer100g && <span className="input-validate">{errors.proteinPer100g.message}</span>}
             </div>
             <div className="form-group">
                 <label htmlFor="carbsPer100g">Węglowodany na 100g (g)</label>
@@ -67,7 +56,7 @@ export default function ProductForm({ onSubmit, onCancel }: ProductFormProps) {
                     {...register("carbsPer100g", { required: "Węglowodany są wymagane", min: 0 })} 
                     step="0.01"
                 />
-                {errors.carbsPer100g && <p className="error">{errors.carbsPer100g.message}</p>}
+                {errors.carbsPer100g && <span className="input-validate">{errors.carbsPer100g.message}</span>}
             </div>
             <div className="form-group">
                 <label htmlFor="fatPer100g">Tłuszcz na 100g (g)</label>
@@ -78,7 +67,7 @@ export default function ProductForm({ onSubmit, onCancel }: ProductFormProps) {
                     {...register("fatPer100g", { required: "Tłuszcz jest wymagany", min: 0 })} 
                     step="0.01"
                 />
-                {errors.fatPer100g && <p className="error">{errors.fatPer100g.message}</p>}
+                {errors.fatPer100g && <span className="input-validate">{errors.fatPer100g.message}</span>}
             </div>
             <div className="form-group">
                 <button type="submit" className="btn-submit">Dodaj produkt</button>

@@ -33,8 +33,8 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
             const session = homeData?.workoutSessions.find(ws => new Date(ws.date).toLocaleDateString('pl-PL', { weekday: 'long' }) === day.toLowerCase());
             return {
                 day,
-                timeSpent: session ? session.timeSpent : 0,
-                weightLifted: session ? session.weightLifted : 0
+                timeSpent: session ? Math.round(session.timeSpent) : 0,
+                weightLifted: session ? Math.round(session.weightLifted) : 0
             };
         });
         return chartData;

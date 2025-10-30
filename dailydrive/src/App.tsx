@@ -53,6 +53,12 @@ const router = createBrowserRouter([
         element: <ProtectedRoute>
                   <StatisticsPage/>
                 </ProtectedRoute>
+      }, 
+      {
+        path: '*', 
+        element: <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
       }
     ]
   }

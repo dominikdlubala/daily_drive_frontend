@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { ActivityLevel, Gender, WeightGoal } from "../../types";
+import Tooltip from "../primitives/Tooltip";
+import { MdQuestionMark } from "react-icons/md";
 
 export type RegisterFormValues = {
     firstName: string 
@@ -29,7 +31,8 @@ export const calculateMacro = (gender: Gender, height: number, weight: number, a
     const activityLevelMultiplier = {
         LowActivity: 1.2,
         MediumActivity: 1.55,
-        HighActivity: 1.725
+        HighActivity: 1.725, 
+        Adaptive: 1.0
     }
     const weightGoalMultiplier = (bmr: number, weightGoal: WeightGoal) => {
         switch(weightGoal) {
@@ -42,11 +45,11 @@ export const calculateMacro = (gender: Gender, height: number, weight: number, a
         }
     }
     if(gender === 'Male') {
-        bmr = (13.7516 * weight) + (5.0033 * height) - (6.7550 * age) + 66.4730;
+        bmr = 66.4730 + (13.7516 * weight) + (5.0033 * height) - (6.7550 * age);
     } else if (gender === 'Female') {
-        bmr = (9.5634 * weight) + (1.8500 * height) - (4.6760 * age) + 655.0955;
+        bmr =  655.0955 + (9.5634 * weight) + (1.8496 * height) - (4.6756 * age);
     } else {
-        bmr = (((13.7516+9.5634)/2) * weight) + (((5.0033+1.8500)/2) * height) - (((6.7550+4.6760/2)) * age) + ((66.4730+655.0955)/2);
+        bmr = (((13.7516+9.5634)/2) * weight) + (((5.0033+1.8496)/2) * height) - (((6.7550+4.6756/2)) * age) + ((66.4730+655.0955)/2);
     }
     const calories = bmr * activityLevelMultiplier[activityLevel] + weightGoalMultiplier(bmr, weightGoal);
     const protein = (calories * 0.35) / 4; 
@@ -89,6 +92,11 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
             setValue("goalFat", fat);
         }
     }, [gender, height, weight, activityLevel, age, weightGoal, setValue])
+
+    const [isAdaptive, setIsAdaptive] = useState(false);
+    useEffect(() => {
+        if(isAdaptive) setValue("activityLevel", "Adaptive" as ActivityLevel);
+    },[isAdaptive, setValue])
 
     const handleNextStep = async () => {
         let isValid = false; 
@@ -196,7 +204,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                 <label className="form-label">Wiek *</label>
                 <input 
                     type="number" 
-                    step="0.1"
+                    step="1"
                     className="form-input" 
                     { ...register("age", {
                         required: {
@@ -231,10 +239,23 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
             </div>
             <div className="form-group">
                 <label className="form-label">Poziom aktywności *</label>
+                <label className="form-checkbox">
+                    <input 
+                        className="adaptive-checkbox"
+                        type="checkbox" 
+                        checked={isAdaptive}
+                        onChange={(e) => setIsAdaptive(e.target.checked)}
+                    />
+                    Ustaw tryb adaptacyjny
+                </label>
+                <div className="adaptive-info">System adaptacyjny analizuje dane o Twoich treningach w konkretnym dniu i na tej podstawie dodaje odpowiednią ilość kalorii i makroelementów do Twojego celu</div>
                 <select 
-                    className="form-input"
+                    className={`form-input ${isAdaptive ? 'form-group--disabled' : ''}`}
                     defaultValue="" 
-                    { ...register("activityLevel", { required: { value: true, message: 'To pole jest wymagane'} })}
+                    disabled={isAdaptive}
+                    { ...register("activityLevel", { required: { 
+                        value: !isAdaptive, 
+                        message: 'To pole jest wymagane'} })}
                 >
                     <option value="" disabled>Wybierz poziom aktywności</option>
                     <option value="LowActivity">Ćwiczę niewiele (1-2 / tydzień)</option>
@@ -306,7 +327,7 @@ export default function RegisterForm({ onSubmit }: RegisterFormProps) {
                { errors.goalCarbs && <span className="input-validate">{errors.goalCarbs.message}</span> }                    
                 </div>  
                 <div className="form-group">
-                    <label className="form-label">Cel tłuszczu (g) *</label>
+                    <label className="form-label">Cel tłuszczy (g) *</label>
                     <input 
                         type="number" 
                         className="form-input" 

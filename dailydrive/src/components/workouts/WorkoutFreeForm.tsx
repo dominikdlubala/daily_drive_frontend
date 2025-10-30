@@ -50,7 +50,6 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     }
   }, [currentWorkout]);
 
-
   const syncWorkout = () => {
 
     if (currentWorkout) {
@@ -86,15 +85,15 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
   };
 
   const handleExerciseSelect = (exercise: Exercise) => {
-    if (exercise.type === "weight") {
+    if (exercise.type === "Weight") {
       setWeightExercises([...weightExercises, { name: exercise.name, type: "weight", sets: [], bodyPart: (exercise.bodyPart) }]);
     } else {
       setCardioExercises([...cardioExercises, { name: exercise.name, type: "cardio", intensity: 0, duration: 0 }]);
     }
   };
 
-  const updateExercise = (type: "weight" | "cardio", index: number, updatedExercise: WeightExercise | CardioExercise) => {
-    if (type === "weight") {
+  const updateExercise = (type: "Weight" | "Cardio", index: number, updatedExercise: WeightExercise | CardioExercise) => {
+    if (type === "Weight") {
       const updated = [...weightExercises];
       updated[index] = updatedExercise as WeightExercise;
       setWeightExercises(updated);
@@ -105,8 +104,8 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
     }
   };
 
-  const removeExercise = (type: "weight" | "cardio", index: number) => {
-    if (type === "weight") {
+  const removeExercise = (type: "Weight" | "Cardio", index: number) => {
+    if (type === "Weight") {
       setWeightExercises(weightExercises.filter((_, i) => i !== index));
     } else {
       setCardioExercises(cardioExercises.filter((_, i) => i !== index));
@@ -120,7 +119,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
       return; 
     }
     setNewExError(null);
-    setWeightExercises([...weightExercises, { name: newWeightExerciseName, type: "weight", sets: [], bodyPart: newWeightExerciseBodyPart }]);    
+    setWeightExercises([...weightExercises, { name: newWeightExerciseName, type: "Weight", sets: [], bodyPart: newWeightExerciseBodyPart }]);    
     setNewWeightExerciseName("");
     setShowWeightExerciseForm(false);
   };
@@ -132,13 +131,25 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
       return; 
     }
     setNewExError(null);
-    setCardioExercises([...cardioExercises, { name: newCardioExerciseName, type: "cardio", intensity: 0, duration: 0 }]);
+    setCardioExercises([...cardioExercises, { name: newCardioExerciseName, type: "Cardio", intensity: 0, duration: 0 }]);
     setNewCardioExerciseName("");
     setShowCardioExerciseForm(false);
   };
 
 
   const handleWorkoutEnd = () => {
+    if(!title) {
+      setError("Podaj tytuł treningu");
+      return; 
+    }
+    if(weightExercises.some(ex => ex.sets.some(set => (set.reps === 0) || set.weight === 0))) {
+      setError("Ilość powtórzen i ciężar muszą być większe od 0.");
+      return; 
+    }
+    if(cardioExercises.some(ex => ex.intensity === 0 || ex.duration === 0)) {
+      setError("Intensywność i czas trwania muszą być większe od 0.");
+      return; 
+    }
     if (currentWorkout) {
       dispatch(updateCurrentWorkout({
         token, 
@@ -168,11 +179,11 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
         setError("Podaj tytuł treningu");
         return; 
     }
-    if(weightExercises.some(ex => ex.sets.some(set => (set.reps === 0) || set.weight === 0))) {
+    if(weightExercises.some(ex => ex.sets.some(set => (set.reps <= 0) || set.weight <= 0))) {
         setError("Ilość powtórzen i ciężar muszą być większe od 0.");
         return; 
     }
-    if(cardioExercises.some(ex => ex.intensity === 0 || ex.duration === 0)) {
+    if(cardioExercises.some(ex => ex.intensity <= 0 || ex.duration <= 0)) {
         setError("Intensywność i czas trwania muszą być większe od 0.");
         return; 
     }
@@ -254,9 +265,9 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
           <div key={index} className="form-group form-group--workout-free">
             <ExerciseDetails 
                 index={index+1} 
-                exercise={{...exercise, type: 'weight'}} 
-                onExerciseUpdate={(updatedExercise) => updateExercise("weight", index, updatedExercise)} 
-                onDelete={() => removeExercise("weight", index)}
+                exercise={{...exercise, type: 'Weight'}} 
+                onExerciseUpdate={(updatedExercise) => updateExercise("Weight", index, updatedExercise)} 
+                onDelete={() => removeExercise("Weight", index)}
             />
           </div>
         ))}
@@ -287,8 +298,8 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
             <ExerciseDetails 
                 index={index+1} 
                 exercise={exercise} 
-                onExerciseUpdate={(updatedExercise) => updateExercise("cardio", index, updatedExercise)} 
-                onDelete={() => removeExercise("cardio", index)}
+                onExerciseUpdate={(updatedExercise) => updateExercise("Cardio", index, updatedExercise)} 
+                onDelete={() => removeExercise("Cardio", index)}
             />
           </div>
         ))}

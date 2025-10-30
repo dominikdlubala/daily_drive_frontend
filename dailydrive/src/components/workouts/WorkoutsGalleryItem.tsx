@@ -15,13 +15,13 @@ const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
         workoutSession: {
             name: template.name,
             startTime: new Date().toISOString(),
-            weightExercises: template.exercises.filter(ex => ex.type === 'weight').map(ex => ({
+            weightExercises: template.exercises.filter(ex => ex.type === 'Weight').map(ex => ({
                 name: ex.name, 
                 type: ex.type,
                 sets: [] as ExerciseSet[],
                 bodyPart: ex.bodyPart
             })),
-            cardioExercises: template.exercises.filter(ex => ex.type === 'cardio').map(ex => ({
+            cardioExercises: template.exercises.filter(ex => ex.type === 'Cardio').map(ex => ({
                 name: ex.name, 
                 type: ex.type,
                 intensity: 0, 
@@ -44,7 +44,7 @@ export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: W
             fault(error.message as string);
             return
         }
-        success(`Trening ${startWorkoutData.workoutSession.name} rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
+        success(`Trening "${startWorkoutData.workoutSession.name}" rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
     }
 
     return (
