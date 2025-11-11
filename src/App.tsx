@@ -5,10 +5,12 @@ import Root from './pages/Root';
 import LoginPage from './pages/LoginPage'; 
 import HomePage from './pages/HomePage'; 
 import RegisterPage from './pages/RegisterPage'; 
-import WorkoutsPage from './pages/WorkoutsPage';
+import WorkoutsPage from './pages/workouts/WorkoutsPage';
 import DietPage from './pages/DietPage';
 import AccountPage from './pages/AccountPage';
 import StatisticsPage from './pages/StatisticsPage';
+import CurrentWorkoutPage from './pages/current_workout/CurrentWorkoutPage';
+import ModalManager from './components/modal/ModalManager';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,12 @@ const router = createBrowserRouter([
         element: <ProtectedRoute>
                   <HomePage />
                 </ProtectedRoute>
+      }, 
+      {
+        path: '/currentWorkout', 
+        element: <ProtectedRoute>
+            <CurrentWorkoutPage />
+        </ProtectedRoute>
       }
     ]
   }
@@ -66,6 +74,8 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router}></RouterProvider>
+    </>
   )
 }

@@ -81,8 +81,8 @@ export type WorkoutSession = {
     name?: string | null; 
     startTime?: string; 
     endTime?: string | null; 
-    weightExercises?: WeightExercise[];
-    cardioExercises?: CardioExercise[];
+    weightExercises: WeightExercise[];
+    cardioExercises: CardioExercise[];
 
     bodyPart?: BodyPart; 
     weightLifted?: number; 
@@ -116,7 +116,7 @@ export type CurrentWorkoutApiReturn = {
 }
 
 export type WorkoutState = {
-    currentWorkout: CurrentWorkout | null; 
+    currentWorkout?: CurrentWorkout; 
 }
 
 export type Exercise = {
@@ -128,7 +128,7 @@ export type Exercise = {
 
 export type ExerciseApiReturn = {
     data?: Exercise[] | null; 
-    error?: { message: string } | null; 
+    error?: { message: string, status?: number | string } | null; 
 }
 
 

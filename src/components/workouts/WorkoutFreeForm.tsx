@@ -14,7 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { usePrompt } from "../../hooks/usePrompt";
 
 interface WorkoutFreeFormProps {
-    handleModalClose: (updatedWorkout?: CurrentWorkout) => void;
+    handleModalClose?: (updatedWorkout?: CurrentWorkout) => void;
 }
 
 export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
@@ -207,7 +207,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
         success(`Trening ${title} rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
     }
     dispatch(resetWorkout());
-    handleModalClose();
+    handleModalClose && handleModalClose();
   };
 
   return (
@@ -263,12 +263,12 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
         {weightExercises.map((exercise, index) => (
           <div key={index} className="form-group form-group--workout-free">
-            <ExerciseDetails 
+            {/* <ExerciseDetails 
                 index={index+1} 
                 exercise={{...exercise, type: 'Weight'}} 
                 onExerciseUpdate={(updatedExercise) => updateExercise("Weight", index, updatedExercise)} 
                 onDelete={() => removeExercise("Weight", index)}
-            />
+            /> */}
           </div>
         ))}
       </div>
@@ -295,12 +295,12 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
       </div>
         {cardioExercises.map((exercise, index) => (
           <div key={index} className="form-group form-group--workout-free">
-            <ExerciseDetails 
+            {/* <ExerciseDetails 
                 index={index+1} 
                 exercise={exercise} 
                 onExerciseUpdate={(updatedExercise) => updateExercise("Cardio", index, updatedExercise)} 
                 onDelete={() => removeExercise("Cardio", index)}
-            />
+            /> */}
           </div>
         ))}
 

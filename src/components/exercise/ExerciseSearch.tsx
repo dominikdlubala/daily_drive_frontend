@@ -1,7 +1,10 @@
-import '../styles/exercise.css';
+import '../styles/exercise.scss';
+import '../../styles/global.scss'; 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { fetchExercisesByName } from "../../services/ExerciseService";
 import { Exercise } from "../../types";
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { openModal } from '../../store';
 
 interface ExerciseSearchProps {
     exerciseType?: "weight" | "cardio";
@@ -9,6 +12,8 @@ interface ExerciseSearchProps {
 }
 
 export default function ExerciseSearch({ exerciseType, onExerciseSelect }: ExerciseSearchProps) {
+  const dispatch = useAppDispatch(); 
+
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Exercise[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -49,31 +54,38 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
     setShowResults(false);
     setSearchTerm(""); 
     setSearchResults([]); 
-    
   }
 
   return (
-    <div className="search exercise-search">
-      <div className="search-input">
+    <div className="exercise-search">
+      <div className="exercise-search__input">
         <input
           type="text"
           placeholder="Wyszukaj ćwiczenie"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Szukaj</button>
+        <button className="exercise-search__button" onClick={handleSearch}>Szukaj</button>
       </div>
-      {error && <span className="input-validate">{error}</span> }
+      {error && <span className="exercise-search__error">{error}</span> }
 
       {searchResults.length > 0 && showResults && (
-        <ul ref={resultsRef}>
+        <ul className="exercise-search__results" ref={resultsRef}>
           {searchResults.map((exercise, index) => (
-            <li key={index} onClick={() => handleSubmit(exercise)}>
+            <li className="exercise-search__result-item" key={index} onClick={() => handleSubmit(exercise)}>
               {exercise.name}
             </li>
           ))}
         </ul>
       )}
+
+      <div className="exercise-search__create-wrapper">
+        <span>Jeśli Twojego ćwiczenia nie ma na liście: </span>
+        <button 
+          className="button exercise-search__button exercise-search__button--add"
+          onClick={() => dispatch(openModal({ type: 'CREATE_EXERCISE' }))}  
+        >Dodaj nowe +</button>
+      </div>
     </div>
   );
 }

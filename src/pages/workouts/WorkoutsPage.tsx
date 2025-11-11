@@ -1,11 +1,12 @@
-import './styles/workoutsPage.css';
+import './workoutsPage.css';
+import './workoutsPage.scss'; 
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import WorkoutsGallery from '../components/workouts/WorkoutsGallery';
-import WorkoutsList from '../components/workouts/WorkoutsList';
-import Modal from '../components/primitives/Modal';
-import WorkoutFreeForm from '../components/workouts/WorkoutFreeForm';
+import WorkoutsGallery from '../../components/workouts/WorkoutsGallery';
+import WorkoutsList from '../../components/workouts/WorkoutsList';
+import Modal from '../../components/primitives/Modal';
+import WorkoutFreeForm from '../../components/workouts/WorkoutFreeForm';
 
 export default function WorkoutsPage() {
     const location = useLocation();

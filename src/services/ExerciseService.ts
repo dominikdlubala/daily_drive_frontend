@@ -24,7 +24,7 @@ export const fetchExercisesByName = async (name: string, type?: string): Promise
             response = await fetch(`${API_URL}/${name}/${type}`);
         }
         if(!response.ok) {
-            return { error: { message: await response.text() }}
+            return { error: { message: await response.text(), status: response.status }}
         }
         const data = await response.json(); 
         return { data }; 

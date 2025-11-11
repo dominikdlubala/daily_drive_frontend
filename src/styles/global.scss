@@ -1,0 +1,112 @@
+@import './variables.scss'; 
+
+.button {
+  transition: ease 0.3s background-color; 
+  border: none; 
+  border-radius: $border-round;
+  padding: 12px;
+  font-size: 16px;
+  background-color: $btn-basic-bg;
+  color: $btn-basic-text; 
+
+  &:hover {
+    background-color: $btn-basic-bg-hover;
+  }
+}
+
+.form {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  width: 100%; 
+
+  &__title {
+    font-size: 1.5rem; 
+  }
+
+  &__group {
+    width: 100%; 
+    display: flex; 
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__input-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__error {
+    min-height: 30px; 
+    color: $error-message-color; 
+  }
+
+  label {
+    font-weight: 400;
+    font-size: 1.25rem;
+  }
+
+  &__input, input {
+    border: none; 
+    border-bottom: 2px solid $underline-color; 
+    outline: none; 
+    font-size: 18px; 
+    padding: 16px 0; 
+
+    &:focus {
+      border-color: $primary-color;
+    }
+
+    &::placeholder {
+      color: #000; 
+    }
+
+    &::-ms-input-placeholder {
+      color: #000; 
+    }
+    &:-ms-input-placeholder {
+      color: #000; 
+    }
+  }
+
+  &__submit {
+    @extend .button; 
+  }
+
+  &__select {
+    
+    &:focus {
+      border-color: var(--primary-color);
+    }
+
+    &-option {
+      border: 2px solid $primary-color
+
+      &--active {
+        background-color: $primary-color
+      }
+    }
+  }
+
+}
+
+
+.tab-manager {
+  &__tabs {
+    display: flex; 
+    margin-bottom: 16px;
+  }
+
+  &__tab {
+    width: 100%; 
+    background: none; 
+    border: none; 
+    border-bottom: 2px solid $underline-color;
+    padding: 12px;
+    font-size: 20px;
+  }
+
+  &__tab--active {
+    border-color: $tab-active-color; 
+  }
+}

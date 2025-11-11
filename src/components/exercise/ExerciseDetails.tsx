@@ -2,27 +2,32 @@ import { FormEvent, useState } from "react";
 import { CardioExercise, WeightExercise } from "../../types";
 import { FaTrashAlt } from "react-icons/fa";
 import '../styles/exercise.css';
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { removeExercise, updateExerciseDetails } from "../../store";
 
 interface ExerciseDetailsProps {
     index: number; 
     exercise: WeightExercise | CardioExercise;
-    onExerciseUpdate: (updatedExercise: WeightExercise | CardioExercise) => void;
-    onDelete: () => void;
 }
 
-export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onDelete }: ExerciseDetailsProps) {
+export default function ExerciseDetails({ index, exercise }: ExerciseDetailsProps) {
+
+  const dispatch = useAppDispatch(); 
+
   const [details, setDetails] = useState(exercise);
 
   const handleDetailChange = (field: string, value: any) => {
     const updatedDetails = { ...details, [field]: value };
     setDetails(updatedDetails);
-    onExerciseUpdate(updatedDetails);
+    // onExerciseUpdate(updatedDetails);
+    handleDetailsUpdate(updatedDetails);
   };
 
   const handleCardioStatChange = (field: string, value: number) => {
     const updatedCardio = { ...details, [field]: (isNaN(value) ? 0 : value) };
     setDetails(updatedCardio);
-    onExerciseUpdate(updatedCardio);
+    // onExerciseUpdate(updatedCardio);
+    handleDetailsUpdate(updatedCardio);
   }
   const handleSetChange = (index: number, field: string, value: number) => {
     const updatedSets = (details as WeightExercise).sets.map((set, i) => 
@@ -41,11 +46,21 @@ export default function ExerciseDetails({ index, exercise, onExerciseUpdate, onD
     handleDetailChange("sets", updatedSets);
   }
 
+
+  const handleDetailsUpdate = (ex: WeightExercise | CardioExercise) => {
+    dispatch(updateExerciseDetails(ex)); 
+  }
+
+  const handleDelete = () => {
+    console.log('delete')
+    dispatch(removeExercise({ index, exercise })); 
+  }
+
   return (
     <div className="exercise-details">
         <div className="exercise-details--header">
             <h3 className="exercise-details--title">{index}. {exercise.name}</h3>
-            <button type="button" className="btn btn-remove" onClick={onDelete}>
+            <button type="button" className="btn btn-remove" onClick={handleDelete}>
               <FaTrashAlt />
             </button>
         </div>

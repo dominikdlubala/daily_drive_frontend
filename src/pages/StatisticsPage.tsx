@@ -5,10 +5,12 @@ import { useAuth } from "../hooks/useAuth";
 import { fetchStatisticsData } from "../services/StatisticsService";
 import StatisticsList from "../components/statistics/StatisticsList";
 import { WorkoutStatistic } from "../types";
+import { usePrompt } from '../hooks/usePrompt';
 
 export default function StatisticsPage() {
     const { token } = useAuth();
 
+    const { fault } = usePrompt(); 
     const [selectedPeriod, setSelectedPeriod] = useState('month');
     const [statisticsData, setStatisticsData] = useState<WorkoutStatistic[]>([]);
 
@@ -16,7 +18,7 @@ export default function StatisticsPage() {
         const fetchData = async () => {
             const { data, error } = await fetchStatisticsData(token as string, selectedPeriod);
             if(error) {
-                console.error(error);
+                fault(error.message); 
             } else {
                 setStatisticsData(data);
             }
@@ -24,8 +26,6 @@ export default function StatisticsPage() {
 
         fetchData(); 
     }, [token, selectedPeriod]); 
-
-    console.log(statisticsData)
 
 
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {

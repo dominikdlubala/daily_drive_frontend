@@ -5,31 +5,46 @@ import { createPortal } from "react-dom"
 interface ModalProps {
     children: ReactNode; 
     isOpen: boolean; 
-    onClose: () => void; 
+    onClose?: () => void; 
+    disableOverlayClick?: boolean; 
+    zIndex?: number; 
 }
 
-export default function Modal({ children, isOpen, onClose }: ModalProps) {
-
-    const modalRef = useRef<HTMLDivElement | null>(null); 
+export default function Modal({ children, isOpen, onClose, disableOverlayClick, zIndex = 1000 }: ModalProps) {
 
     useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if(modalRef.current && !modalRef.current.contains(e.target as Node)) {
-                onClose(); 
-            }
-        } 
-        
-        if(isOpen) document.addEventListener('mousedown', handleClickOutside); 
+        if(!isOpen || !onClose) return; 
 
-        return () => document.removeEventListener('mousedown', handleClickOutside); 
-    }, [isOpen, onClose]); 
+        const handleEsc = (e: KeyboardEvent) => {
+            if(e.key === 'Escape') onClose(); 
+        }
+        if(isOpen) {
+            document.addEventListener('keydown', handleEsc)
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleEsc); 
+        }
+    }, [isOpen, onClose])
+
+    if(!isOpen) return null; 
 
     return createPortal(
-        <div className="modal-background">
-            <div ref={modalRef} onClick={(e) => e.stopPropagation()} className="modal-content">
+        <div 
+            className="modal-background" 
+            onClick={!disableOverlayClick && onClose ? onClose : undefined}
+            style={{zIndex}}
+        >
+            <div
+                className="modal-content" 
+                onClick={(e) => e.stopPropagation()}
+                style={{zIndex: zIndex + 1}}
+                role="dialog"
+                aria-modal="true"
+            >
                 {children}
             </div>
         </div>, 
-        document.querySelector('.modal-container') as Element
+        document.getElementById('modal-root') as Element
     )
 }
