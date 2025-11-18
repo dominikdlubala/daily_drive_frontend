@@ -34,7 +34,7 @@ export default function HomePage() {
             }
         }
         fetchData();
-    }, [token, fault])
+    }, [token])
     
 
     let content = (

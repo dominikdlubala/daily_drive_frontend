@@ -11,7 +11,7 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
     const [showError, setShowError] = useState(false);
 
     useEffect(() => {
-        if(homeData?.weightLifted === 0) {
+        if(!homeData || homeData?.weightLifted === 0) {
             setShowError(true);
         }
     }, [homeData])

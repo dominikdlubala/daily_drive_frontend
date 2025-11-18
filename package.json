@@ -2,7 +2,6 @@
   "name": "dailydrive",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5006",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@reduxjs/toolkit": "^2.3.0",

@@ -1,8 +1,8 @@
-const API_URL = 'api/Home'; 
+const API_ROUTE = `${process.env.REACT_APP_API_URL}/home`; 
 
 export const fetchHomePageData = async (token: string) => {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(API_ROUTE, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

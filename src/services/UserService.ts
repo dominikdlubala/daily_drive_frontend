@@ -3,11 +3,11 @@ import { UserDataFormValues } from '../components/account/EditUserDataForm';
 import { RegisterFormValues } from '../components/login/RegisterForm';
 import type { UserLoginApiReturn } from '../types'; 
 
-const API_URL = '/api/User'; 
+const API_ROUTE = `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/auth`; 
 
 export const loginUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
     try {
-        const response = await fetch(`${API_URL}/login`, {
+        const response = await fetch(`${API_ROUTE}/login`, {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
@@ -22,9 +22,9 @@ export const loginUser = async (username: string, password: string): Promise<Use
             return { token: null, error: { error: true, message: await response.text() } }
         }
 
-        const data = await response.json() as { token: string }; 
+        const payload = await response.json(); 
 
-        return { token: data.token };  
+        return { token: payload.data.accessToken };  
     } catch (error) {
         return { token: null, error: { error: true, message: 'Niespodziewany błąd' } }
     }
@@ -33,7 +33,7 @@ export const loginUser = async (username: string, password: string): Promise<Use
 export const registerUser = async (formValues: RegisterFormValues): Promise<UserLoginApiReturn> => {
     try {
 
-        const response = await fetch(`${API_URL}/register`, {
+        const response = await fetch(`${API_ROUTE}/register`, {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json', 
@@ -54,7 +54,7 @@ export const registerUser = async (formValues: RegisterFormValues): Promise<User
 
 export const getUserData = async (token: string | null) => {
     try {
-        const response = await fetch(`${API_URL}`, {
+        const response = await fetch(`${API_ROUTE}`, {
             method: 'GET', 
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export const getUserData = async (token: string | null) => {
 
 export const updateUserData = async (token: string | null, userData: UserDataFormValues) => {
     try {
-        const response = await fetch(`${API_URL}`, {
+        const response = await fetch(`${API_ROUTE}`, {
             method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export const updateUserData = async (token: string | null, userData: UserDataFor
 
 export const changePassword = async (token: string | null, changePasswordData: ChangePasswordFormValues): Promise<{ data?: { message: string}, error?: { message: string} }> => {
     try {
-        const response = await fetch(`${API_URL}/change-password`, {
+        const response = await fetch(`${API_ROUTE}/change-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', 
