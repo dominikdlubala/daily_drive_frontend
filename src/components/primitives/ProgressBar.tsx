@@ -1,4 +1,4 @@
-import { round } from "../diet/MealForm";
+import { round } from "src/features/diet/components/MealForm";
 
 interface ProgressBarProps {
     currentAmount: number; 

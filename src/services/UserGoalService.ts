@@ -1,4 +1,4 @@
-import { UserGoalFormValues } from "../components/account/EditUserGoalForm";
+import { UserGoalFormValues } from "src/features/account/components/EditUserGoalForm";
 
 const API_URL = 'api/UserGoal';
 

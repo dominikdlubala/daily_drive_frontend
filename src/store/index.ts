@@ -2,13 +2,19 @@ import { configureStore } from '@reduxjs/toolkit';
 import { workoutSlice } from './slices/current_workout/slice';
 import { exerciseSlice } from './slices/exercise/slice';
 import modalSliceReducer from './slices/modal/slice'; 
+import { homePageApi } from 'src/api/queries/homePageApi';
 
 const store = configureStore({
     reducer: {
         workout: workoutSlice.reducer,
         exercise: exerciseSlice.reducer, 
         modal: modalSliceReducer,
-    }
+        [homePageApi.reducerPath]: homePageApi.reducer
+    }, 
+    middleware: 
+        (getDefaultMiddleware) => 
+            getDefaultMiddleware()
+                .concat(homePageApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>; 

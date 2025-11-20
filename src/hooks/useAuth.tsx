@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useEffect } from "react";
+import { createContext, useContext, useMemo, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,8 @@ import { jwtDecode } from "jwt-decode";
 import { useLocalStorage } from "./useLocalStorage";
 import type { UserLoginApiReturn } from "../types";
 import { loginUser } from "../services/UserService";
+import { getToken, removeToken, setToken } from "src/utils/token/tokenStorage";
+import client from "src/api/axios/client";
 
 interface DecodedToken {
   exp: number; 
@@ -23,33 +25,20 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useLocalStorage<string | null>("token", null);
+  const [token, setTokenState] = useState<string | null>(() => getToken());
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token) {
-      if (isTokenExpired(token)) {
-        console.warn("Token wygasł, użytkownik został wylogowany.");
-        logout(); 
-      } else {
-        try {
-          const decoded: DecodedToken = jwtDecode(token);
-          const expiresIn = (decoded.exp *1000) - Date.now(); 
 
-          const tokenTimer = setTimeout(() => {
-            logout()
-          }, expiresIn); 
+    const checkToken = async () => {
+      // if (token && isTokenExpired(token)) {
+      //   logout(); 
+      // }
+    }
 
-          return () => clearTimeout(tokenTimer); 
+    checkToken(); 
 
-        } catch (error) {
-          console.error("Invalid token:", error);
-          logout(); 
-        }
-      }
-    } 
-
-  }, [token]);
+  }, []);
 
   const login = async (
     { username, password }: { username: string; password: string },
@@ -64,7 +53,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return { token: null, error };
         }
 
-        setToken(token);
+        setToken(token); 
+        setTokenState(token);
 
         navigate(path);
         return { token };
@@ -76,8 +66,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    setToken(null);
-    navigate('/login')
+    removeToken(); 
+    setTokenState(null);
+    // navigate('/login')
   };
 
   const isTokenExpired = (token: string): boolean => {

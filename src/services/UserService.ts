@@ -1,30 +1,19 @@
-import { ChangePasswordFormValues } from '../components/account/ChangePasswordForm';
-import { UserDataFormValues } from '../components/account/EditUserDataForm';
-import { RegisterFormValues } from '../components/login/RegisterForm';
+import { UserDataFormValues } from 'src/features/account/components/EditUserDataForm';
+import { RegisterFormValues } from '../features/login/components/RegisterForm';
 import type { UserLoginApiReturn } from '../types'; 
+import { ChangePasswordFormValues } from 'src/features/account/components/ChangePasswordForm';
+import client from 'src/api/axios/client';
 
 const API_ROUTE = `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/auth`; 
 
 export const loginUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
     try {
-        const response = await fetch(`${API_ROUTE}/login`, {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: username, 
-                password: password 
-            })
+        const response = await client.post(`${API_ROUTE}/login`, {
+            username, 
+            password
         });
 
-        if(!response.ok) {
-            return { token: null, error: { error: true, message: await response.text() } }
-        }
-
-        const payload = await response.json(); 
-
-        return { token: payload.data.accessToken };  
+        return { token: response.data.data.accessToken };  
     } catch (error) {
         return { token: null, error: { error: true, message: 'Niespodziewany błąd' } }
     }
