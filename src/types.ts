@@ -1,3 +1,12 @@
+
+export interface ApiResponse<T = any> {
+  status: number; 
+  message: string; 
+  data?: T; 
+  showNotification?: boolean; 
+  autoHide?: boolean; 
+}
+
 export type User = {
     id: number; 
     username: string; 
@@ -198,8 +207,9 @@ export type HomePageDailyDietDTO = {
     date: Date;
 }
 
-export type BodyPart = 'Chest' | 'Back' | 'Shoulders' | 'Legs' | 'Arms' | 'Other'
+export const BODY_PARTS_LIST = ['Chest', 'Back', 'Shoulders', 'Legs', 'Arms', 'Other'] as const;
 
+export type BodyPart = typeof BODY_PARTS_LIST[number]; 
 
 // Statistics
 export type WorkoutStatistic = {
@@ -216,4 +226,20 @@ export type WeightExerciseStat = {
     name: string; 
     date: string; 
     potential1RM: number;
+}
+
+
+// Exercise
+export interface ExerciseDefinition {
+    id: string; 
+    name: string; 
+    unit: string; 
+    bodyParts?: BodyPart[]; 
+    workoutTemplates?: WorkoutTemplate[]
+}
+
+export interface CreateExerciseDefinitionDTO {
+    name: string; 
+    unit: string; 
+    bodyParts?: BodyPart[]; 
 }

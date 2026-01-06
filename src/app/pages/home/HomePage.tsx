@@ -19,7 +19,7 @@ export default function HomePage() {
 
     const navigate = useNavigate(); 
 
-    const { data: homeData, isLoading, error } = useGetHomePageDataQuery(); 
+    const { data: homeData, isLoading, error, isSuccess } = useGetHomePageDataQuery(); 
     
 
     let content = (

@@ -4,6 +4,8 @@ import TabManager from "../../../components/tab_manager/TabManager"
 import * as z from 'zod'; 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input, ControlledSelect } from "../../../components/primitives/inputs/Inputs";
+import { useCreateExerciseDefinitionMutation } from "src/api/queries/exerciseApi";
+import { BODY_PARTS_LIST, CreateExerciseDefinitionDTO } from "src/types";
 
 const weightExerciseFormSchema = z.object({
   name: z.string().min(1, { message: 'Ćwiczenie musi mieć nazwę'}), 
@@ -76,6 +78,8 @@ const cardioExerciseFormSchema = z.object({
 
 type CardioExerciseFormValues = z.infer<typeof cardioExerciseFormSchema>; 
 
+
+
 const CreateCardioExerciseForm = () => {
 
   const {
@@ -121,18 +125,99 @@ const CreateCardioExerciseForm = () => {
   )
 }
 
+  
+const exerciseFormSchema = z.object({
+  name: z.string().min(1, { message: 'Ćwiczenie musi mieć nazwę'}), 
+  unit: z.string().min(1, { message: 'Musisz wybrać jednostkę' }),
+  bodyParts: z.array(z.string()).optional()
+}).superRefine(({ unit, bodyParts }, refinementContext) => {
+  if( (unit === 'KGxREPS' || unit === 'REPS') && bodyParts?.length === 0 ) {
+    return refinementContext.addIssue({
+      code: "custom", 
+      message: 'Wybierz conajmniej jedną partię ciała', 
+      path: ['bodyParts']
+    })
+  }
+})
 
+type ExerciseFormValues = z.infer<typeof exerciseFormSchema> 
 
 export default function CreateExerciseForm() {
 
+  const bodyPartOptions = [
+    { label: 'Klatka', value: 'Chest'}, 
+    { label: 'Plecy', value: 'Back'}, 
+    { label: 'Ramiona', value: 'Arms'}, 
+    { label: 'Nogi', value: 'Legs'}, 
+    { label: 'Barki', value: 'Shoulders'}, 
+    { label: 'Brzuch', value: 'Abs'}, 
+  ]; 
+
+  const unitOptions = [
+    { label: 'KGxPOWTÓRZENIA', value: 'KGxREPS'}, 
+    { label: 'POWTÓRZENIA', value: 'REPS'}, 
+    { label: 'CZAS', value: 'TIME'}, 
+  ]
+
+  const [createExerciseDefinition, result] = useCreateExerciseDefinitionMutation(); 
+
+  const {
+    handleSubmit, 
+    control, 
+    formState: { errors, isLoading }, 
+    watch
+  } = useForm<ExerciseFormValues>({
+    resolver: zodResolver(exerciseFormSchema), 
+    defaultValues: {
+      name: "", 
+      bodyParts: [], 
+      unit: ""
+    }
+  }); 
+
+  const onSubmit = (data: ExerciseFormValues) => {
+    createExerciseDefinition(data as CreateExerciseDefinitionDTO); 
+  }
+
+  const unitValue = watch('unit'); 
+
   return (
-    <TabManager> 
-      <Tab id="weightExercise" title={'Siłowe'}>
-        <CreateWeightExerciseForm />
-      </Tab>
-      <Tab id="cardioExercise" title={'Cardio'}>
-        <CreateCardioExerciseForm />
-      </Tab>
-    </TabManager>
+    <form className="form create-exercise__form" onSubmit={handleSubmit(onSubmit)}>
+      <h3 className="form__title">Dodaj ćwiczenie</h3>
+      <div className="form__group">
+        <label>Nazwa ćwiczenia</label>
+        <Input
+          control={control}
+          name="name"
+        />
+      </div>
+      <div className="form__group">
+        <label>Jednostka</label>
+        <ControlledSelect 
+          control={control}
+          name="unit"
+          options={unitOptions}
+        />
+      </div>
+      {
+        (unitValue === 'KGxREPS' || unitValue === 'REPS')
+        &&
+        <div className="form__group">
+          <label>Grupa mięśniowa</label>
+          <ControlledSelect 
+            control={control}
+            name="bodyParts"
+            options={bodyPartOptions}
+            multiple={true}
+          />
+        </div>
+      }
+      <div className="form__group">
+        <button
+          className="form__submit button"
+          disabled={isLoading}
+        >Zatwierdź</button>
+      </div>
+    </form>    
   )
 }

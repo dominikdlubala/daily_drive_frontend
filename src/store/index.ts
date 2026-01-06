@@ -3,18 +3,20 @@ import { workoutSlice } from './slices/current_workout/slice';
 import { exerciseSlice } from './slices/exercise/slice';
 import modalSliceReducer from './slices/modal/slice'; 
 import { homePageApi } from 'src/api/queries/homePageApi';
+import { exerciseApi } from 'src/api/queries/exerciseApi';
 
 const store = configureStore({
     reducer: {
         workout: workoutSlice.reducer,
-        exercise: exerciseSlice.reducer, 
         modal: modalSliceReducer,
-        [homePageApi.reducerPath]: homePageApi.reducer
+        [homePageApi.reducerPath]: homePageApi.reducer, 
+        [exerciseApi.reducerPath]: exerciseApi.reducer
     }, 
     middleware: 
         (getDefaultMiddleware) => 
             getDefaultMiddleware()
                 .concat(homePageApi.middleware)
+                .concat(exerciseApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>; 
