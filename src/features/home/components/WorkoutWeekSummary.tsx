@@ -17,7 +17,7 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
     }, [homeData])
 
     const translateBodyPart = (bodyPart?: BodyPart) => { 
-        switch(bodyPart) {
+        switch(bodyPart?.name) {
             case 'Chest': return 'Klatka piersiowa';
             case 'Back': return 'Plecy';
             case 'Shoulders': return 'Barki';
@@ -70,7 +70,7 @@ export default function WorkoutWeekSummary({ homeData }: WorkoutWeekSummaryProps
                         Do tej pory najwięcej trenowałeś: 
                         <div>
                             {homeData?.mostTrained.map(bp => (
-                                <div className="body-part" key={bp}>
+                                <div className="body-part" key={bp.name}>
                                     {translateBodyPart(bp) + ' '}
                                 </div>
                             ))} 

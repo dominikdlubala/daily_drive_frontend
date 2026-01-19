@@ -29,7 +29,7 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
   const [weightExercises, setWeightExercises] = useState<WeightExercise[]>(currentWorkout?.workoutSession.weightExercises || []);
   const [cardioExercises, setCardioExercises] = useState<CardioExercise[]>(currentWorkout?.workoutSession.cardioExercises || []);
   const [newWeightExerciseName, setNewWeightExerciseName] = useState("");
-  const [newWeightExerciseBodyPart, setNewWeightExerciseBodyPart] = useState<BodyPart>('Other');
+  const [newWeightExerciseBodyPart, setNewWeightExerciseBodyPart] = useState<BodyPart>({ name: 'Other' });
   const [newCardioExerciseName, setNewCardioExerciseName] = useState("");
   const [showWeightExerciseForm, setShowWeightExerciseForm] = useState(false);
   const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
@@ -242,8 +242,8 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
             />
           <select
             className="form-input"
-            value={newWeightExerciseBodyPart}
-            onChange={(e) => setNewWeightExerciseBodyPart(e.target.value as BodyPart)}
+            value={newWeightExerciseBodyPart.name}
+            onChange={(e) => setNewWeightExerciseBodyPart({ name: e.target.value })}
             required
           >
             <option value="Chest">Klatka piersiowa</option>

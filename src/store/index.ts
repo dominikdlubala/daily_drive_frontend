@@ -4,6 +4,7 @@ import { exerciseSlice } from './slices/exercise/slice';
 import modalSliceReducer from './slices/modal/slice'; 
 import { homePageApi } from 'src/api/queries/homePageApi';
 import { exerciseApi } from 'src/api/queries/exerciseApi';
+import { toastMiddleware } from './middleware/middleware';
 
 const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
             getDefaultMiddleware()
                 .concat(homePageApi.middleware)
                 .concat(exerciseApi.middleware)
+                .concat(toastMiddleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>; 

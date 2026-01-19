@@ -23,7 +23,8 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
     const [error, setError] = useState<string | null>(null);
 
     const addExercise = () => {
-        const newExercise: Exercise = { name: '', type: 'Weight', bodyPart: 'Other' };
+        const newExercise: Exercise = { name: '', type: 'Weight', bodyPart: { name: 'Other' } };
+        // const newExercise: Exercise = { name: '', type: 'Weight', bodyPart: 'Other' };
         setExercises([...exercises, newExercise]);
     }
 
@@ -34,7 +35,8 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
         } else if (field === 'type') {
             updatedExercises[index].type = value as 'Weight' | 'Cardio';
         } else if (field === 'bodyPart') {
-            updatedExercises[index].bodyPart = value as BodyPart;
+            updatedExercises[index].bodyPart.name = value;
+            // updatedExercises[index].bodyPart = value as BodyPart;
         }
         setExercises(updatedExercises);
     }
@@ -111,7 +113,7 @@ export default function WorkoutTemplateForm({ initialData, handleSubmit }: Worko
                                 style={{
                                     display: exercise.type === 'Weight' ? 'block' : 'none'
                                 }}
-                                value={exercise.bodyPart}
+                                value={exercise.bodyPart.name}
                                 onChange={(e: FormEvent<HTMLSelectElement>) => updateExercise(index, 'bodyPart', e.currentTarget.value)}
                             >
                                 <option value="Chest">Klatka piersiowa</option>

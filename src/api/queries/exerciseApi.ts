@@ -8,7 +8,7 @@ export const exerciseApi = createApi({
   endpoints: (builder) => ({
     createExerciseDefinition: builder.mutation<ApiResponse<ExerciseDefinition>, CreateExerciseDefinitionDTO>({
       query: (createExDefDTO) => ({ 
-        url: '/exercise/create', 
+        url: '/exercise', 
         method: 'POST',
         data: createExDefDTO
       }), 

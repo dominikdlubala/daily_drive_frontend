@@ -39,10 +39,13 @@ const modalSlice = createSlice({
     closeModalByType: (state, action: PayloadAction<ModalType>) => {
       const typeToRemove = action.payload; 
       state.stack = state.stack.filter(modal => modal.type !== typeToRemove); 
+    },
+    checkOpenModals: (state) => {
+      console.log(state.stack); 
     }
   }
 })
 
 
-export const { openModal, closeTopModal, closeAllModals, closeModalByType } = modalSlice.actions; 
+export const { openModal, closeTopModal, closeAllModals, closeModalByType, checkOpenModals } = modalSlice.actions; 
 export default modalSlice.reducer; 

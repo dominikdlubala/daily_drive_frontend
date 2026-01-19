@@ -19,7 +19,7 @@ export const axiosBaseQuery = ({ baseUrl = ''} = {}): BaseQueryFn<AxiosBaseQuery
         params
       })
 
-      return { data: result.data }
+      return result.data; 
     } catch(error) {
       const err = error as AxiosError; 
       

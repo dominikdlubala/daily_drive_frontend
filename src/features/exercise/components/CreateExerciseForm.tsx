@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input, ControlledSelect } from "../../../components/primitives/inputs/Inputs";
 import { useCreateExerciseDefinitionMutation } from "src/api/queries/exerciseApi";
 import { BODY_PARTS_LIST, CreateExerciseDefinitionDTO } from "src/types";
+import { closeModalByType } from "src/store";
+import { useAppDispatch } from "src/hooks/useAppDispatch";
 
 const weightExerciseFormSchema = z.object({
   name: z.string().min(1, { message: 'Ćwiczenie musi mieć nazwę'}), 
@@ -159,12 +161,17 @@ export default function CreateExerciseForm() {
     { label: 'CZAS', value: 'TIME'}, 
   ]
 
-  const [createExerciseDefinition, result] = useCreateExerciseDefinitionMutation(); 
+  const dispatch = useAppDispatch(); 
+
+  const [
+    createExerciseDefinition, 
+    { data, isLoading, isSuccess } 
+  ] = useCreateExerciseDefinitionMutation(); 
 
   const {
     handleSubmit, 
     control, 
-    formState: { errors, isLoading }, 
+    formState: { errors }, 
     watch
   } = useForm<ExerciseFormValues>({
     resolver: zodResolver(exerciseFormSchema), 
@@ -175,10 +182,18 @@ export default function CreateExerciseForm() {
     }
   }); 
 
-  const onSubmit = (data: ExerciseFormValues) => {
-    createExerciseDefinition(data as CreateExerciseDefinitionDTO); 
-  }
+  const onSubmit = async (data: ExerciseFormValues) => {
 
+    const response = await createExerciseDefinition({
+      ...data, 
+      bodyParts: data.bodyParts?.map(bp => {
+        return { name: bp }
+      }) 
+    }); 
+    if(!response.error) {
+      dispatch(closeModalByType('CREATE_EXERCISE')); 
+    }
+  }
   const unitValue = watch('unit'); 
 
   return (
@@ -215,8 +230,10 @@ export default function CreateExerciseForm() {
       <div className="form__group">
         <button
           className="form__submit button"
-          disabled={isLoading}
-        >Zatwierdź</button>
+          type="submit"
+        >
+          {!isLoading ? `Zatwierdź` : 'Zapisuję...'}
+        </button>
       </div>
     </form>    
   )

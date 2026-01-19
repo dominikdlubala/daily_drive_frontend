@@ -209,7 +209,12 @@ export type HomePageDailyDietDTO = {
 
 export const BODY_PARTS_LIST = ['Chest', 'Back', 'Shoulders', 'Legs', 'Arms', 'Other'] as const;
 
-export type BodyPart = typeof BODY_PARTS_LIST[number]; 
+// export type BodyPart = typeof BODY_PARTS_LIST[number]; 
+
+export type BodyPart = {
+    id?: number; 
+    name: string; 
+}
 
 // Statistics
 export type WorkoutStatistic = {

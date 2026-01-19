@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout, endCurrentWorkout, openModal } from "../../../store";
+import { setWorkout, updateWorkout, endWorkout, resetWorkout, startCurrentWorkout, fetchCurrentWorkout, updateCurrentWorkout, endCurrentWorkout, openModal, checkOpenModals } from "../../../store";
 
 import type { CurrentWorkout, WeightExercise, CardioExercise, Exercise, BodyPart, WorkoutSession } from "../../../types";
 import ExerciseSearch from "../../exercise/components/ExerciseSearch";
@@ -158,7 +158,7 @@ export default function WorkoutForm({ handleModalClose }: WorkoutFreeFormProps) 
 
       <div className="form-group">
         <h3>Ćwiczenia</h3>
-          <button type="button" className="btn--workout-template btn-add" onClick={() => dispatch(openModal({ type: 'ADD_EXERCISE' }))}>Dodaj ćwiczenie +</button>
+          <button type="button" className="btn--workout-template btn-add" onClick={() => dispatch(openModal({ type: 'CREATE_EXERCISE' }))}>Dodaj ćwiczenie +</button>
         {currentWorkout?.workoutSession.weightExercises.map((exercise, index) => (
           <div key={index} className="form-group form-group--workout-free">
             <ExerciseDetails 

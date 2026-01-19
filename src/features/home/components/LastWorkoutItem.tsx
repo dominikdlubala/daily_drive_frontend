@@ -6,7 +6,7 @@ interface LastWorkoutItemProps {
 }
 
 const translateBodyPart = (bodyPart?: BodyPart) => { 
-        switch(bodyPart) {
+        switch(bodyPart?.name) {
             case 'Chest': return 'Klatka piersiowa';
             case 'Back': return 'Plecy';
             case 'Shoulders': return 'Barki';
