@@ -2,7 +2,6 @@ import { MdEdit, MdDelete } from "react-icons/md";
 
 import type { CurrentWorkout, ExerciseSet, WorkoutTemplate } from "../../../types";
 import { useAuth } from "../../../hooks/useAuth";
-import { usePrompt } from "../../../hooks/usePrompt";
 import { startCurrentWorkout } from "../../../services/WorkoutCurrentService";
 interface WorkoutsGalleryItemProps {
     workoutData: WorkoutTemplate
@@ -34,17 +33,14 @@ const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
 export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: WorkoutsGalleryItemProps) {
 
     const { token } = useAuth(); 
-    const { success, fault } = usePrompt(); 
 
     const startWorkoutData: CurrentWorkout = templateToCurrent(workoutData);
 
     const handleClick = async () => {
         const { error } = await startCurrentWorkout(token as string, startWorkoutData);
         if(error) {
-            fault(error.message as string);
             return
         }
-        success(`Trening "${startWorkoutData.workoutSession.name}" rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
     }
 
     return (

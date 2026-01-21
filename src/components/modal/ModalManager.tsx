@@ -3,8 +3,9 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { closeTopModal } from "../../store";
 import AddExerciseModal from "./components/exercise/AddExerciseModal";
-import Modal from "../primitives/Modal";
+import Modal from "./components/Modal";
 import CreateExerciseModal from "./components/exercise/CreateExerciseModal";
+import { createPortal } from "react-dom";
 
 const MODAL_COMPONENTS: Record<string, React.FC<any>> = {
   ADD_EXERCISE: AddExerciseModal,
@@ -26,7 +27,7 @@ export default function ModalManager() {
         const ModalComponent = MODAL_COMPONENTS[entry.type]; 
         const isTopModal = idx === stack.length - 1; 
 
-        return (
+        return createPortal(
           <Modal
             key={idx}
             isOpen={true}
@@ -35,7 +36,8 @@ export default function ModalManager() {
             zIndex={1000 + idx}
           >
             <ModalComponent {...entry.props} />
-          </Modal>
+          </Modal>,
+          document.getElementById('modal-root') as Element
         )
       })}
     </>

@@ -5,17 +5,15 @@ import { ActivityLevel, Gender, User } from "../../../types";
 import { useAuth } from "../../../hooks/useAuth";
 import { changePassword, getUserData, updateUserData } from "../../../services/UserService";
 import { MdEdit } from 'react-icons/md';
-import Modal from '../../../components/primitives/Modal';
+import Modal from '../../../components/modal/components/Modal';
 import { SubmitHandler } from 'react-hook-form';
 import EditUserDataForm, { UserDataFormValues } from '../../../features/account/components/EditUserDataForm';
 import { updateUserGoal } from '../../../services/UserGoalService';
-import { usePrompt } from '../../../hooks/usePrompt';
 import EditUserGoalForm, { UserGoalFormValues } from 'src/features/account/components/EditUserGoalForm';
 import ChangePasswordForm, { ChangePasswordFormValues } from 'src/features/account/components/ChangePasswordForm';
 
 export default function AccountPage() {
     const { token } = useAuth(); 
-    const { success, fault } = usePrompt();
 
     const [userData, setUserData] = useState<User | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -56,9 +54,7 @@ export default function AccountPage() {
     const onSubmitData: SubmitHandler<UserDataFormValues> = async (formValues: UserDataFormValues) => {
         const { error } = await updateUserData(token, formValues);
         if(error) {
-            fault(error.message);
         } else {
-            success('Dane zostały zaktualizowane');
             setIsModalOpen(false);
             refetchData();
         }
@@ -66,9 +62,7 @@ export default function AccountPage() {
     const onSubmitGoal: SubmitHandler<UserGoalFormValues> = async (formValues: UserGoalFormValues) => {
         const { error } = await updateUserGoal(token, formValues, userData?.userGoal?.id as number);
         if(error) {
-            fault(error.message);
         } else {
-            success('Cel został zaktualizowany');
             setIsModalOpen(false);
             refetchData(); 
         }
@@ -77,12 +71,9 @@ export default function AccountPage() {
     const onSubmitPassword: SubmitHandler<ChangePasswordFormValues> = async (formValues: ChangePasswordFormValues) => {
         const { data, error } = await changePassword(token, formValues); 
         if(error){
-            fault(error.message); 
         } else if(data) {
-            success(data.message);
             setIsModalOpen(false); 
         } else {
-            fault('Coś poszło nie tak'); 
         }
     }
 

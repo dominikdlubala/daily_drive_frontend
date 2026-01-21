@@ -11,7 +11,6 @@ import ExerciseDetails from "../../exercise/components/ExerciseDetails";
 // import "../styles/exercise.css";
 import "../styles/workoutForm.css";
 import { useAuth } from "../../../hooks/useAuth";
-import { usePrompt } from "../../../hooks/usePrompt";
 
 interface WorkoutFreeFormProps {
     handleModalClose?: (updatedWorkout?: CurrentWorkout) => void;
@@ -20,7 +19,6 @@ interface WorkoutFreeFormProps {
 export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormProps) {
 
   const { token } = useAuth(); 
-  const { success } = usePrompt();  
 
   const dispatch = useAppDispatch();
   const currentWorkout = useAppSelector((state) => state.workout.currentWorkout);
@@ -168,7 +166,6 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
       dispatch(endWorkout()); 
       dispatch(resetWorkout());
       handleModalClose && handleModalClose();
-      success(`Trening ${title} zakończony.`)
     }
   };
 
@@ -190,7 +187,6 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
 
     if(currentWorkout?.id){
         dispatch(updateWorkout(currentWorkout.workoutSession));
-        success(`Trening ${title} zapisany.`);
     } else {
         dispatch(startCurrentWorkout({
           token, 
@@ -204,7 +200,6 @@ export default function WorkoutFreeForm({ handleModalClose }: WorkoutFreeFormPro
             }
           }
         }));
-        success(`Trening ${title} rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
     }
     dispatch(resetWorkout());
     handleModalClose && handleModalClose();

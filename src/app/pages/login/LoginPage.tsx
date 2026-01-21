@@ -5,7 +5,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom'; 
 
 import { useAuth } from '../../../hooks/useAuth'; 
-import { usePrompt } from '../../../hooks/usePrompt';
 
 type FormValues = {
     username: string 
@@ -15,7 +14,6 @@ type FormValues = {
 export default function LoginPage() {
 
     const { login } = useAuth(); 
-    const { fault } = usePrompt(); 
     const [error, setError] = useState<string | undefined>(); 
 
     const { 
@@ -28,7 +26,6 @@ export default function LoginPage() {
         const { error } = await login({ username, password }); 
         if(error) {
             setError(error.message)
-            fault(error.message as string); 
         }
     }
 

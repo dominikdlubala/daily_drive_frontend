@@ -2,16 +2,14 @@ import { useEffect, useState } from "react"
 import WorkoutsGalleryItem from "./WorkoutsGalleryItem"
 import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../../services/WorkoutTemplateService";
 import { WorkoutTemplate } from "../../../types";
-import Modal from "../../../components/primitives/Modal";
+import Modal from "../../../components/modal/components/Modal";
 import WorkoutTemplateForm, { WorkoutTemplateFormValues } from "./WorkoutTemplateForm";
 import { useAuth } from "../../../hooks/useAuth";
-import { usePrompt } from "../../../hooks/usePrompt";
 
 
 export default function WorkoutsGallery() {
 
     const { token } = useAuth(); 
-    const { success, fault } = usePrompt(); 
 
     const [templates, setTemplates] = useState<WorkoutTemplate[] | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -52,9 +50,7 @@ export default function WorkoutsGallery() {
                 exercises: formValues.exercises
             } as Omit<WorkoutTemplate, 'id'>)
             if(error) {
-                fault(error.message)
             } else if (data) {
-                success('Szablon treningowy został dodany');
             }
         } else {
             const { data, error } = await updateWorkoutTemplate(token as string, {
@@ -63,9 +59,7 @@ export default function WorkoutsGallery() {
                 exercises: formValues.exercises
             } as WorkoutTemplate); 
             if(error) {
-                fault(error.message)
             } else if (data) {
-                success('Szablon treningowy zaktualizowany');
                 setTemplateToUpdate(undefined); 
             }
             
@@ -87,9 +81,7 @@ export default function WorkoutsGallery() {
     const handleDelete = async (id: number) => {
         const { error } = await deleteWorkoutTemplate(token as string, id);
         if(error) {
-            fault(error.message)
         } else {
-            success('Szablon treningowy został usunięty');
             setTemplates(templates?.filter(el => el.id !== id) || null);
             await refreshTemplates(); 
         }

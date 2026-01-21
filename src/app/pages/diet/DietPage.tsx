@@ -7,12 +7,10 @@ import { FaCircleArrowRight } from "react-icons/fa6";
 import { UserGoal } from '../../../types';
 import { getUserGoals } from '../../../services/UserGoalService';
 import { useAuth } from '../../../hooks/useAuth';
-import { usePrompt } from '../../../hooks/usePrompt';
 import DietToday from 'src/features/diet/components/DietToday';
 
 export default function DietPage() {
     const { token } = useAuth(); 
-    const { fault } = usePrompt(); 
     
     const [userGoal, setUserGoal] = useState<UserGoal | undefined>(undefined);
 
@@ -24,14 +22,13 @@ export default function DietPage() {
         const fetchUserGoal = async () => { 
             const { data, error } = await getUserGoals(token, dietDate.toISOString()); 
             if(error) {
-                fault(error.message)
             } else {
                 setUserGoal(data);
             }
         }
 
         fetchUserGoal();
-    }, [token, dietDate, fault]);
+    }, [token, dietDate]);
 
 
     return (

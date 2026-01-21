@@ -7,8 +7,7 @@ import { useEffect, useState } from 'react';
 import { addMeal, deleteMeal, fetchDietByDate, updateMeal } from '../../../services/DietService';
 import MealForm from './MealForm';
 import { useAuth } from '../../../hooks/useAuth';
-import { usePrompt } from '../../../hooks/usePrompt';
-import Modal from 'src/components/primitives/Modal';
+import Modal from 'src/components/modal/components/Modal';
 
 interface DietTodayProps {
     date: Date;
@@ -18,7 +17,6 @@ interface DietTodayProps {
 export default function DietToday({ date, dietGoal }: DietTodayProps) {
 
     const { token } = useAuth();
-    const { success, fault } = usePrompt(); 
     
     const [dietData, setDietData] = useState<DailyDiet | null>(null);
     const [modalOpen, setModalOpen] = useState(false); 
@@ -54,10 +52,8 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
     const handleMealDelete = async (id: number) => {
         const { error } = await deleteMeal(token, id);
         if(error) {
-            fault('Nie udało się usunąć posiłku!'); 
             return;
         }
-        success('Pomyślnie usunięto posiłek!');
         setModalOpen(false); 
         refetchData();
     }
@@ -66,7 +62,6 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
         if(meal.id) {
             const { data } = await updateMeal(token, meal);    
             if(data) {
-                success('Pomyślnie zaktualizowano posiłek!');
             }         
         } else {
             const { data } = await addMeal(token, {
@@ -74,7 +69,6 @@ export default function DietToday({ date, dietGoal }: DietTodayProps) {
                 date
             });
             if(data) {
-                success('Pomyślnie dodano posiłek!');
             }
         }
         refetchData();

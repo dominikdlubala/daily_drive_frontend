@@ -10,7 +10,7 @@ export const exerciseApi = createApi({
       query: (createExDefDTO) => ({ 
         url: '/exercise', 
         method: 'POST',
-        data: createExDefDTO
+        data: createExDefDTO, 
       }), 
 
     }) 

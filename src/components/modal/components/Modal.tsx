@@ -29,7 +29,7 @@ export default function Modal({ children, isOpen, onClose, disableOverlayClick, 
 
     if(!isOpen) return null; 
 
-    return createPortal(
+    return (
         <div 
             className="modal-background" 
             onClick={!disableOverlayClick && onClose ? onClose : undefined}
@@ -44,7 +44,6 @@ export default function Modal({ children, isOpen, onClose, disableOverlayClick, 
             >
                 {children}
             </div>
-        </div>, 
-        document.getElementById('modal-root') as Element
+        </div> 
     )
 }

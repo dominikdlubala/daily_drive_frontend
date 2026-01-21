@@ -11,7 +11,6 @@ import ExerciseDetails from "../../exercise/components/ExerciseDetails";
 // import "../styles/exercise.css";
 import "../styles/workoutForm.css";
 import { useAuth } from "../../../hooks/useAuth";
-import { usePrompt } from "../../../hooks/usePrompt";
 import { openExerciseModal } from "../../../store/slices/exercise/slice";
 
 interface WorkoutFreeFormProps {
@@ -21,7 +20,6 @@ interface WorkoutFreeFormProps {
 export default function WorkoutForm({ handleModalClose }: WorkoutFreeFormProps) {
 
   const { token } = useAuth(); 
-  const { success } = usePrompt();  
   const dispatch = useAppDispatch();
   
     useEffect(() => {
@@ -117,7 +115,6 @@ export default function WorkoutForm({ handleModalClose }: WorkoutFreeFormProps) 
       dispatch(endWorkout()); 
       dispatch(resetWorkout());
       handleModalClose && handleModalClose();
-      success(`Trening ${title} zakończony.`)
     }
   };
 
@@ -131,9 +128,7 @@ export default function WorkoutForm({ handleModalClose }: WorkoutFreeFormProps) 
 
     if(currentWorkout?.id){
         dispatch(updateWorkout(currentWorkout.workoutSession));
-        success(`Trening ${title} zapisany.`);
     } else {
-        success(`Trening ${title} rozpoczęty. Kliknij przycisk na dole aby go modyfikować.`);
     }
     dispatch(resetWorkout());
     handleModalClose && handleModalClose();
@@ -158,7 +153,7 @@ export default function WorkoutForm({ handleModalClose }: WorkoutFreeFormProps) 
 
       <div className="form-group">
         <h3>Ćwiczenia</h3>
-          <button type="button" className="btn--workout-template btn-add" onClick={() => dispatch(openModal({ type: 'CREATE_EXERCISE' }))}>Dodaj ćwiczenie +</button>
+          <button type="button" className="btn--workout-template btn-add" onClick={() => dispatch(openModal({ type: 'ADD_EXERCISE' }))}>Dodaj ćwiczenie +</button>
         {currentWorkout?.workoutSession.weightExercises.map((exercise, index) => (
           <div key={index} className="form-group form-group--workout-free">
             <ExerciseDetails 

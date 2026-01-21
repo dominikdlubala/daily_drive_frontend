@@ -9,13 +9,11 @@ import LastWorkoutItem from '../../../features/home/components/LastWorkoutItem';
 import WorkoutWeekSummary from '../../../features/home/components/WorkoutWeekSummary';
 import DietWeekSummary from '../../../features/home/components/DietWeekSummary';
 import { useAuth } from '../../../hooks/useAuth';
-import { usePrompt } from '../../../hooks/usePrompt';
 import DietSummary from 'src/features/diet/components/DietSumary';
 import { useGetHomePageDataQuery } from 'src/api/queries/homePageApi';
 
 export default function HomePage() {
 
-    const { fault } = usePrompt(); 
 
     const navigate = useNavigate(); 
 

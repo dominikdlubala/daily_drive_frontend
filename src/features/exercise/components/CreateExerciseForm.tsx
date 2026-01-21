@@ -190,6 +190,7 @@ export default function CreateExerciseForm() {
         return { name: bp }
       }) 
     }); 
+    console.log(response); 
     if(!response.error) {
       dispatch(closeModalByType('CREATE_EXERCISE')); 
     }

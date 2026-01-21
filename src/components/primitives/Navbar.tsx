@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useToast } from 'src/hooks/useToast';
 
 
 function MobileNav() {
@@ -59,6 +60,8 @@ function Navbar() {
     const location = useLocation();
     const { token, logout } = useAuth(); 
 
+    const { notify } = useToast(); 
+
     const getLinkClassName = (path: string) => {
         return location.pathname === path ? 'link link-header link-header--active' : 'link link-header';
     };
@@ -75,6 +78,9 @@ function Navbar() {
                 <Link to={'/diet'} className={getLinkClassName('/diet')}>
                     Dieta
                 </Link>
+                <button onClick={() => notify({ message: 'prompt testowy', type: 'info'})}>
+                    prompt
+                </button>
             </div>
             <div className="header-links--mid">
                 <Link to={'/'} className="link link-header link-header--logo">
@@ -97,7 +103,7 @@ function Navbar() {
     )
 }
 
-export default function Header() {
+export default function Nav() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
