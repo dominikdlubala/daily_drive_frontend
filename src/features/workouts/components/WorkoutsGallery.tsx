@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import WorkoutsGalleryItem from "./WorkoutsGalleryItem"
 import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../../services/WorkoutTemplateService";
 import { WorkoutTemplate } from "../../../types";
-import Modal from "../../../components/modal/components/Modal";
+import Modal from "../../modal/components/Modal";
 import WorkoutTemplateForm, { WorkoutTemplateFormValues } from "./WorkoutTemplateForm";
 import { useAuth } from "../../../hooks/useAuth";
 

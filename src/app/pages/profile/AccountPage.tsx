@@ -5,7 +5,7 @@ import { ActivityLevel, Gender, User } from "../../../types";
 import { useAuth } from "../../../hooks/useAuth";
 import { changePassword, getUserData, updateUserData } from "../../../services/UserService";
 import { MdEdit } from 'react-icons/md';
-import Modal from '../../../components/modal/components/Modal';
+import Modal from '../../../features/modal/components/Modal';
 import { SubmitHandler } from 'react-hook-form';
 import EditUserDataForm, { UserDataFormValues } from '../../../features/account/components/EditUserDataForm';
 import { updateUserGoal } from '../../../services/UserGoalService';

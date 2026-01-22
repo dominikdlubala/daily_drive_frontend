@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { ToastEntry } from "src/hooks/useToast";
 
-export interface ToastProps {
-  id: number; 
-  message: string; 
-  type?: string;
+export interface ToastProps extends ToastEntry {
   onClose: () => void; 
 }
 
@@ -12,24 +9,26 @@ export default function Toast({
   id, 
   message, 
   type, 
-  onClose
+  onClose, 
+  stopAutoHide, 
+  duration
 }: ToastProps) {
 
-  const [isPaused, setIsPaused] = useState(false); 
+  const [isPaused, setIsPaused] = useState(stopAutoHide ?? false); 
   const [isClosing, setIsClosing] = useState(false); 
 
   useEffect(() => {
     if(isPaused || isClosing) return; 
     const timer = setTimeout(() => {
       setIsClosing(true); 
-    }, 3500)
+    }, duration ?? 3000)
 
     return () => clearTimeout(timer); 
-  },[id, isPaused, isClosing])
+  },[id, isPaused, isClosing, duration])
 
   return (
       <div 
-        className={`toast ${ type ? `toast-${type}` : ''} ${isClosing ? 'closing' : ''}`} 
+        className={`toast ${ type ? `toast_${type}` : ''} ${isClosing ? 'closing' : ''}`} 
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
 

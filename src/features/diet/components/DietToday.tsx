@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { addMeal, deleteMeal, fetchDietByDate, updateMeal } from '../../../services/DietService';
 import MealForm from './MealForm';
 import { useAuth } from '../../../hooks/useAuth';
-import Modal from 'src/components/modal/components/Modal';
+import Modal from 'src/features/modal/components/Modal';
 
 interface DietTodayProps {
     date: Date;

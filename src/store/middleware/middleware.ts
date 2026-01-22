@@ -1,20 +1,20 @@
 import { isFulfilled, isRejectedWithValue, Middleware } from "@reduxjs/toolkit"
+import { AxiosError } from "axios";
+import { sendNotificationEvent } from "src/features/notifications/notificationEvent";
 import { ApiResponse } from "src/types";
 
 export const toastMiddleware: Middleware = (api) => (next) => (action) => {
   if (isFulfilled(action)) {
-    const { message, showNotification, autoHide } = action.payload as ApiResponse; 
-    if(showNotification){
-      // TO DO NOTIFICATION SYSTEM
-      console.log(`success ${message}`)
-    }
+    const { message, showNotification, stopAutoHide, duration } = action.payload as ApiResponse; 
+    console.log('SUCCESS', action.payload); 
+    showNotification && sendNotificationEvent({ type: 'success', message, stopAutoHide, duration }); 
 
     return next(action); 
   }
 
   if(isRejectedWithValue(action)) {
-    const { message, showNotification, autoHide } = action.payload as ApiResponse;  
-    showNotification && console.error(`err: ${message}`); 
+    const { message, showNotification, stopAutoHide, duration } = action.payload as ApiResponse;  
+    showNotification && sendNotificationEvent({ type: 'error', message, stopAutoHide, duration }); 
   }
   return next(action); 
 }

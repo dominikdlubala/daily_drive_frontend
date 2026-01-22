@@ -4,7 +4,8 @@ export interface ApiResponse<T = any> {
   message: string; 
   data?: T; 
   showNotification?: boolean; 
-  autoHide?: boolean; 
+  stopAutoHide?: boolean; 
+  duration?: number; 
 }
 
 export type User = {

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import WorkoutsGallery from '../../../features/workouts/components/WorkoutsGallery';
 import WorkoutsList from '../../../features/workouts/components/WorkoutsList';
-import Modal from '../../../components/modal/components/Modal';
+import Modal from '../../../features/modal/components/Modal';
 import WorkoutFreeForm from '../../../features/workouts/components/WorkoutFreeForm';
 
 export default function WorkoutsPage() {

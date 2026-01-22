@@ -1,14 +1,16 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import Toast, { ToastProps } from "src/components/notifications/Toast";
+import Toast from "src/features/notifications/components/Toast";
+import { onNotificationEvent } from "src/features/notifications/notificationEvent";
 
 export type ToastType = 'success' | 'error' | 'info'; 
 
-interface ToastEntry {
+export interface ToastEntry {
   type: ToastType; 
   id: number; 
   message: string; 
   stopAutoHide?: boolean; 
+  duration?: number; 
 }
 
 interface ToastContextType {
@@ -30,8 +32,7 @@ export default function ToastProvider({ children }: ToastProviderProps) {
       ...notifications, 
       {
         id: notifications.length, 
-        message: toast.message, 
-        type: toast.type, 
+        ...toast
       }
     ]); 
   }
@@ -39,6 +40,15 @@ export default function ToastProvider({ children }: ToastProviderProps) {
   const removeToast = (id: number) => {
     setNotifications(notifications.filter(n => n.id !== id));
   }
+
+
+  useEffect(() => {
+    const unsubscribe = onNotificationEvent((payload) => {
+      notify(payload); 
+    }); 
+
+    return () => unsubscribe(); 
+  }, [])
 
   const value = {
     notify
@@ -51,13 +61,15 @@ export default function ToastProvider({ children }: ToastProviderProps) {
       {createPortal(
         <div className="toast-container">
           {
-            notifications.map(({ id, message, type }) => (
+            notifications.map(({ id, message, type, stopAutoHide, duration }) => (
               <Toast
                 key={id}
                 id={id}
                 message={message} 
                 type={type}
                 onClose={() => removeToast(id)}
+                stopAutoHide={stopAutoHide}
+                duration={duration}
               />
             ))
           }

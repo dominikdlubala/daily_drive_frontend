@@ -1,4 +1,4 @@
-import CreateExerciseForm from "../../../../features/exercise/components/CreateExerciseForm";
+import CreateExerciseForm from "../../../exercise/components/CreateExerciseForm";
 
 export default function CreateExerciseModal() {
 
