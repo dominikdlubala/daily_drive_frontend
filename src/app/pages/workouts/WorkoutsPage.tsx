@@ -45,12 +45,6 @@ export default function WorkoutsPage() {
 
     return (
         <div className="page page-workouts">
-            {isModalOpen && (
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <WorkoutFreeForm handleModalClose={() => setIsModalOpen(false)} />
-                </Modal>
-            )}
-
             <div onClick={handleWorkoutsButtonsClick} className="section--workouts-buttons">
                 <button
                     data-value="customWorkouts"

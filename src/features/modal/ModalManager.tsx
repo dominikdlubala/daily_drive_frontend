@@ -6,10 +6,12 @@ import AddExerciseModal from "./components/exercise/AddExerciseModal";
 import Modal from "./components/Modal";
 import CreateExerciseModal from "./components/exercise/CreateExerciseModal";
 import { createPortal } from "react-dom";
+import CreateWorkoutTemplateModal from "./components/workout/CreateWorkoutTemplateModal";
 
 const MODAL_COMPONENTS: Record<string, React.FC<any>> = {
   ADD_EXERCISE: AddExerciseModal,
-  CREATE_EXERCISE: CreateExerciseModal
+  CREATE_EXERCISE: CreateExerciseModal, 
+  CREATE_EDIT_WORKOUT_TEMPLATE: CreateWorkoutTemplateModal
 }
 
 export default function ModalManager() {

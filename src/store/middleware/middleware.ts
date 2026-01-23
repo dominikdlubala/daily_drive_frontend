@@ -6,7 +6,6 @@ import { ApiResponse } from "src/types";
 export const toastMiddleware: Middleware = (api) => (next) => (action) => {
   if (isFulfilled(action)) {
     const { message, showNotification, stopAutoHide, duration } = action.payload as ApiResponse; 
-    console.log('SUCCESS', action.payload); 
     showNotification && sendNotificationEvent({ type: 'success', message, stopAutoHide, duration }); 
 
     return next(action); 

@@ -1,9 +1,10 @@
 import '../styles/exercise.scss';
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { fetchExercisesByName } from "../../../services/ExerciseService";
-import { Exercise } from "../../../types";
+import { Exercise, ExerciseDefinition } from "../../../types";
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { openModal } from '../../../store';
+import { useLazyGetExerciseByNameQuery } from 'src/api/queries/exerciseApi';
 
 interface ExerciseSearchProps {
     exerciseType?: "weight" | "cardio";
@@ -13,8 +14,10 @@ interface ExerciseSearchProps {
 export default function ExerciseSearch({ exerciseType, onExerciseSelect }: ExerciseSearchProps) {
   const dispatch = useAppDispatch(); 
 
+  const [triggerSearch, { isLoading }] = useLazyGetExerciseByNameQuery(); 
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<Exercise[]>([]);
+  const [searchResults, setSearchResults] = useState<ExerciseDefinition[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,14 +40,18 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
       setError('Wpisz nazwę ćwiczenia');
       return; 
     } 
-    const { data, error } = await fetchExercisesByName(searchTerm, exerciseType);
-    if(error) {
-      setError(error.message);
-    }
-    if(data) {
-        setSearchResults(data);
-        setShowResults(true); 
-        setError(null);
+    // const { data, error } = await fetchExercisesByName(searchTerm, exerciseType);
+    const response = await triggerSearch(searchTerm); 
+
+
+    if(response.data?.data) {
+      if(response.data.data.length === 0) {
+        setError('Nie znaleziono takiego ćwiczenia')
+        return; 
+      }
+      setSearchResults(response.data.data);
+      setShowResults(true); 
+      setError(null);
     }
   };
 
@@ -68,10 +75,12 @@ export default function ExerciseSearch({ exerciseType, onExerciseSelect }: Exerc
       </div>
       {error && <span className="exercise-search__error">{error}</span> }
 
-      {searchResults.length > 0 && showResults && (
+      {searchResults?.length > 0 && showResults && (
         <ul className="exercise-search__results" ref={resultsRef}>
           {searchResults.map((exercise, index) => (
-            <li className="exercise-search__result-item" key={index} onClick={() => handleSubmit(exercise)}>
+            <li className="exercise-search__result-item" key={index} 
+              // onClick={() => handleSubmit(exercise)}
+            >
               {exercise.name}
             </li>
           ))}

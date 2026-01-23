@@ -2,14 +2,17 @@ import { useEffect, useState } from "react"
 import WorkoutsGalleryItem from "./WorkoutsGalleryItem"
 import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../../services/WorkoutTemplateService";
 import { WorkoutTemplate } from "../../../types";
-import Modal from "../../modal/components/Modal";
-import WorkoutTemplateForm, { WorkoutTemplateFormValues } from "./WorkoutTemplateForm";
+import { WorkoutTemplateFormValues } from "./WorkoutTemplateForm2";
 import { useAuth } from "../../../hooks/useAuth";
+import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { openModal } from "src/store";
 
 
 export default function WorkoutsGallery() {
 
     const { token } = useAuth(); 
+
+    const dispatch = useAppDispatch(); 
 
     const [templates, setTemplates] = useState<WorkoutTemplate[] | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -43,34 +46,33 @@ export default function WorkoutsGallery() {
         formSubmitted && await refreshTemplates()
     } 
 
-    const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
-        if(add) {
-            const {data, error } = await addWorkoutTemplate(token as string, {
-                name: formValues.name, 
-                exercises: formValues.exercises
-            } as Omit<WorkoutTemplate, 'id'>)
-            if(error) {
-            } else if (data) {
-            }
-        } else {
-            const { data, error } = await updateWorkoutTemplate(token as string, {
-                id:  formValues.id,
-                name: formValues.name, 
-                exercises: formValues.exercises
-            } as WorkoutTemplate); 
-            if(error) {
-            } else if (data) {
-                setTemplateToUpdate(undefined); 
-            }
+    // const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
+    //     if(add) {
+    //         const {data, error } = await addWorkoutTemplate(token as string, {
+    //             name: formValues.name, 
+    //             exercises: formValues.exercises
+    //         } as Omit<WorkoutTemplate, 'id'>)
+    //         if(error) {
+    //         } else if (data) {
+    //         }
+    //     } else {
+    //         const { data, error } = await updateWorkoutTemplate(token as string, {
+    //             id:  formValues.id,
+    //             name: formValues.name, 
+    //             exercises: formValues.exercises
+    //         } as WorkoutTemplate); 
+    //         if(error) {
+    //         } else if (data) {
+    //             setTemplateToUpdate(undefined); 
+    //         }
             
-        } 
+    //     } 
 
-        handleModalClose(true); 
-    }
+    //     handleModalClose(true); 
+    // }
 
     const handleAddClick = () => {
-        setTemplateToUpdate(undefined); 
-        setIsModalOpen(true);
+        dispatch(openModal({ type: 'CREATE_EDIT_WORKOUT_TEMPLATE' }))
     }
 
     const handleEdit = (template: WorkoutTemplate) => {
@@ -97,17 +99,6 @@ export default function WorkoutsGallery() {
                 >Dodaj szablon +</button>
             </div>
             <div className="gallery gallery-workouts">
-                {
-                    isModalOpen
-                    &&
-                    <Modal
-                        isOpen={isModalOpen}
-                        onClose={handleModalClose}
-                    >
-                        <WorkoutTemplateForm initialData={templateToUpdate} handleSubmit={handleFormSubmit} />
-                    </Modal>
-                }
-
                 {templates?.map((el, index) => (
                     <WorkoutsGalleryItem key={el.id + index} workoutData={el} onEdit={handleEdit} onDelete={handleDelete}/>
                 ))}

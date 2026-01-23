@@ -15,7 +15,7 @@ export interface WorkoutTemplateFormProps {
     initialData?: WorkoutTemplate; 
 }
 
-export default function WorkoutTemplateForm({ initialData }: WorkoutTemplateFormProps) {
+export default function WorkoutTemplateForm2({ initialData }: WorkoutTemplateFormProps) {
 
     const [exercises, setExercises] = useState<Exercise[]>(initialData?.exercises || [] as Exercise[]);
     const [title, setTitle] = useState<string>(initialData?.name || '');
