@@ -5,14 +5,14 @@ import { ApiResponse, CreateExerciseDefinitionDTO, ExerciseDefinition } from "sr
 export const exerciseApi = createApi({
   reducerPath: 'exercise', 
   baseQuery: axiosBaseQuery(), 
-  tagTypes: ['Exercise'],
+  tagTypes: ['EXERCISE'],
   endpoints: (builder) => ({
     getExerciseByName: builder.query<ApiResponse<ExerciseDefinition[]>, string>({
       query: (exerciseName) => ({
         url: `/exercise/${exerciseName}`, 
         method: 'GET'
       }), 
-      providesTags: (result) => [{ type: 'Exercise', id: 'LIST' }],
+      providesTags: (result) => [{ type: 'EXERCISE', id: 'LIST' }],
     }),
     createExerciseDefinition: builder.mutation<ApiResponse<ExerciseDefinition>, CreateExerciseDefinitionDTO>({
       query: (createExDefDTO) => ({ 
@@ -20,7 +20,7 @@ export const exerciseApi = createApi({
         method: 'POST',
         data: createExDefDTO, 
       }), 
-      invalidatesTags: [{ type: 'Exercise', id: 'LIST' }]
+      invalidatesTags: [{ type: 'EXERCISE', id: 'LIST' }]
     }), 
 
   })

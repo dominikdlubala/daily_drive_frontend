@@ -1,5 +1,27 @@
 @import './variables.scss'; 
 
+.page {
+  min-height: 90vh; 
+  margin-bottom: 2rem;
+
+  &_header{
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+    padding: 32px; 
+  }
+
+  &_title {
+    font-size: 2rem; 
+    font-weight: bold; 
+    margin-bottom: 1rem; 
+  }
+
+  &_section {
+    padding: 0 32px; 
+  }
+}
+
 .button {
   transition: ease 0.3s background-color; 
   border: none; 
@@ -14,29 +36,88 @@
   }
 }
 
+.btn {
+  &-danger {
+    &:hover {
+      color: $btn-red;
+    }
+  }
+}
+
+/* Header */
+.header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  position: relative; 
+  height: 10vh; 
+  padding: 0 32px; 
+
+  &-links--left {
+    display: flex; 
+    gap: 1rem; 
+  }
+
+  &-links--mid {
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); 
+    font-size: 2rem; 
+  }
+
+  &-links--right {
+    display: flex; 
+    gap: 1rem; 
+  }
+}
+
+.link-header {
+  color: black; 
+  border: 1px solid black; 
+  font-size: 1.2rem; 
+  border-radius: 15px; 
+  padding: 0.5rem; 
+}
+
+.link-header--logo {
+  font-size: 2rem; 
+  font-weight: bold; 
+  border: none; 
+}
+
+.link-header--logout {
+  color: #e63d3d;
+}
+
+.link-header--active {
+  background-color: var(--primary-color); 
+  color: #fff; 
+  border: none; 
+}
+
 .form {
   display: flex; 
   flex-direction: column;
   align-items: center;
   width: 100%; 
 
-  &__title {
+  &_title {
     font-size: 1.5rem; 
   }
 
-  &__group {
+  &_group {
     width: 100%; 
     display: flex; 
     flex-direction: column;
     gap: 15px;
   }
 
-  &__input-wrapper {
+  &_input-wrapper {
     display: flex;
     flex-direction: column;
   }
 
-  &__error {
+  &_error {
     min-height: 30px; 
     color: $error-message-color; 
   }
@@ -46,7 +127,7 @@
     font-size: 1.25rem;
   }
 
-  &__input, input {
+  &_input, input {
     border: none; 
     border-bottom: 2px solid $underline-color; 
     outline: none; 
@@ -69,11 +150,11 @@
     }
   }
 
-  &__submit {
+  &_submit {
     @extend .button; 
   }
 
-  &__select {
+  &_select {
     
     &:focus {
       border-color: var(--primary-color);
@@ -210,3 +291,222 @@
     padding: 2rem; 
   }
 }
+
+
+
+.form {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  width: 100%; 
+  gap: 2rem; 
+
+  background-color: #ffffff;
+  max-width: 600px;
+  margin: 2rem auto; 
+  padding: 2.5rem;
+  border-radius: $border-radius;
+
+
+  &_workout-template {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  }
+
+  &_title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  &_group {
+    width: 100%; 
+    display: flex; 
+    flex-direction: column;
+  }
+
+  &_input-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_error {
+    min-height: 30px; 
+    color: $error-message-color; 
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &_input, input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: $text-dark;
+    transition: all $transition-speed ease;
+    background-color: #fff;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &::placeholder {
+      color: #000; 
+    }
+
+    &::-ms-input-placeholder {
+      color: #000; 
+    }
+    &:-ms-input-placeholder {
+      color: #000; 
+    }
+  }
+
+  &_submit {
+    @extend .button; 
+  }
+
+  &_select {
+    
+    &:focus {
+      border-color: var(--primary-color);
+    }
+
+    &-option {
+      border: 2px solid $primary-color
+
+      &--active {
+        background-color: $primary-color
+      }
+    }
+  }
+
+  &_list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: $secondary-bg;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      border-radius: 8px;
+      border-bottom: 4px solid $primary-color;
+      transition: transform $transition-speed ease, box-shadow $transition-speed ease;
+      animation: slideIn 0.3s ease-out forwards;
+
+      span {
+        font-weight: 700;
+        color: $text-dark;
+        font-size: 1rem;
+      }
+
+      &--count {
+        padding-right: 0.75rem; 
+      }
+      
+      &--delete {
+        background: none; 
+        border: none; 
+        padding: 0; 
+        font-size: 1rem; 
+        opacity: 0.6;
+        cursor: pointer;
+        &:hover { opacity: 1; color: $btn-red; }
+      }
+    }
+  }
+
+  &_btn-secondary {
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    padding: 0.75rem;
+    background-color: transparent;
+    border: 2px solid #d1d5db; 
+    border-radius: 8px;
+    color: $text-muted;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-speed;
+    font-size: 0.95rem;
+
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+      background-color: rgba($primary-color, 0.02);
+    }
+    
+    &:active {
+      transform: scale(0.99);
+    }
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 1rem;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color $transition-speed, transform $transition-speed;
+    box-shadow: 0 4px 6px -1px rgba($primary-color, 0.4);
+    margin-top: 1rem;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px -1px rgba($primary-color, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+    
+    &:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+}
+
+
+
+
+.form_workout-template {
+
+  .input-validate {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: $danger-color;
+    font-weight: 500;
+    
+  }
+}
+
+
+

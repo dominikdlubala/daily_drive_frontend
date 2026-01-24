@@ -19,9 +19,9 @@ export const Input = <T extends FieldValues>({ control, name, placeholder, type 
             type={type}
             {...field}
             placeholder={placeholder}
-            className="form__input"
+            className="form_input"
           />
-          <span className="form__error">{error?.message || ''}</span>
+          <span className="form_error">{error?.message || ''}</span>
         </>
       )}
     />
@@ -70,7 +70,7 @@ export const ControlledSelect = <T extends FieldValues>({
 
         return (
           <>
-            <div className={`form__select ${className || ''}`}>
+            <div className={`form_select ${className || ''}`}>
               <Select
                 options={options}
                 isMulti={multiple}
@@ -78,7 +78,7 @@ export const ControlledSelect = <T extends FieldValues>({
                 value={value}
               />
             </div>
-            <span className="form__error">{error?.message || "\u00A0"}</span>
+            <span className="form_error">{error?.message || "\u00A0"}</span>
           </>
         );
       }}

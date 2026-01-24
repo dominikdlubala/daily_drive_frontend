@@ -107,7 +107,15 @@ export type WorkoutSessionApiReturn = {
 export type WorkoutTemplate = {
     id: number; 
     name: string; 
-    exercises: Exercise[]
+    ownerId: number; 
+    exercises: ExerciseDefinition[]; 
+    usedByUsers?: UserTemplateLibrary[]; 
+}
+
+export type UserTemplateLibrary = {
+    userId: number; 
+    templateId: number; 
+    usageCount: number; 
 }
 
 export type CreateWorkoutTemplateDTO = {
@@ -242,7 +250,7 @@ export type WeightExerciseStat = {
 
 // Exercise
 export interface ExerciseDefinition {
-    id: string; 
+    id: number; 
     name: string; 
     unit: string; 
     bodyParts?: BodyPart[]; 

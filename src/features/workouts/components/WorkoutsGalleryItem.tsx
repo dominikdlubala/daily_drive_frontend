@@ -5,51 +5,44 @@ import { useAuth } from "../../../hooks/useAuth";
 import { startCurrentWorkout } from "../../../services/WorkoutCurrentService";
 interface WorkoutsGalleryItemProps {
     workoutData: WorkoutTemplate
-    onEdit: (template: WorkoutTemplate) => void; 
-    onDelete: (id: number) => void; 
+    onEdit?: (template: WorkoutTemplate) => void; 
+    onDelete?: (id: number) => void; 
 }
 
-const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
-    return {
-        workoutSession: {
-            name: template.name,
-            startTime: new Date().toISOString(),
-            weightExercises: template.exercises.filter(ex => ex.type === 'Weight').map(ex => ({
-                name: ex.name, 
-                type: ex.type,
-                sets: [] as ExerciseSet[],
-                bodyPart: ex.bodyPart
-            })),
-            cardioExercises: template.exercises.filter(ex => ex.type === 'Cardio').map(ex => ({
-                name: ex.name, 
-                type: ex.type,
-                intensity: 0, 
-                duration: 0
-            }))
-        }
-    }
-}
+// const templateToCurrent = (template: WorkoutTemplate): CurrentWorkout => {
+//     return {
+//         workoutSession: {
+//             name: template.name,
+//             startTime: new Date().toISOString(),
+//             exercises: template.exercises.filter(ex => ex.type === 'Cardio').map(ex => ({
+//                 name: ex.name, 
+//                 intensity: 0, 
+//                 duration: 0
+//             }))
+//         }
+//     }
+// }
 
 export default function WorkoutsGalleryItem({ workoutData, onEdit, onDelete }: WorkoutsGalleryItemProps) {
 
     const { token } = useAuth(); 
 
-    const startWorkoutData: CurrentWorkout = templateToCurrent(workoutData);
+    // const startWorkoutData: CurrentWorkout = templateToCurrent(workoutData);
 
     const handleClick = async () => {
-        const { error } = await startCurrentWorkout(token as string, startWorkoutData);
-        if(error) {
-            return
-        }
+        // const { error } = await startCurrentWorkout(token as string, startWorkoutData);
+        // if(error) {
+        //     return
+        // }
     }
 
     return (
-        <div className="gallery-item gallery-item--workouts">
-            <div className="gallery-item--header">
+        <div className="templates_card">
+            <div className="templates_card-header">
                 {workoutData.name}
-                <div className="header-buttons">
-                    <MdEdit className="btn-edit--gallery" onClick={() => onEdit(workoutData)} />
-                    <MdDelete className="btn-delete--gallery" onClick={() => onDelete(workoutData.id)} />
+                <div className="templates_card-buttons">
+                    <MdEdit className="templates-card-buttons--edit"  />
+                    <MdDelete className="templates-card-buttons--delete btn-danger"  />
                 </div>
             </div>
             <ul 

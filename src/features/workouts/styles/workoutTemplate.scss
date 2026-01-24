@@ -1,0 +1,93 @@
+@import '../../../styles/variables.scss';
+
+.templates {
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; 
+    width: 100%; 
+    gap: 2rem; 
+
+  }
+
+  &_card {
+    border: 2px solid black; 
+    display: flex; 
+    flex-direction: column;
+    border-radius: 15px;
+    overflow: hidden; 
+    padding: 1rem; 
+
+    &-header {
+      display: flex; 
+      justify-content: space-between;
+      text-align: center; 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+    }
+
+    &-buttons {
+      display: flex; 
+      gap: 10px; 
+      font-size: 1.5rem;
+      padding: 0; 
+
+      > {
+        svg {
+          &:hover {
+            cursor:pointer; 
+          }
+        }
+      }
+    }
+
+
+    .btn-edit {
+      background: none;
+      color: $btn-basic-bg;
+    }
+
+
+  }
+
+}
+
+.workout-templ--add {
+    background-color: var(--green-btn); 
+    color: #fff; 
+    padding: 1rem; 
+    border-radius: 10px; 
+    border: none; 
+    cursor: pointer; 
+}
+
+.btn-submit-workout {
+    margin-bottom: 1rem; 
+}
+
+.btn-edit--gallery {
+    cursor: pointer; 
+}
+
+.btn-delete--gallery {
+    cursor: pointer; 
+    color: var(--red-btn); 
+}
+
+.gallery-item--exercises-list {
+    margin: 1rem 0;  
+}
+
+.gallery-item--exercise-item {
+    padding: 0.5rem 0; 
+}
+
+.gallery-item--button-start {
+    border: none; 
+    background-color: var(--primary-color); 
+    color: #fff; 
+    padding: 0.5rem; 
+    cursor: pointer; 
+    border-radius: 5px;
+}

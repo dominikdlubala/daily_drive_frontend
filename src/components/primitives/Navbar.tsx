@@ -72,6 +72,9 @@ function Navbar() {
                 <Link to={'/workouts'} className={getLinkClassName('/workouts')}>
                     Treningi
                 </Link>
+                <Link to={'/workouts/templates'} className={getLinkClassName('/workouts/templates')}>
+                    Moje szablony
+                </Link>
                 <Link to={'/statistics'} className={getLinkClassName('/statistics')}>
                     Statystyki
                 </Link>

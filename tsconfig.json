@@ -2,9 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@": ["./src"], 
-      "@styles": ["./src/styles"]
+      "@/*": ["src/*"], 
+      "@styles/*": ["src/styles/*"], 
+      "src/*": ["src/*"]
     },
+    "types": ["vite/client"],
     "target": "es5",
     "lib": [
       "dom",

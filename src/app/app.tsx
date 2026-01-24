@@ -12,6 +12,8 @@ import AccountPage from './pages/profile/AccountPage';
 import CurrentWorkoutPage from './pages/current_workout/CurrentWorkoutPage';
 import RegisterPage from './pages/register/RegisterPage';
 import StatisticsPage from './pages/statistics/StatisticsPage';
+import WorkoutTemplatesPage from './pages/workouts/WorkoutTemplatesPage';
+import WorkoutTemplatesFormPage from './pages/workouts/WorkoutTemplatesFormPage';
 
 const router = createBrowserRouter([
   {
@@ -68,6 +70,30 @@ const router = createBrowserRouter([
         element: <ProtectedRoute>
             <CurrentWorkoutPage />
         </ProtectedRoute>
+      }, 
+      {
+        path: '/workouts/templates', 
+        element: (
+          <ProtectedRoute>
+            <WorkoutTemplatesPage />
+          </ProtectedRoute>
+        )
+      }, 
+      {
+        path: '/workouts/templates/create', 
+        element: (
+          <ProtectedRoute>
+            <WorkoutTemplatesFormPage />
+          </ProtectedRoute>
+        )
+      }, 
+      {
+        path: '/workouts/templates/edit/:id?', 
+        element: (
+          <ProtectedRoute>
+            <WorkoutTemplatesFormPage />
+          </ProtectedRoute>
+        )
       }
     ]
   }

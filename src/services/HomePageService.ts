@@ -1,4 +1,4 @@
-const API_ROUTE = `${process.env.REACT_APP_API_URL}/home`; 
+const API_ROUTE = `${import.meta.env.VITE_API_URL}/home`; 
 
 export const fetchHomePageData = async (token: string) => {
     try {

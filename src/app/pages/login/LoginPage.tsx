@@ -31,7 +31,6 @@ export default function LoginPage() {
 
     return (
         <div className="page page-login">
-            <div className="form-wrapper--login">
                 <form className="form form-login" onSubmit={handleSubmit(onSubmit)}>
                     <h1 className="form-title form-title--login">Zaloguj się</h1>
                     <div className="form-group">
@@ -73,12 +72,11 @@ export default function LoginPage() {
                     >
                         {isSubmitting ? 'Loguję...' : 'Zaloguj'}
                     </button>
+                    <div className="register-link--login">
+                        <span>Nie masz konta?</span> <br/>
+                        <Link to={'/register'}>Zarejestruj się</Link>
+                    </div>
                 </form>
-                <div className="register-link--login">
-                    <span>Nie masz konta?</span> <br/>
-                    <Link to={'/register'}>Zarejestruj się</Link>
-                </div>
-            </div>
         </div>
     )
 }

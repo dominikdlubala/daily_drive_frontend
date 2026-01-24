@@ -4,7 +4,7 @@ import type { UserLoginApiReturn } from '../types';
 import { ChangePasswordFormValues } from 'src/features/account/components/ChangePasswordForm';
 import client from 'src/api/axios/client';
 
-const API_ROUTE = `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/auth`; 
+const API_ROUTE = `${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/auth`; 
 
 export const loginUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
     try {

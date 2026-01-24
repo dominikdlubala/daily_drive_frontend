@@ -2,49 +2,32 @@ import { useEffect, useState } from "react"
 import WorkoutsGalleryItem from "./WorkoutsGalleryItem"
 import { addWorkoutTemplate, deleteWorkoutTemplate, fetchWorkoutTemplates, updateWorkoutTemplate } from "../../../services/WorkoutTemplateService";
 import { WorkoutTemplate } from "../../../types";
-import { WorkoutTemplateFormValues } from "./WorkoutTemplateForm2";
 import { useAuth } from "../../../hooks/useAuth";
 import { useAppDispatch } from "src/hooks/useAppDispatch";
 import { openModal } from "src/store";
+import { Link } from "react-router-dom";
+import { useGetUserWorkoutTemplatesQuery } from "src/api/queries/workoutApi";
+import Skeleton from "src/components/skeletons/Skeleton";
 
+interface WorkoutTemplatesGalleryProps {
+    workoutTemplates?: WorkoutTemplate[]; 
+    isLoading?: boolean; 
+}
 
-export default function WorkoutsGallery() {
+export default function WorkoutTemplatesGallery({ workoutTemplates, isLoading }: WorkoutTemplatesGalleryProps) {
 
-    const { token } = useAuth(); 
+    // useEffect(() => {
+    //     const fetchTemplates = async () => {
+    //         const { data, error } = await fetchWorkoutTemplates(token as string); 
+    //         if(error) {
+    //             console.error(error); 
+    //         } else if(data) {
+    //             setTemplates(data as WorkoutTemplate[]); 
+    //         }
+    //     }
 
-    const dispatch = useAppDispatch(); 
-
-    const [templates, setTemplates] = useState<WorkoutTemplate[] | null>(null); 
-    const [isModalOpen, setIsModalOpen] = useState(false); 
-    const [templateToUpdate, setTemplateToUpdate] = useState<WorkoutTemplate | undefined>(undefined); 
-
-    useEffect(() => {
-        const fetchTemplates = async () => {
-            const { data, error } = await fetchWorkoutTemplates(token as string); 
-            if(error) {
-                console.error(error); 
-            } else if(data) {
-                setTemplates(data as WorkoutTemplate[]); 
-            }
-        }
-
-        fetchTemplates(); 
-    }, [token]); 
-
-    const refreshTemplates = async () => {
-        const { data, error } = await fetchWorkoutTemplates(token as string);
-        setTemplateToUpdate(undefined);
-        if(error) {
-            console.error(error); 
-        } else if(data) {
-            setTemplates(data as WorkoutTemplate[]);
-        }
-    }
-
-    const handleModalClose = async (formSubmitted?: boolean) => {
-        setIsModalOpen(false); 
-        formSubmitted && await refreshTemplates()
-    } 
+    //     fetchTemplates(); 
+    // }, [token]); 
 
     // const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
     //     if(add) {
@@ -71,38 +54,29 @@ export default function WorkoutsGallery() {
     //     handleModalClose(true); 
     // }
 
-    const handleAddClick = () => {
-        dispatch(openModal({ type: 'CREATE_EDIT_WORKOUT_TEMPLATE' }))
-    }
 
-    const handleEdit = (template: WorkoutTemplate) => {
-        setTemplateToUpdate(template); 
-        setIsModalOpen(true); 
-    }
+    let content = (
+        <>
+            {Array.from({ length: 12 }).map((el, idx) => (
+                <Skeleton key={idx} className="skeleton_workout-template--item" />
+            ))}
+        </>
+    )
+    
 
-    const handleDelete = async (id: number) => {
-        const { error } = await deleteWorkoutTemplate(token as string, id);
-        if(error) {
-        } else {
-            setTemplates(templates?.filter(el => el.id !== id) || null);
-            await refreshTemplates(); 
-        }
+    if(!isLoading) {
+        content = (
+            <>
+                {workoutTemplates?.map((el, index) => (
+                    <WorkoutsGalleryItem key={el.id + index} workoutData={el}/>
+                ))}
+            </>
+        )
     }
 
     return (
-        <>
-            <div className="workout-page--head">
-                <div className="page-title">Szablony treningowe</div>
-                <button
-                    className="workout-templ--add"
-                    onClick={() => handleAddClick()}    
-                >Dodaj szablon +</button>
-            </div>
-            <div className="gallery gallery-workouts">
-                {templates?.map((el, index) => (
-                    <WorkoutsGalleryItem key={el.id + index} workoutData={el} onEdit={handleEdit} onDelete={handleDelete}/>
-                ))}
-            </div>
-        </>
+        <div className="templates_list">
+            {content}
+        </div>
     )
 }

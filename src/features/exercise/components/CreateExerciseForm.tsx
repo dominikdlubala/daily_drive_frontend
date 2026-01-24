@@ -197,16 +197,16 @@ export default function CreateExerciseForm() {
   const unitValue = watch('unit'); 
 
   return (
-    <form className="form create-exercise__form" onSubmit={handleSubmit(onSubmit)}>
-      <h3 className="form__title">Dodaj ćwiczenie</h3>
-      <div className="form__group">
+    <form className="form create-exercise_form" onSubmit={handleSubmit(onSubmit)}>
+      <h3 className="form_title">Dodaj ćwiczenie</h3>
+      <div className="form_group">
         <label>Nazwa ćwiczenia</label>
         <Input
           control={control}
           name="name"
         />
       </div>
-      <div className="form__group">
+      <div className="form_group">
         <label>Jednostka</label>
         <ControlledSelect 
           control={control}
@@ -217,7 +217,7 @@ export default function CreateExerciseForm() {
       {
         (unitValue === 'KGxREPS' || unitValue === 'REPS')
         &&
-        <div className="form__group">
+        <div className="form_group">
           <label>Grupa mięśniowa</label>
           <ControlledSelect 
             control={control}
@@ -227,9 +227,9 @@ export default function CreateExerciseForm() {
           />
         </div>
       }
-      <div className="form__group">
+      <div className="form_group">
         <button
-          className="form__submit button"
+          className="form_submit button"
           type="submit"
         >
           {!isLoading ? `Zatwierdź` : 'Zapisuję...'}

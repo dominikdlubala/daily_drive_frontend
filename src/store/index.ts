@@ -5,19 +5,22 @@ import modalSliceReducer from './slices/modal/slice';
 import { homePageApi } from 'src/api/queries/homePageApi';
 import { exerciseApi } from 'src/api/queries/exerciseApi';
 import { toastMiddleware } from './middleware/middleware';
+import { workoutApi } from 'src/api/queries/workoutApi';
 
 const store = configureStore({
     reducer: {
         workout: workoutSlice.reducer,
         modal: modalSliceReducer,
         [homePageApi.reducerPath]: homePageApi.reducer, 
-        [exerciseApi.reducerPath]: exerciseApi.reducer
+        [exerciseApi.reducerPath]: exerciseApi.reducer,
+        [workoutApi.reducerPath]: workoutApi.reducer
     }, 
     middleware: 
         (getDefaultMiddleware) => 
             getDefaultMiddleware()
                 .concat(homePageApi.middleware)
                 .concat(exerciseApi.middleware)
+                .concat(workoutApi.middleware)
                 .concat(toastMiddleware)
 })
 

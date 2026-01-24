@@ -8,10 +8,11 @@ $btn-basic-bg-hover: #292929;
 $btn-basic-text: #fff; 
 
 
+$primary-btn: #086cca; 
 $green-btn: #319b5a;
 $green-btn-hover: #2a7f4b;
-$red-btn: #d44343;
-$red-btn-hover: #ad3434;
+$btn-red: #d44343;
+$btn-red-hover: #ad3434;
 
 $underline-color: #c5c5c5; 
 $tab-active-color: #000; 
@@ -22,3 +23,15 @@ $error-message-color: #e22832;
 $toast-basic: #417dff;
 $toast-success: #009940;
 $toast-error: #f32f38;
+
+$secondary-bg: #f3f4f6;        
+$text-dark: #111827;           
+$text-muted: #6b7280;          
+$danger-color: #ef4444;        
+$border-radius: 12px;
+$transition-speed: 0.2s;
+
+
+$skeleton-base-color: #e2e8f0; 
+$skeleton-highlight-color: #f1f5f9; 
+$border-radius: 8px;

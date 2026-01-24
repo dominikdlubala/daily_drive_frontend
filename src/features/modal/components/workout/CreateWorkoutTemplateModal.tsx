@@ -1,4 +1,4 @@
-import WorkoutTemplateForm from "src/features/workouts/components/WorkoutTemplateForm2";
+import WorkoutTemplateForm from "src/features/workouts/components/WorkoutTemplateForm";
 
 export default function CreateWorkoutTemplateModal() {
 
