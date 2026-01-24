@@ -235,11 +235,6 @@ li {
   height: 50px; 
 }
 
-.drawer {
-  position: absolute;  
-  top: -180px;
-}
-
 .drawer--list-item {
   background-color: #3392ff8b; 
   margin-bottom: 10px;

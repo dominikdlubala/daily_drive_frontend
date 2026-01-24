@@ -6,6 +6,7 @@ import App from './app/app';
 import './index.css';
 import './smallScreen.css';
 import './styles/global.scss'; 
+import '@styles/skeleton/skeleton.scss'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

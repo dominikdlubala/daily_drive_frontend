@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (token !== null) {
         if (isTokenExpired(token)) {
-          console.error("Received expired token.");
           return { token: null, error };
         }
 
@@ -68,7 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     removeToken(); 
     setTokenState(null);
-    // navigate('/login')
+    navigate('/login')
   };
 
   const isTokenExpired = (token: string): boolean => {
@@ -80,7 +79,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       return false; 
     } catch (error) {
-      console.error("Error decoding token:", error);
       return true;
     }
   };

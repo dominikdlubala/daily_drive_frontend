@@ -1,6 +1,6 @@
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import axios from "axios";
-import { getToken, setToken } from "src/utils/token/tokenStorage";
+import { getToken, removeToken, setToken } from "src/utils/token/tokenStorage";
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000', 
@@ -31,7 +31,6 @@ client.interceptors.response.use(
       originalRequest._retry = true; 
 
       try {
-        console.log('REFRESH TRIED')
         const { data } = await client.post('/auth/refresh'); 
         const newToken = data.data.accessToken; 
         setToken(newToken); 
@@ -41,8 +40,8 @@ client.interceptors.response.use(
 
         return client(originalRequest); 
       } catch(error) {
-        console.log('REFRESH FAILED')
-        // window.location.href = '/login'; 
+        removeToken(); 
+        window.location.href = '/login'; 
         return Promise.reject(error); 
       }
     }

@@ -153,6 +153,8 @@ export default function CreateExerciseForm() {
     { label: 'Nogi', value: 'Legs'}, 
     { label: 'Barki', value: 'Shoulders'}, 
     { label: 'Brzuch', value: 'Abs'}, 
+    { label: 'Triceps', value: 'Triceps' }, 
+    { label: 'Biceps', value: 'Biceps' }
   ]; 
 
   const unitOptions = [

@@ -3,35 +3,72 @@
 .templates {
 
   &_list {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap; 
+    display: grid;
+    grid-template-columns: auto auto;
     width: 100%; 
     gap: 2rem; 
 
   }
 
   &_card {
-    border: 2px solid black; 
+    box-shadow: 0 10px 25px -4px rgba(0,0,0,0.3); 
+    border: 1px solid $border-color-gray; 
     display: flex; 
     flex-direction: column;
     border-radius: 15px;
-    overflow: hidden; 
     padding: 1rem; 
+
+    &-title {
+      margin: 0; 
+      font-size: 1.5rem; 
+    }
 
     &-header {
       display: flex; 
       justify-content: space-between;
+      align-items: center;
       text-align: center; 
       font-size: 1.5rem; 
       font-weight: bold; 
+      padding: 0.75rem;
+      border: 2px solid $primary-color; 
+      border-radius: 12px; 
     }
 
-    &-buttons {
+    &-muscles {
       display: flex; 
-      gap: 10px; 
-      font-size: 1.5rem;
-      padding: 0; 
+      gap: 12px; 
+      padding-top: 1rem;
+
+      &--item {
+        font-size: 18px;
+        font-weight: 600;
+        background-color: $other-muscles-color;
+        color: #fff; 
+        padding: 0.5rem 1rem; 
+        border-radius: $border-radius;
+      }
+    }
+
+    &-exercise-list {
+      padding: 1rem; 
+
+      &--item {
+        font-size: 1.1rem; 
+        font-weight: 600;
+        border-bottom: 1px dashed $primary-color;
+        padding-bottom: 1rem; 
+      }
+    }
+
+
+    &-buttons {
+      position: relative; 
+    }
+
+    &-button {
+      background: none; 
+      border: none; 
 
       > {
         svg {

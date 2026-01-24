@@ -16,45 +16,6 @@ interface WorkoutTemplatesGalleryProps {
 
 export default function WorkoutTemplatesGallery({ workoutTemplates, isLoading }: WorkoutTemplatesGalleryProps) {
 
-    // useEffect(() => {
-    //     const fetchTemplates = async () => {
-    //         const { data, error } = await fetchWorkoutTemplates(token as string); 
-    //         if(error) {
-    //             console.error(error); 
-    //         } else if(data) {
-    //             setTemplates(data as WorkoutTemplate[]); 
-    //         }
-    //     }
-
-    //     fetchTemplates(); 
-    // }, [token]); 
-
-    // const handleFormSubmit = async (formValues: WorkoutTemplateFormValues, add?: boolean) => {
-    //     if(add) {
-    //         const {data, error } = await addWorkoutTemplate(token as string, {
-    //             name: formValues.name, 
-    //             exercises: formValues.exercises
-    //         } as Omit<WorkoutTemplate, 'id'>)
-    //         if(error) {
-    //         } else if (data) {
-    //         }
-    //     } else {
-    //         const { data, error } = await updateWorkoutTemplate(token as string, {
-    //             id:  formValues.id,
-    //             name: formValues.name, 
-    //             exercises: formValues.exercises
-    //         } as WorkoutTemplate); 
-    //         if(error) {
-    //         } else if (data) {
-    //             setTemplateToUpdate(undefined); 
-    //         }
-            
-    //     } 
-
-    //     handleModalClose(true); 
-    // }
-
-
     let content = (
         <>
             {Array.from({ length: 12 }).map((el, idx) => (
@@ -63,12 +24,11 @@ export default function WorkoutTemplatesGallery({ workoutTemplates, isLoading }:
         </>
     )
     
-
     if(!isLoading) {
         content = (
             <>
                 {workoutTemplates?.map((el, index) => (
-                    <WorkoutsGalleryItem key={el.id + index} workoutData={el}/>
+                    <WorkoutsGalleryItem key={el.id + index} workoutTemplate={el}/>
                 ))}
             </>
         )

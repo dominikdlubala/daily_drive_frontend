@@ -30,11 +30,19 @@ export const workoutApi = createApi({
         :
         [{ type: 'WORKOUT_TEMPLATES', id: 'LIST' }]
       
+    }), 
+    getWorkoutTemplateById: builder.query<ApiResponse<WorkoutTemplate>, number>({
+      query: (id) => ({
+        url: `/workout/templates/${id}`, 
+        method: 'GET'
+      }), 
+      providesTags: (result) => result ? [{ type: 'WORKOUT_TEMPLATES', id: result.data?.id }] : []
     })
   })
 })
 
 export const {
   useCreateWorkoutTemplateMutation, 
-  useGetUserWorkoutTemplatesQuery
+  useGetUserWorkoutTemplatesQuery,
+  useGetWorkoutTemplateByIdQuery
 } = workoutApi; 

@@ -40,4 +40,12 @@
     height: 300px; 
   }
 
+  &_workout-template--form {
+    height: 600px; 
+    max-width: 600px; 
+    margin: 2rem 0;
+    left: 50%; 
+    transform: translateX(-50%);  
+  }
+
 }

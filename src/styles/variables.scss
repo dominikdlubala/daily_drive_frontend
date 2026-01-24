@@ -28,10 +28,20 @@ $secondary-bg: #f3f4f6;
 $text-dark: #111827;           
 $text-muted: #6b7280;          
 $danger-color: #ef4444;        
-$border-radius: 12px;
+$border-radius: 10px;
 $transition-speed: 0.2s;
 
+$border-color-gray: rgba(201, 201, 201, 0.6); 
 
 $skeleton-base-color: #e2e8f0; 
 $skeleton-highlight-color: #f1f5f9; 
-$border-radius: 8px;
+$skeleton-border-radius: 8px;
+
+
+
+// muscle groups
+$pull-muscles-color: #d4660b;
+$push-muscles-color: #690bd4;
+$other-muscles-color: #2e976b;
+
+$drawer-bg-hover: #cdd8fa; 
