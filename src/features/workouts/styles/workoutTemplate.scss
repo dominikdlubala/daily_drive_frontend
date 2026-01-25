@@ -52,12 +52,50 @@
 
     &-exercise-list {
       padding: 1rem; 
-
+      display: flex; 
+      gap: 0.7rem;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%; 
+      overflow: hidden; 
+      
       &--item {
         font-size: 1.1rem; 
         font-weight: 600;
+
+        &-extended {
+          animation: list-item-slideDown 0.35s cubic-bezier(0.23, 1, 0.32, 1) forwards; 
+        }
+      }
+      
+      &--border {
         border-bottom: 1px dashed $primary-color;
-        padding-bottom: 1rem; 
+      }
+
+      &--wrapper {
+        display: flex; 
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%; 
+      }
+
+      &--extend {
+        position: relative;
+        display: flex; 
+        
+        span {
+          padding-left: 1rem; 
+          padding-bottom: 0.5rem; 
+          font-weight: 600;
+          color: $primary-color;
+        }
+
+        &-btn {
+          position: absolute; 
+          right: 5px; 
+          bottom: 0.5rem; 
+          cursor:pointer; 
+        }
       }
     }
 
@@ -127,4 +165,31 @@
     padding: 0.5rem; 
     cursor: pointer; 
     border-radius: 5px;
+}
+
+
+@keyframes list-item-slideDown {
+  from {
+    opacity: 0; 
+    transform: translateY(-100%); 
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%); 
+  }
+}
+
+@keyframes list-item-slideUpHide {
+  from {
+    opacity: 1; 
+    transform: translateY(0%); 
+  }
+
+  to {
+    opacity: 0; 
+    max-height: 0px;
+    padding-bottom: 0; 
+    transform: translateY(-100%); 
+  }
 }

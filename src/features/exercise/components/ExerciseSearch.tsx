@@ -183,6 +183,7 @@ export function ExerciseSearch2({ onExerciseSelect }: ExerciseSearchProps2) {
       <div className="exercise-search__create-wrapper">
         <span>Jeśli Twojego ćwiczenia nie ma na liście: </span>
         <button 
+          type="button"
           className="button exercise-search__button exercise-search__button--add"
           onClick={() => dispatch(openModal({ type: 'CREATE_EXERCISE' }))}  
         >Dodaj nowe +</button>

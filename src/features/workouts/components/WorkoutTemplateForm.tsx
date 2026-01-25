@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from 'src/components/primitives/inputs/Inputs';
 import Modal from 'src/features/modal/components/Modal';
 import { createPortal } from 'react-dom';
-import { useCreateWorkoutTemplateMutation } from 'src/api/queries/workoutApi';
+import { useCreateWorkoutTemplateMutation, useUpdateWorkoutTemplateMutation } from 'src/api/queries/workoutApi';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@/components/skeletons/Skeleton';
 
@@ -20,6 +20,7 @@ export interface WorkoutTemplateFormProps {
 }
 
 const workoutTemplateFormSchema = z.object({
+    id: z.number().optional(),
     name: z.string().min(1, { message: 'Szablon musi posiadać nazwę' }), 
     exercises: z.array(z.object({
         id: z.number(), 
@@ -39,16 +40,17 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
     const [isSearchOpen, setIsSearchOpen] = useState(false); 
     const navigate = useNavigate(); 
     const [createWorkoutTemplate, { isLoading, isSuccess }] = useCreateWorkoutTemplateMutation(); 
+    const [updateWorkoutTemplate, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess }] = useUpdateWorkoutTemplateMutation(); 
 
     const { 
         control, 
         handleSubmit, 
         formState: { errors, isSubmitting }, 
         trigger, 
-        reset
     } = useForm<WorkoutTemplateFormValues>({
         resolver: zodResolver(workoutTemplateFormSchema), 
         defaultValues: {
+            id: initialData?.id ?? undefined, 
             name: initialData?.name ?? '', 
             exercises: initialData?.exercises ?? []
         },
@@ -56,13 +58,10 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
     })
 
     useEffect(() => {
-        if(initialData && !isInitialDataLoading) {
-            reset({
-                name: initialData.name, 
-                exercises: initialData.exercises
-            })
+        if(isSuccess || isUpdateSuccess) {
+            navigate('/workouts/templates')
         }
-    }, [initialData, isInitialDataLoading, reset])
+    }, [isSuccess, isUpdateSuccess])
 
     const { fields, append, remove } = useFieldArray({
         control, 
@@ -76,8 +75,14 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
     }
 
     const onSubmit = async (formValues: WorkoutTemplateFormValues) => {
-        await createWorkoutTemplate(formValues); 
-        isSuccess && navigate('/workouts/templates')
+        if(initialData && formValues.id) {
+            await updateWorkoutTemplate({
+                ...formValues, 
+                id: formValues.id
+            })
+        } else {
+            await createWorkoutTemplate(formValues); 
+        }
     }
 
     let content = <WorkoutTemplateFormSkeleton />
@@ -106,6 +111,7 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
                                             <span className="form_list-item--content">{ex.name}</span>
                                         </div>
                                         <button 
+                                            type="button"
                                             className="form_list-item--delete btn-delete"
                                             onClick={() => remove(ex.id)}
                                         >
@@ -116,6 +122,7 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
                             }
                         </ul>
                         <button 
+                            type="button"
                             className="form_btn-secondary" 
                             onClick={() => setIsSearchOpen(true)}
                         >Dodaj ćwiczenie</button>
@@ -131,7 +138,7 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
                 <button 
                     type="submit"
                     className="btn-submit btn-submit--workout-template"
-                    disabled={isSubmitting || isLoading}
+                    disabled={isSubmitting || isLoading || isUpdateLoading}
                 >
                     {isSubmitting ? 'Zapisuję...' : 'Zapisz'}
                 </button>

@@ -2,7 +2,7 @@ import { useGetWorkoutTemplateByIdQuery } from "@/api/queries/workoutApi";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import WorkoutTemplateForm from "src/features/workouts/components/WorkoutTemplateForm";
+import WorkoutTemplateForm, { WorkoutTemplateFormSkeleton } from "src/features/workouts/components/WorkoutTemplateForm";
 import { parse } from "zod";
 
 export default function WorkoutTemplatesFormPage() {
@@ -17,7 +17,13 @@ export default function WorkoutTemplatesFormPage() {
 
   return (
     <div className="page page_workout-templates-form">
-      <WorkoutTemplateForm initialData={initialData} isLoading={shouldShowSkeleton as boolean}/>
+      {
+        shouldShowSkeleton 
+        ?
+        <WorkoutTemplateFormSkeleton />
+        :
+        <WorkoutTemplateForm initialData={initialData} isLoading={shouldShowSkeleton as boolean}/>
+      }
     </div>
   )
 }

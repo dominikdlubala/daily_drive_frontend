@@ -6,6 +6,9 @@ import { useAuth } from "../../../hooks/useAuth";
 import { startCurrentWorkout } from "../../../services/WorkoutCurrentService";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useConfirm } from "@/hooks/useConfirm";
+import { useDeleteWorkoutTempalteMutation } from "@/api/queries/workoutApi";
 interface WorkoutsGalleryItemProps {
     workoutTemplate: WorkoutTemplate
 }
@@ -13,8 +16,11 @@ interface WorkoutsGalleryItemProps {
 export default function WorkoutsGalleryItem({ workoutTemplate }: WorkoutsGalleryItemProps) {
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false); 
+    const [isListExtended, setIsListExtended] = useState(false); 
     const drawerRef = useRef<HTMLDivElement>(null); 
     const drawerBtnRef = useRef<HTMLButtonElement>(null); 
+    const { confirm }  = useConfirm(); 
+    const [deleteWorkoutTemplate, { isLoading, isSuccess }] = useDeleteWorkoutTempalteMutation(); 
     
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -44,6 +50,12 @@ export default function WorkoutsGalleryItem({ workoutTemplate }: WorkoutsGallery
         .slice(0,2)
         .map(([name, count]) => ({ name, count})); 
         
+    const handleTemplateDelete = async (id: number) => {
+        const isConfirmed = await confirm(`Czy chcesz usunąć szablon ${workoutTemplate.name}?`)
+        if(isConfirmed){
+            await deleteWorkoutTemplate(id);
+        }
+    }
 
     return (
         <div className="templates_card">
@@ -81,6 +93,7 @@ export default function WorkoutsGalleryItem({ workoutTemplate }: WorkoutsGallery
                             </Link>
                             <button
                                 className="drawer_item"
+                                onClick={() => handleTemplateDelete(workoutTemplate.id)}
                             >
                                 Usuń
                             </button>
@@ -98,18 +111,59 @@ export default function WorkoutsGalleryItem({ workoutTemplate }: WorkoutsGallery
                     </span>
                 ))}
             </div>
-            <ul 
-                className="templates_card-exercise-list"
-            >
-                {workoutTemplate.exercises.map((ex, idx) => (
-                    <li 
-                        className="templates_card-exercise-list--item"
-                        key={ex.id + idx}
-                    >
-                        {idx+1}. {ex.name}
-                    </li>
-                )).slice(0, 3)}
-            </ul>
+            <div className="templates_card-exercise-list--wrapper">
+                <ul 
+                    className="templates_card-exercise-list"
+                >
+                    {workoutTemplate.exercises.map((ex, idx) => (
+                        <li 
+                            className="templates_card-exercise-list--item"
+                            key={ex.id + idx}
+                        >
+                            {idx+1}. {ex.name}
+                        </li>
+                    )).slice(0, 3)}
+                    {
+                        isListExtended
+                        &&
+                        workoutTemplate.exercises.map((ex, idx) => (
+                            <li 
+                                className="templates_card-exercise-list--item templates_card-exercise-list--item-extended"
+                                key={ex.id + idx}
+                            >
+                                {idx+1}. {ex.name}
+                            </li>
+                        )).slice(3,)
+                    }
+                </ul>
+                {
+                    workoutTemplate.exercises.length > 3
+                    &&
+                    <div className="templates_card-exercise-list--extend">
+                        {
+                            isListExtended
+                            ||
+                            <span>
+                                [Zawiera jeszcze {workoutTemplate.exercises.length-3} ćwiczenia]
+                            </span>
+                    }
+                        {
+                            !isListExtended
+                            ?
+                            <FaChevronDown
+                                className="templates_card-exercise-list--extend-btn"
+                                onClick={() => setIsListExtended(true)}
+                            />
+                            :
+                            <FaChevronUp
+                                className="templates_card-exercise-list--extend-btn"
+                                onClick={() => setIsListExtended(false)}
+                            />
+                        }
+                    </div>
+                }
+                <div className="templates_card-exercise-list--border"></div>
+            </div>
         </div>
     )
 } 

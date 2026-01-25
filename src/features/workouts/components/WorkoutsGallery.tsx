@@ -16,6 +16,7 @@ interface WorkoutTemplatesGalleryProps {
 
 export default function WorkoutTemplatesGallery({ workoutTemplates, isLoading }: WorkoutTemplatesGalleryProps) {
 
+
     let content = (
         <>
             {Array.from({ length: 12 }).map((el, idx) => (
@@ -27,8 +28,8 @@ export default function WorkoutTemplatesGallery({ workoutTemplates, isLoading }:
     if(!isLoading) {
         content = (
             <>
-                {workoutTemplates?.map((el, index) => (
-                    <WorkoutsGalleryItem key={el.id + index} workoutTemplate={el}/>
+                {workoutTemplates?.map((el) => (
+                    <WorkoutsGalleryItem key={el.id} workoutTemplate={el}/>
                 ))}
             </>
         )

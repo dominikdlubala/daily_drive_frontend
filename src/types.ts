@@ -123,6 +123,10 @@ export type CreateWorkoutTemplateDTO = {
     exercises: ExerciseDefinition[]
 }
 
+export type UpdateWorkoutTemplateDTO = CreateWorkoutTemplateDTO & {
+    id: number; 
+}
+
 export type WorkoutTemplateApiReturn = {
     data?: WorkoutTemplate[] | null; 
     error?: { message: string };

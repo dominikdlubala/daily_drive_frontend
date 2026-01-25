@@ -297,6 +297,51 @@
 }
 
 
+// confirm
+#confirm-root {
+  z-index: 1000; 
+}
+
+.confirm {
+  &_wrapper {
+    display: flex; 
+    flex-direction: column;
+    gap: 2rem; 
+    align-items: center;
+  }
+
+  &_message {
+    font-size: 1.25rem; 
+    
+  }
+  &_buttons {
+    display: flex; 
+    width: 100%; 
+    justify-content: space-around;
+
+    &--confirm, &--cancel {
+      padding: 0.5rem 1rem; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 0.9rem;
+      color: #fff; 
+    }
+    &--confirm {
+      background-color: $primary-btn;
+      &:hover {
+        background-color: $primary-btn-hover;
+      }
+    }
+    &--cancel {
+      background-color: $btn-red; 
+      &:hover {
+        background-color: $btn-red-hover;
+      }
+    }
+  }
+}
+
+
 
 .form {
   display: flex; 

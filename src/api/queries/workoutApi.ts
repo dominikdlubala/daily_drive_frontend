@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "../axios/axiosBaseQuery";
-import { ApiResponse, CreateWorkoutTemplateDTO, WorkoutTemplate } from "src/types";
+import { ApiResponse, CreateWorkoutTemplateDTO, UpdateWorkoutTemplateDTO, WorkoutTemplate } from "src/types";
 
 export const workoutApi = createApi({
   reducerPath: 'workout2',
@@ -37,6 +37,27 @@ export const workoutApi = createApi({
         method: 'GET'
       }), 
       providesTags: (result) => result ? [{ type: 'WORKOUT_TEMPLATES', id: result.data?.id }] : []
+    }),
+    updateWorkoutTemplate: builder.mutation<ApiResponse<WorkoutTemplate>, UpdateWorkoutTemplateDTO>({
+      query: (templateDTO) => ({
+        url: `/workout/templates/edit/${templateDTO.id}`,
+        method: 'PUT', 
+        data: templateDTO
+      }), 
+      invalidatesTags: (result) => result?.data ? [
+        { type: 'WORKOUT_TEMPLATES', id: result.data.id}, 
+        { type: 'WORKOUT_TEMPLATES', id: 'LIST' }
+      ] : [{ type: 'WORKOUT_TEMPLATES', id: 'LIST' }]
+    }),
+    deleteWorkoutTempalte: builder.mutation<ApiResponse, number>({
+      query: (id) => ({
+        url: `/workout/templates/delete/${id}`, 
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result) => result?.data ? [
+        { type: 'WORKOUT_TEMPLATES', id: result.data.id }, 
+        { type: 'WORKOUT_TEMPLATES', id: 'LIST' }
+      ] : [ {type: 'WORKOUT_TEMPLATES', id: 'LIST' }]
     })
   })
 })
@@ -44,5 +65,7 @@ export const workoutApi = createApi({
 export const {
   useCreateWorkoutTemplateMutation, 
   useGetUserWorkoutTemplatesQuery,
-  useGetWorkoutTemplateByIdQuery
+  useGetWorkoutTemplateByIdQuery, 
+  useUpdateWorkoutTemplateMutation, 
+  useDeleteWorkoutTempalteMutation
 } = workoutApi; 
