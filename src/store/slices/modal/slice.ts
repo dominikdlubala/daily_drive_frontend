@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const ModalTypes = {
-  ADD_EXERCISE: "ADD_EXERCISE", 
   CREATE_EXERCISE: "CREATE_EXERCISE", 
   CREATE_EDIT_WORKOUT_TEMPLATE: "CREATE_EDIT_WORKOUT_TEMPLATE", 
   EXERCISE_SEARCH: 'EXERCISE_SEARCH'

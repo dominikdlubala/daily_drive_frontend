@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom';
 import { useCreateWorkoutTemplateMutation, useUpdateWorkoutTemplateMutation } from 'src/api/queries/workoutApi';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@/components/skeletons/Skeleton';
+import AddExerciseModal from '@/features/modal/components/exercise/AddExerciseModal';
 
 export interface WorkoutTemplateFormProps {
     initialData?: WorkoutTemplate; 
@@ -126,13 +127,11 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
                             className="form_btn-secondary" 
                             onClick={() => setIsSearchOpen(true)}
                         >Dodaj ćwiczenie</button>
-                        {
-                            createPortal((
-                                <Modal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
-                                    <ExerciseSearch2 onExerciseSelect={handleExerciseSelect} />
-                                </Modal>
-                            ), document.getElementById('modal-root') as Element)
-                        }
+                        <AddExerciseModal
+                            isOpen={isSearchOpen}
+                            onClose={() => setIsSearchOpen(false)}
+                            onExerciseSelect={handleExerciseSelect}
+                        />
                         { errors.exercises && <span className="input-validate">{errors.exercises.message}</span> }
                     </div>
                 <button 

@@ -66,7 +66,7 @@ const router = createBrowserRouter([
                 </ProtectedRoute>
       }, 
       {
-        path: '/currentWorkout', 
+        path: '/workouts/current-workout', 
         element: <ProtectedRoute>
             <CurrentWorkoutPage />
         </ProtectedRoute>

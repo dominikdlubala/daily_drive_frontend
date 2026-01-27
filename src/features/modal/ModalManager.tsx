@@ -2,7 +2,6 @@ import React, { ReactNode } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { closeTopModal } from "../../store";
-import AddExerciseModal from "./components/exercise/AddExerciseModal";
 import Modal from "./components/Modal";
 import CreateExerciseModal from "./components/exercise/CreateExerciseModal";
 import { createPortal } from "react-dom";
@@ -10,7 +9,6 @@ import CreateWorkoutTemplateModal from "./components/workout/CreateWorkoutTempla
 import { ExerciseSearch2 } from "../exercise/components/ExerciseSearch";
 
 const MODAL_COMPONENTS: Record<string, React.FC<any>> = {
-  ADD_EXERCISE: AddExerciseModal,
   CREATE_EXERCISE: CreateExerciseModal, 
   CREATE_EDIT_WORKOUT_TEMPLATE: CreateWorkoutTemplateModal, 
   EXERCISE_SEARCH: ExerciseSearch2
