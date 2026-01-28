@@ -153,6 +153,8 @@ export type Exercise = {
     bodyPart: BodyPart;
 }
 
+
+
 export type ExerciseApiReturn = {
     data?: Exercise[] | null; 
     error?: { message: string, status?: number | string } | null; 
@@ -265,4 +267,18 @@ export interface CreateExerciseDefinitionDTO {
     name: string; 
     unit: string; 
     bodyParts?: BodyPart[]; 
+}
+
+export type AddPerformedExerciseDTO = {
+    exerciseId: number; 
+    name: string; 
+    unit: string; 
+    sets: AddPerformedSetDTO[];
+} 
+
+export type AddPerformedSetDTO = {
+    setNumber: number; 
+    reps?: number; 
+    weight?: number; 
+    duration?: number; 
 }

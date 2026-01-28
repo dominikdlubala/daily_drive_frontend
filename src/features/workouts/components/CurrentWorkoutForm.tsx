@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import * as z from 'zod'; 
-import { useAppSelector } from "../../../hooks/useAppSelector";
 import type { CurrentWorkout, ExerciseDefinition, WorkoutSession } from "../../../types";
 import ExerciseDetails from "../../exercise/components/ExerciseDetails";
-import { useForm } from "react-hook-form";
-import { openModal } from "@/store";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AddExerciseModal from "@/features/modal/components/exercise/AddExerciseModal";
 
@@ -17,11 +14,12 @@ const CurrentWorkoutFormSchema = z.object({
   performedExercises: z.array(z.object({
     exerciseId: z.number(),
     name: z.string().min(1, { message: 'Ćwiczenie musi mieć nazwę' }), 
+    unit: z.string(),
     sets: z.array(z.object({
       setNumber: z.number(), 
       reps: z.number().optional(), 
       weight: z.number().optional(), 
-      duration: z.string().optional(), 
+      duration: z.number().optional(), 
     }))
   }))
 })
@@ -30,44 +28,52 @@ type CurrentWorkoutFormValues = z.infer<typeof CurrentWorkoutFormSchema>;
 
 export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
 
-  const dispatch = useAppDispatch(); 
+  const [isSearchOpen, setIsSearchOpen] = useState(false); 
 
   const {
     register, 
     control, 
     handleSubmit, 
     formState: { errors, isSubmitting }, 
-    trigger
+    trigger, 
+    setError
   } = useForm<CurrentWorkoutFormValues>({
     resolver: zodResolver(CurrentWorkoutFormSchema), 
     defaultValues: {
       startedAt: new Date(), 
       performedExercises: []
-    }
+    }, 
+    mode: 'onBlur'
   })
 
-  const [isSearchOpen, setIsSearchOpen] = useState(false); 
-
-  const currentWorkout = useAppSelector((state) => state.workout.currentWorkout);
+  const { fields, append, remove } = useFieldArray({
+    control, 
+    name: 'performedExercises'
+  })
 
   const handleExerciseSelect = (exercise: ExerciseDefinition) => {
+    if(fields.some(ex => ex.exerciseId === exercise.id)){
+      setError('performedExercises', { message: 'Nie można duplikować ćwiczeń' })
+      return; 
+    }
 
+    append({
+      exerciseId: exercise.id, 
+      name: exercise.name, 
+      unit: exercise.unit, 
+      sets: []
+    })
   }
 
-  useEffect(() => {
-    trigger('startedAt')
-    trigger('performedExercises')
-  }, [])
-
   return (
-    <form className="form form--workout-free">
-      <h2 className="form-title">Trening wolny</h2>
+    <form className="form form_current-workout">
+      <h2 className="form_title">Trening wolny</h2>
 
-      <div className="form-group">
+      <div className="form_group">
         <h3>Ćwiczenia</h3>
         <button 
           type="button" 
-          className="btn--workout-template btn-add"
+          className="form_btn-secondary"
           onClick={() => setIsSearchOpen(true)}
         >Dodaj ćwiczenie +</button>
         <AddExerciseModal 
@@ -75,21 +81,14 @@ export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
           onClose={() => setIsSearchOpen(false)}
           onExerciseSelect={handleExerciseSelect}
         />
-        {currentWorkout?.workoutSession.weightExercises.map((exercise, index) => (
-          <div key={index} className="form-group form-group--workout-free">
-            <ExerciseDetails 
-              index={index} 
-              exercise={{...exercise, type: 'Weight'}} 
-            />
-          </div>
-        ))}
-        {currentWorkout?.workoutSession.cardioExercises.map((exercise, index) => (
-          <div key={index} className="form-group form-group--workout-free">
-            <ExerciseDetails 
-              index={index} 
-              exercise={{...exercise, type: 'Cardio'}} 
-            />
-          </div>
+      </div>
+      <div className="form_group">
+        {fields.map((ex, idx) => (
+          <ExerciseDetails
+            key={ex.id}
+            index={idx}
+            exercise={ex}
+          />
         ))}
       </div>
 
@@ -101,8 +100,8 @@ export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
         ))
       }
       <div className="workout-actions">
-        <button type="submit" className="btn-submit btn-submit-workout">Zapisz trening</button>
-        {currentWorkout?.id ? <button type="button" className="btn-cancel">Zakończ trening</button> : ''}
+        <button type="submit" className="btn-submit">Zapisz trening</button>
+        {/* {currentWorkout?.id ? <button type="button" className="btn-cancel">Zakończ trening</button> : ''} */}
       </div>
     </form>
   );

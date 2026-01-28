@@ -24,6 +24,7 @@ export default function AddExerciseModal<T>({
           <Modal isOpen={isOpen} onClose={onClose}>
             <ExerciseSearch2 onExerciseSelect={(value: ExerciseDefinition) => {
               onExerciseSelect(value)
+              onClose()
             }} />
           </Modal>
         ), document.getElementById('modal-root') as Element)

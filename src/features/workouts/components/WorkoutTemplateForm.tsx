@@ -71,7 +71,6 @@ export default function WorkoutTemplateForm({ initialData, isLoading: isInitialD
 
     const handleExerciseSelect = (exercise: ExerciseDefinition) => {
         append(exercise);
-        setIsSearchOpen(false); 
         trigger('exercises'); 
     }
 
