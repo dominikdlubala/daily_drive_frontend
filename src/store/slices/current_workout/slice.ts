@@ -14,7 +14,7 @@ export const workoutSlice = createSlice({
     reducers: {
         initiateWorkout(state) {
             state.currentWorkout = {
-                workoutSession: {
+                workoutSession: { 
                     weightExercises: [], 
                     cardioExercises: [],
                     startTime: new Date().toISOString(), 
