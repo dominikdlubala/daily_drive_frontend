@@ -1,0 +1,184 @@
+button {
+    cursor: pointer;
+}
+
+.page-workouts {
+    display: flex; 
+    flex-direction: column;
+    width: 90vw; 
+    max-width: 1600px; 
+    margin: 1rem auto; 
+}
+
+.section--workouts-buttons {
+    display: flex; 
+    justify-content: space-evenly;
+    margin-top: 1rem; 
+}
+
+  
+.btn-workouts {
+    font-size: 1rem; 
+    padding: 0.75rem; 
+    border: 1px solid black; 
+    border-radius: 10px; 
+    background-color: #fff;
+    cursor: pointer;    
+}
+
+.btn-workouts--active {
+    background-color: #7282a0;
+    color: #fff; 
+    border: none; 
+    /* border-bottom: 2px solid var(--primary-color) */
+}
+
+.btn-current-workout {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-current-workout:hover {
+    background-color: #0056b3;
+}
+
+.btn-current-workout:active {
+    background-color: #004085;
+}
+
+.btn-edit--secondary {
+    color: #fff; 
+}
+
+
+
+
+
+/* Workout list */
+.month-wrapper {
+    border: 2px solid black; 
+    padding: 1rem; 
+    border-radius: 30px; 
+    margin-bottom: 2rem; 
+    background-color: #94bbef; 
+}
+
+.month-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 0.5rem; 
+    margin-bottom: 1rem;  
+}
+
+.workouts-list {
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+}
+
+.list-workout--item {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.list-workout--item-header {
+    /* display: flex;  */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    border-bottom: 1px solid #ddd;
+    font-size: 1.5rem; 
+    font-weight: bold;
+    padding: 1rem; 
+    text-align: center;;
+    position: relative; 
+}
+
+.list-workout--item-header-date {
+    position: absolute; 
+    top: 1rem; 
+    left: 1rem; 
+}
+
+.btn-remove--list-workout--item {
+    position: absolute; 
+    top: 1rem; 
+    right: 1rem; 
+    cursor: pointer;
+}
+
+.list-workout--item-subheader {
+    display: flex; 
+    justify-content: space-between;
+    font-size: 1rem; 
+}
+
+.list-workout--item-body {
+    padding: 0 1rem;
+}
+
+.exercise-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.exercise-item {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding: 8px 0;
+    margin: 0 1.5rem; 
+}
+
+.exercise-item:first-child {
+    border-top: none;
+}
+
+.exercise-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.set {
+    font-size: 1rem;
+    padding: 0.5rem; 
+    text-align: right; 
+}
+
+.cardio-details {
+    font-size: 1rem;
+    padding: 0.5rem;
+    text-align: right; 
+}
+
+
+
+.exercise-item--faded {
+    position: relative;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+}
+
+.btn-toggle-exercises {
+    display: block;
+    margin: 0 auto; 
+    margin-bottom: 1rem; 
+    padding: 0.5rem 1rem;
+    border: 1px solid #000;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}

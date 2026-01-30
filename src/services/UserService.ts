@@ -1,30 +1,19 @@
-import { ChangePasswordFormValues } from '../components/account/ChangePasswordForm';
-import { UserDataFormValues } from '../components/account/EditUserDataForm';
-import { RegisterFormValues } from '../components/login/RegisterForm';
+import { UserDataFormValues } from 'src/features/account/components/EditUserDataForm';
+import { RegisterFormValues } from '../features/login/components/RegisterForm';
 import type { UserLoginApiReturn } from '../types'; 
+import { ChangePasswordFormValues } from 'src/features/account/components/ChangePasswordForm';
+import client from 'src/api/axios/client';
 
-const API_URL = '/api/User'; 
+const API_ROUTE = `${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/auth`; 
 
 export const loginUser = async (username: string, password: string): Promise<UserLoginApiReturn> => {
     try {
-        const response = await fetch(`${API_URL}/login`, {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: username, 
-                password: password 
-            })
+        const response = await client.post(`${API_ROUTE}/login`, {
+            username, 
+            password
         });
 
-        if(!response.ok) {
-            return { token: null, error: { error: true, message: await response.text() } }
-        }
-
-        const data = await response.json() as { token: string }; 
-
-        return { token: data.token };  
+        return { token: response.data.data.accessToken };  
     } catch (error) {
         return { token: null, error: { error: true, message: 'Niespodziewany błąd' } }
     }
@@ -33,7 +22,11 @@ export const loginUser = async (username: string, password: string): Promise<Use
 export const registerUser = async (formValues: RegisterFormValues): Promise<UserLoginApiReturn> => {
     try {
 
+<<<<<<< HEAD
         const response = await fetch(`${API_URL}/register`, {
+=======
+        const response = await fetch(`${API_ROUTE}/register`, {
+>>>>>>> feat/rtkquery_implementation
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json', 
@@ -54,7 +47,11 @@ export const registerUser = async (formValues: RegisterFormValues): Promise<User
 
 export const getUserData = async (token: string | null) => {
     try {
+<<<<<<< HEAD
         const response = await fetch(`${API_URL}`, {
+=======
+        const response = await fetch(`${API_ROUTE}`, {
+>>>>>>> feat/rtkquery_implementation
             method: 'GET', 
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +70,11 @@ export const getUserData = async (token: string | null) => {
 
 export const updateUserData = async (token: string | null, userData: UserDataFormValues) => {
     try {
+<<<<<<< HEAD
         const response = await fetch(`${API_URL}`, {
+=======
+        const response = await fetch(`${API_ROUTE}`, {
+>>>>>>> feat/rtkquery_implementation
             method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',
@@ -94,7 +95,11 @@ export const updateUserData = async (token: string | null, userData: UserDataFor
 
 export const changePassword = async (token: string | null, changePasswordData: ChangePasswordFormValues): Promise<{ data?: { message: string}, error?: { message: string} }> => {
     try {
+<<<<<<< HEAD
         const response = await fetch(`${API_URL}/change-password`, {
+=======
+        const response = await fetch(`${API_ROUTE}/change-password`, {
+>>>>>>> feat/rtkquery_implementation
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', 

@@ -1,0 +1,195 @@
+@import '../../../styles/variables.scss';
+
+.templates {
+
+  &_list {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 100%; 
+    gap: 2rem; 
+
+  }
+
+  &_card {
+    box-shadow: 0 10px 25px -4px rgba(0,0,0,0.3); 
+    border: 1px solid $border-color-gray; 
+    display: flex; 
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 1rem; 
+
+    &-title {
+      margin: 0; 
+      font-size: 1.5rem; 
+    }
+
+    &-header {
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+      text-align: center; 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+      padding: 0.75rem;
+      border: 2px solid $primary-color; 
+      border-radius: 12px; 
+    }
+
+    &-muscles {
+      display: flex; 
+      gap: 12px; 
+      padding-top: 1rem;
+
+      &--item {
+        font-size: 18px;
+        font-weight: 600;
+        background-color: $other-muscles-color;
+        color: #fff; 
+        padding: 0.5rem 1rem; 
+        border-radius: $border-radius;
+      }
+    }
+
+    &-exercise-list {
+      padding: 1rem; 
+      display: flex; 
+      gap: 0.7rem;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%; 
+      overflow: hidden; 
+      
+      &--item {
+        font-size: 1.1rem; 
+        font-weight: 600;
+
+        &-extended {
+          animation: list-item-slideDown 0.35s cubic-bezier(0.23, 1, 0.32, 1) forwards; 
+        }
+      }
+      
+      &--border {
+        border-bottom: 1px dashed $primary-color;
+      }
+
+      &--wrapper {
+        display: flex; 
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%; 
+      }
+
+      &--extend {
+        position: relative;
+        display: flex; 
+        
+        span {
+          padding-left: 1rem; 
+          padding-bottom: 0.5rem; 
+          font-weight: 600;
+          color: $primary-color;
+        }
+
+        &-btn {
+          position: absolute; 
+          right: 5px; 
+          bottom: 0.5rem; 
+          cursor:pointer; 
+        }
+      }
+    }
+
+
+    &-buttons {
+      position: relative; 
+    }
+
+    &-button {
+      background: none; 
+      border: none; 
+
+      > {
+        svg {
+          &:hover {
+            cursor:pointer; 
+          }
+        }
+      }
+    }
+
+
+    .btn-edit {
+      background: none;
+      color: $btn-basic-bg;
+    }
+
+
+  }
+
+}
+
+.workout-templ--add {
+    background-color: var(--green-btn); 
+    color: #fff; 
+    padding: 1rem; 
+    border-radius: 10px; 
+    border: none; 
+    cursor: pointer; 
+}
+
+.btn-submit-workout {
+    margin-bottom: 1rem; 
+}
+
+.btn-edit--gallery {
+    cursor: pointer; 
+}
+
+.btn-delete--gallery {
+    cursor: pointer; 
+    color: var(--red-btn); 
+}
+
+.gallery-item--exercises-list {
+    margin: 1rem 0;  
+}
+
+.gallery-item--exercise-item {
+    padding: 0.5rem 0; 
+}
+
+.gallery-item--button-start {
+    border: none; 
+    background-color: var(--primary-color); 
+    color: #fff; 
+    padding: 0.5rem; 
+    cursor: pointer; 
+    border-radius: 5px;
+}
+
+
+@keyframes list-item-slideDown {
+  from {
+    opacity: 0; 
+    transform: translateY(-100%); 
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%); 
+  }
+}
+
+@keyframes list-item-slideUpHide {
+  from {
+    opacity: 1; 
+    transform: translateY(0%); 
+  }
+
+  to {
+    opacity: 0; 
+    max-height: 0px;
+    padding-bottom: 0; 
+    transform: translateY(-100%); 
+  }
+}

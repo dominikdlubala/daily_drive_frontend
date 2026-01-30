@@ -1,3 +1,13 @@
+
+export interface ApiResponse<T = any> {
+  status: number; 
+  message: string; 
+  data?: T; 
+  showNotification?: boolean; 
+  stopAutoHide?: boolean; 
+  duration?: number; 
+}
+
 export type User = {
     id: number; 
     username: string; 
@@ -81,8 +91,8 @@ export type WorkoutSession = {
     name?: string | null; 
     startTime?: string; 
     endTime?: string | null; 
-    weightExercises?: WeightExercise[];
-    cardioExercises?: CardioExercise[];
+    weightExercises: WeightExercise[];
+    cardioExercises: CardioExercise[];
 
     bodyPart?: BodyPart; 
     weightLifted?: number; 
@@ -97,7 +107,24 @@ export type WorkoutSessionApiReturn = {
 export type WorkoutTemplate = {
     id: number; 
     name: string; 
-    exercises: Exercise[]
+    ownerId: number; 
+    exercises: ExerciseDefinition[]; 
+    usedByUsers?: UserTemplateLibrary[]; 
+}
+
+export type UserTemplateLibrary = {
+    userId: number; 
+    templateId: number; 
+    usageCount: number; 
+}
+
+export type CreateWorkoutTemplateDTO = {
+    name: string; 
+    exercises: ExerciseDefinition[]
+}
+
+export type UpdateWorkoutTemplateDTO = CreateWorkoutTemplateDTO & {
+    id: number; 
 }
 
 export type WorkoutTemplateApiReturn = {
@@ -116,7 +143,7 @@ export type CurrentWorkoutApiReturn = {
 }
 
 export type WorkoutState = {
-    currentWorkout: CurrentWorkout | null; 
+    currentWorkout?: CurrentWorkout; 
 }
 
 export type Exercise = {
@@ -126,9 +153,11 @@ export type Exercise = {
     bodyPart: BodyPart;
 }
 
+
+
 export type ExerciseApiReturn = {
     data?: Exercise[] | null; 
-    error?: { message: string } | null; 
+    error?: { message: string, status?: number | string } | null; 
 }
 
 
@@ -198,8 +227,14 @@ export type HomePageDailyDietDTO = {
     date: Date;
 }
 
-export type BodyPart = 'Chest' | 'Back' | 'Shoulders' | 'Legs' | 'Arms' | 'Other'
+export const BODY_PARTS_LIST = ['Chest', 'Back', 'Shoulders', 'Legs', 'Arms', 'Other'] as const;
 
+// export type BodyPart = typeof BODY_PARTS_LIST[number]; 
+
+export type BodyPart = {
+    id?: number; 
+    name: string; 
+}
 
 // Statistics
 export type WorkoutStatistic = {
@@ -216,4 +251,34 @@ export type WeightExerciseStat = {
     name: string; 
     date: string; 
     potential1RM: number;
+}
+
+
+// Exercise
+export interface ExerciseDefinition {
+    id: number; 
+    name: string; 
+    unit: string; 
+    bodyParts?: BodyPart[]; 
+    workoutTemplates?: WorkoutTemplate[]
+}
+
+export interface CreateExerciseDefinitionDTO {
+    name: string; 
+    unit: string; 
+    bodyParts?: BodyPart[]; 
+}
+
+export type AddPerformedExerciseDTO = {
+    exerciseId: number; 
+    name: string; 
+    unit: string; 
+    sets: AddPerformedSetDTO[];
+} 
+
+export type AddPerformedSetDTO = {
+    setNumber: number; 
+    reps?: number; 
+    weight?: number; 
+    duration?: number; 
 }

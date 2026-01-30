@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { round } from "../diet/MealForm";
+=======
+import { round } from "src/features/diet/components/MealForm";
+>>>>>>> feat/rtkquery_implementation
 
 interface ProgressBarProps {
     currentAmount: number; 
