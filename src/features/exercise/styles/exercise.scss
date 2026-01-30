@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss"; 
+@use "../../../styles/variables.scss"; 
 
 
 .exercise-search, .exercise-details {
@@ -20,14 +20,14 @@
 
     button {
       padding: 11px 20px;
-      background: $primary-color;
+      background: variables.$primary-color;
       color: #fff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
 
       &:hover {
-        background: $primary-color-hover;
+        background: variables.$primary-color-hover;
       }
     }
   }
@@ -70,19 +70,19 @@
     margin-top: 2rem;
     padding: 1rem; 
     background-color: #b6b6b6;  
-    border-radius: $border-round;
+    border-radius: variables.$border-round;
   }
 
   &__button--add {
     padding: 10px 20px;
-    background: $green-btn;
+    background: variables.$green-btn;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 
     &:hover {
-      background: $green-btn-hover;
+      background: variables.$green-btn-hover;
     }
   }
 

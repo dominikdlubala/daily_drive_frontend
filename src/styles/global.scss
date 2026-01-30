@@ -1,4 +1,4 @@
-@import './variables.scss'; 
+@use 'variables.scss'; 
 
 .page {
   min-height: 90vh; 
@@ -27,21 +27,21 @@
 .button {
   transition: ease 0.3s background-color; 
   border: none; 
-  border-radius: $border-round;
+  border-radius: variables.$border-round;
   padding: 12px;
   font-size: 16px;
-  background-color: $btn-basic-bg;
-  color: $btn-basic-text; 
+  background-color: variables.$btn-basic-bg;
+  color: variables.$btn-basic-text; 
 
   &:hover {
-    background-color: $btn-basic-bg-hover;
+    background-color: variables.$btn-basic-bg-hover;
   }
 }
 
 .btn {
   &-danger {
     &:hover {
-      color: $btn-red;
+      color: variables.$btn-red;
     }
   }
 }
@@ -123,7 +123,7 @@
 
   &_error {
     min-height: 30px; 
-    color: $error-message-color; 
+    color: variables.$error-message-color; 
   }
 
   label {
@@ -133,13 +133,13 @@
 
   &_input, input {
     border: none; 
-    border-bottom: 2px solid $underline-color; 
+    border-bottom: 2px solid variables.$underline-color; 
     outline: none; 
     font-size: 18px; 
     padding: 16px 0; 
 
     &:focus {
-      border-color: $primary-color;
+      border-color: variables.$primary-color;
     }
 
     &::placeholder {
@@ -165,10 +165,10 @@
     }
 
     &-option {
-      border: 2px solid $primary-color
+      border: 2px solid variables.$primary-color
 
       &--active {
-        background-color: $primary-color
+        background-color: variables.$primary-color
       }
     }
   }
@@ -186,13 +186,13 @@
     width: 100%; 
     background: none; 
     border: none; 
-    border-bottom: 2px solid $underline-color;
+    border-bottom: 2px solid variables.$underline-color;
     padding: 12px;
     font-size: 20px;
   }
 
   &__tab--active {
-    border-color: $tab-active-color; 
+    border-color: variables.$tab-active-color; 
   }
 }
 
@@ -236,7 +236,7 @@
   gap: 16px; 
 
   .toast {
-    background-color: $toast-basic; 
+    background-color: variables.$toast-basic; 
     padding: 0.5rem 1rem;
     border-radius: 5px; 
     color: #fff;  
@@ -248,10 +248,10 @@
     animation: slideInLeft 0.3s ease-out forwards; 
 
     &_success {
-      background-color: $toast-success;
+      background-color: variables.$toast-success;
     }
     &_error {
-      background-color: $toast-error;
+      background-color: variables.$toast-error;
     }
 
     &_close-btn {
@@ -327,15 +327,15 @@
       color: #fff; 
     }
     &--confirm {
-      background-color: $primary-btn;
+      background-color: variables.$primary-btn;
       &:hover {
-        background-color: $primary-btn-hover;
+        background-color: variables.$primary-btn-hover;
       }
     }
     &--cancel {
-      background-color: $btn-red; 
+      background-color: variables.$btn-red; 
       &:hover {
-        background-color: $btn-red-hover;
+        background-color: variables.$btn-red-hover;
       }
     }
   }
@@ -354,7 +354,7 @@
   max-width: 600px;
   margin: 2rem auto; 
   padding: 2.5rem;
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
 
 
   &_workout-template {
@@ -365,7 +365,7 @@
   &_title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: $text-dark;
+    color: variables.$text-dark;
     margin-bottom: 2.5rem;
     letter-spacing: -0.025em;
   }
@@ -383,13 +383,13 @@
 
   &_error {
     min-height: 30px; 
-    color: $error-message-color; 
+    color: variables.$error-message-color; 
   }
 
   label {
     font-size: 0.875rem;
     font-weight: 600;
-    color: $text-muted;
+    color: variables.$text-muted;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -400,14 +400,14 @@
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     font-size: 1rem;
-    color: $text-dark;
-    transition: all $transition-speed ease;
+    color: variables.$text-dark;
+    transition: all variables.$transition-speed ease;
     background-color: #fff;
 
     &:focus {
       outline: none;
-      border-color: $primary-color;
-      box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+      border-color: variables.$primary-color;
+      box-shadow: 0 0 0 4px rgba(variables.$primary-color, 0.1);
     }
 
     &::placeholder {
@@ -437,10 +437,10 @@
     }
 
     &-option {
-      border: 2px solid $primary-color
+      border: 2px solid variables.$primary-color
 
       &--active {
-        background-color: $primary-color
+        background-color: variables.$primary-color
       }
     }
   }
@@ -454,17 +454,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: $secondary-bg;
+      background-color: variables.$secondary-bg;
       padding: 1rem;
       margin-bottom: 0.75rem;
       border-radius: 8px;
-      border-bottom: 4px solid $primary-color;
-      transition: transform $transition-speed ease, box-shadow $transition-speed ease;
+      border-bottom: 4px solid variables.$primary-color;
+      transition: transform variables.$transition-speed ease, box-shadow variables.$transition-speed ease;
       animation: slideIn 0.3s ease-out forwards;
 
       span {
         font-weight: 700;
-        color: $text-dark;
+        color: variables.$text-dark;
         font-size: 1rem;
       }
 
@@ -479,7 +479,7 @@
         font-size: 1rem; 
         opacity: 0.6;
         cursor: pointer;
-        &:hover { opacity: 1; color: $btn-red; }
+        &:hover { opacity: 1; color: variables.$btn-red; }
       }
     }
   }
@@ -492,16 +492,16 @@
     background-color: transparent;
     border: 2px solid #d1d5db; 
     border-radius: 8px;
-    color: $text-muted;
+    color: variables.$text-muted;
     font-weight: 600;
     cursor: pointer;
-    transition: all $transition-speed;
+    transition: all variables.$transition-speed;
     font-size: 0.95rem;
 
     &:hover {
-      border-color: $primary-color;
-      color: $primary-color;
-      background-color: rgba($primary-color, 0.02);
+      border-color: variables.$primary-color;
+      color: variables.$primary-color;
+      background-color: rgba(variables.$primary-color, 0.02);
     }
     
     &:active {
@@ -512,20 +512,20 @@
   .btn-submit {
     width: 100%;
     padding: 1rem;
-    background-color: $primary-color;
+    background-color: variables.$primary-color;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color $transition-speed, transform $transition-speed;
-    box-shadow: 0 4px 6px -1px rgba($primary-color, 0.4);
+    transition: background-color variables.$transition-speed, transform variables.$transition-speed;
+    box-shadow: 0 4px 6px -1px rgba(variables.$primary-color, 0.4);
     margin-top: 1rem;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 8px -1px rgba($primary-color, 0.5);
+      box-shadow: 0 6px 8px -1px rgba(variables.$primary-color, 0.5);
     }
 
     &:active {
@@ -551,7 +551,7 @@
     display: block;
     margin-top: 0.5rem;
     font-size: 0.85rem;
-    color: $danger-color;
+    color: variables.$danger-color;
     font-weight: 500;
     
   }
@@ -562,7 +562,7 @@
   position: absolute; 
   background-color: #fff; 
   right: 0; 
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
   border: 1px solid rgb(180, 180, 180);
   box-shadow: 0 10px 10px -2px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -576,12 +576,12 @@
     padding: 10px 12px;
     background: none; 
     border: none;
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     cursor: pointer; 
 
     &:hover {
       color: #353535; 
-      background-color: $drawer-bg-hover;
+      background-color: variables.$drawer-bg-hover;
     }
   }
 }
