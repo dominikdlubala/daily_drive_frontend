@@ -22,11 +22,7 @@ export const loginUser = async (username: string, password: string): Promise<Use
 export const registerUser = async (formValues: RegisterFormValues): Promise<UserLoginApiReturn> => {
     try {
 
-<<<<<<< HEAD
-        const response = await fetch(`${API_URL}/register`, {
-=======
         const response = await fetch(`${API_ROUTE}/register`, {
->>>>>>> feat/rtkquery_implementation
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json', 
@@ -47,11 +43,7 @@ export const registerUser = async (formValues: RegisterFormValues): Promise<User
 
 export const getUserData = async (token: string | null) => {
     try {
-<<<<<<< HEAD
-        const response = await fetch(`${API_URL}`, {
-=======
         const response = await fetch(`${API_ROUTE}`, {
->>>>>>> feat/rtkquery_implementation
             method: 'GET', 
             headers: {
                 'Content-Type': 'application/json',
@@ -70,11 +62,7 @@ export const getUserData = async (token: string | null) => {
 
 export const updateUserData = async (token: string | null, userData: UserDataFormValues) => {
     try {
-<<<<<<< HEAD
-        const response = await fetch(`${API_URL}`, {
-=======
         const response = await fetch(`${API_ROUTE}`, {
->>>>>>> feat/rtkquery_implementation
             method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',
@@ -95,11 +83,7 @@ export const updateUserData = async (token: string | null, userData: UserDataFor
 
 export const changePassword = async (token: string | null, changePasswordData: ChangePasswordFormValues): Promise<{ data?: { message: string}, error?: { message: string} }> => {
     try {
-<<<<<<< HEAD
-        const response = await fetch(`${API_URL}/change-password`, {
-=======
         const response = await fetch(`${API_ROUTE}/change-password`, {
->>>>>>> feat/rtkquery_implementation
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', 
