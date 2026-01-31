@@ -86,7 +86,14 @@ export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
       <h2 className="form_title">Trening wolny</h2>
 
       <div className="form_group">
-        <h3>Ćwiczenia</h3>
+        <div className="form_group-header">
+          <h3>Ćwiczenia</h3>
+          <button 
+            type="button" 
+            className="form_btn-secondary btn_exercise-add"
+            onClick={() => setIsSearchOpen(true)}
+          >+</button>
+        </div>
         {fields.map((ex, idx) => (
           <ExerciseDetails<CurrentWorkoutFormValues>
             key={ex.id}
@@ -98,17 +105,12 @@ export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
           ))}
       </div>
       <div className="form_group">
-          <button 
-            type="button" 
-            className="form_btn-secondary"
-            onClick={() => setIsSearchOpen(true)}
-          >Dodaj ćwiczenie +</button>
-          <AddExerciseModal 
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-            onExerciseSelect={handleExerciseSelect}
-          />
       </div>
+      <AddExerciseModal 
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        onExerciseSelect={handleExerciseSelect}
+      />
       {
         errors 
         && 
@@ -117,7 +119,7 @@ export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
         ))
       }
       <div className="workout-actions">
-        <button type="submit" className="btn-submit">Zapisz trening</button>
+        <button type="submit" className="form_btn-submit">Zapisz trening</button>
         {/* {currentWorkout?.id ? <button type="button" className="btn-cancel">Zakończ trening</button> : ''} */}
       </div>
     </form>

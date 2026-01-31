@@ -1,6 +1,5 @@
 import { AddPerformedExerciseDTO, AddPerformedSetDTO } from "../../../types";
 import { FaTrashAlt } from "react-icons/fa";
-import '../styles/exercise.css';
 import { ArrayPath, Control, Controller, FieldValues, Path, useFieldArray } from "react-hook-form";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -24,14 +23,14 @@ export default function ExerciseDetails<T extends FieldValues>({
     })
 
     return (
-        <div className="exercise-details">
-            <div className="exercise-details--header">
-                <h3 className="exercise_detail-title">{index+1}. {exercise.name}</h3>
+        <div className="exercise_details">
+            <div className="exercise_details-header">
+                <h3 className="exercise_detail-title">{exercise.name}</h3>
                 <FaTrashAlt
                     className="form_list-item--delete btn-delete"
                 />
             </div>
-                <div className="exercise-details--weight">
+                <div className="exercise_details--weight">
                 {fields.map((field, setIndex) => {
 
                     const setPath = `${name}.sets.${setIndex}` as Path<T>;
@@ -82,7 +81,6 @@ const WeightSet = <T extends FieldValues>({
 
     return (
         <div className="exercise_detail">
-            
             <h4 className="exercise_detail-title">Seria {setIndex+1}</h4>
             <div className="exercise_detail-right">
                 <div className="split-input_container">

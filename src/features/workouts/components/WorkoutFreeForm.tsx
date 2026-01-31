@@ -8,7 +8,6 @@ import type { CurrentWorkout, WeightExercise, CardioExercise, Exercise, BodyPart
 import ExerciseSearch from "../../exercise/components/ExerciseSearch";
 import ExerciseDetails from "../../exercise/components/ExerciseDetails";
 
-// import "../styles/exercise.css";
 import "../styles/workoutForm.css";
 import { useAuth } from "../../../hooks/useAuth";
 

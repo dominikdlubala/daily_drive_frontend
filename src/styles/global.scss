@@ -114,6 +114,12 @@
     display: flex; 
     flex-direction: column;
     gap: 15px;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   &_input-wrapper {
@@ -407,7 +413,6 @@
     &:focus {
       outline: none;
       border-color: variables.$primary-color;
-      box-shadow: 0 0 0 4px rgba(variables.$primary-color, 0.1);
     }
 
     &::placeholder {
@@ -488,20 +493,18 @@
     align-items: center;
     justify-content: center;
     width: 100%; 
-    padding: 0.75rem;
-    background-color: transparent;
-    border: 2px solid #d1d5db; 
+    padding: 0.5rem 0.75rem;
+    background-color: variables.$green-btn;
+    border: none; 
     border-radius: 8px;
-    color: variables.$text-muted;
+    color: #fff; ;
     font-weight: 600;
     cursor: pointer;
     transition: all variables.$transition-speed;
-    font-size: 0.95rem;
+    font-size: 15px;
 
     &:hover {
-      border-color: variables.$primary-color;
-      color: variables.$primary-color;
-      background-color: rgba(variables.$primary-color, 0.02);
+      background-color: rgba(variables.$green-btn, 0.6);
     }
     
     &:active {
@@ -509,27 +512,20 @@
     }
   }
 
-  .btn-submit {
+  &_btn-submit {
     width: 100%;
     padding: 1rem;
     background-color: variables.$primary-color;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: variables.$border-radius;
+    font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color variables.$transition-speed, transform variables.$transition-speed;
-    box-shadow: 0 4px 6px -1px rgba(variables.$primary-color, 0.4);
-    margin-top: 1rem;
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 8px -1px rgba(variables.$primary-color, 0.5);
-    }
-
-    &:active {
-      transform: translateY(0);
+      background-color: rgba(variables.$primary-color, 0.6)
     }
     
     &:disabled {
@@ -542,6 +538,12 @@
 
 }
 
+.btn {
+  &_exercise-add {
+    width: fit-content; 
+
+  }
+}
 
 
 

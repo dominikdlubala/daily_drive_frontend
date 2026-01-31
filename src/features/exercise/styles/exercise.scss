@@ -1,12 +1,12 @@
 @use "../../../styles/variables.scss"; 
 
 
-.exercise-search, .exercise-details {
+.exercise_search, .exercise_details {
   background: #fff;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-  &__input {
+  &-input {
     display: flex;
     justify-content: space-between;
 
@@ -32,7 +32,19 @@
     }
   }
 
-  &__results {
+  &-header {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 2px variables.$primary-color; 
+    padding: 0.75rem 0; 
+
+    h3 {
+      margin: 0; 
+    }
+  }
+
+  &-results {
     list-style: none;
     margin-top: 1rem;
     padding: 1rem;
@@ -58,12 +70,12 @@
     }
   }
 
-  &__error {
+  &-error {
     color: #dc3545;
     font-size: 0.875rem;
   }
 
-  &__create-wrapper {
+  &-create--wrapper {
     display: flex; 
     align-items: center;
     justify-content: space-between;
@@ -73,7 +85,7 @@
     border-radius: variables.$border-round;
   }
 
-  &__button--add {
+  &-button--add {
     padding: 10px 20px;
     background: variables.$green-btn;
     color: #fff;
@@ -83,30 +95,6 @@
 
     &:hover {
       background: variables.$green-btn-hover;
-    }
-  }
-
-  .exercise-detail {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    align-items: center;
-
-    &--set {
-      flex-direction: row;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 8px;
-      background: #f9f9f9;
-      gap: 1rem;
-    }
-
-    &--input {
-      margin-top: 5px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      width: 100%;
     }
   }
 }
@@ -151,7 +139,7 @@
     min-width: 0;
   }
   &_field {
-    border: none;
+    border: none;    
     background: transparent;
     width: 100%;
     text-align: center;
@@ -165,7 +153,7 @@
       border: none; 
     }
     &::placeholder {
-      color: #a0a0a0; 
+      color: #8a8a8a; 
     }
   }
   

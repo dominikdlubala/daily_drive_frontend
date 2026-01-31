@@ -1,7 +1,6 @@
 import { FormEvent, useState } from "react";
 import { CardioExercise, WeightExercise } from "../../types";
 import { FaTrashAlt } from "react-icons/fa";
-import '../styles/exercise.css';
 
 interface ExerciseDetailsProps {
     index: number; 

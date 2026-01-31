@@ -1,4 +1,3 @@
-import '../styles/exercise.css';
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { fetchExercisesByName } from "../../services/ExerciseService";
 import { Exercise } from "../../types";
