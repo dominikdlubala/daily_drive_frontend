@@ -7,6 +7,7 @@ import './index.css';
 import './smallScreen.css';
 import './styles/global.scss'; 
 import '@styles/skeleton/skeleton.scss'
+import '@/features/workouts/styles/workoutTemplate.scss'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

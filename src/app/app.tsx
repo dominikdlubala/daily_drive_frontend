@@ -1,5 +1,3 @@
-import '../styles/global.scss'; 
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'; 
 
 import ProtectedRoute from '../features/login/components/ProtectedRoute';

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as z from 'zod'; 
-import type { CurrentWorkout, ExerciseDefinition, WorkoutSession } from "../../../types";
+import type { ExerciseDefinition } from "../../../types";
 import ExerciseDetails from "../../exercise/components/ExerciseDetails";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -61,37 +61,54 @@ export default function CurrentWorkoutForm({ }: WorkoutFreeFormProps) {
       exerciseId: exercise.id, 
       name: exercise.name, 
       unit: exercise.unit, 
-      sets: []
+      sets: [
+        {
+          setNumber: 1, 
+        }
+      ]
     })
   }
 
+  const onSubmit = (data: CurrentWorkoutFormValues) => {
+    console.log({
+      ...data, 
+      startedAt: data.startedAt.toISOString()
+    }); 
+  }
+
+  const onError = () => {
+    console.log('err:', errors); 
+    console.log('data', fields); 
+  }
+
   return (
-    <form className="form form_current-workout">
+    <form className="form form_current-workout" onSubmit={handleSubmit(onSubmit, onError)}>
       <h2 className="form_title">Trening wolny</h2>
 
       <div className="form_group">
         <h3>Ćwiczenia</h3>
-        <button 
-          type="button" 
-          className="form_btn-secondary"
-          onClick={() => setIsSearchOpen(true)}
-        >Dodaj ćwiczenie +</button>
-        <AddExerciseModal 
-          isOpen={isSearchOpen}
-          onClose={() => setIsSearchOpen(false)}
-          onExerciseSelect={handleExerciseSelect}
-        />
-      </div>
-      <div className="form_group">
         {fields.map((ex, idx) => (
-          <ExerciseDetails
+          <ExerciseDetails<CurrentWorkoutFormValues>
             key={ex.id}
             index={idx}
             exercise={ex}
-          />
-        ))}
+            control={control}
+            name={`performedExercises.${idx}`}
+            />
+          ))}
       </div>
-
+      <div className="form_group">
+          <button 
+            type="button" 
+            className="form_btn-secondary"
+            onClick={() => setIsSearchOpen(true)}
+          >Dodaj ćwiczenie +</button>
+          <AddExerciseModal 
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+            onExerciseSelect={handleExerciseSelect}
+          />
+      </div>
       {
         errors 
         && 

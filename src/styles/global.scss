@@ -131,7 +131,7 @@
     font-size: 1.25rem;
   }
 
-  &_input, input {
+  &_input {
     border: none; 
     border-bottom: 2px solid variables.$underline-color; 
     outline: none; 
@@ -395,7 +395,7 @@
     letter-spacing: 0.05em;
   }
 
-  &_input, input {
+  &_input {
     padding: 0.75rem 1rem;
     border: 1px solid #e5e7eb;
     border-radius: 8px;
